@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Streaming with Apache Flink :: The Cuddly Computing Machine</title>
+    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/flink/training/intro/streaming.html">
+    <meta name="generator" content="Antora 2.0.0">
+    <link rel="stylesheet" href="../../../../../_/css/site.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-86782445-1"></script>
+    <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-86782445-1')</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="http://alexwangx.github.io">The Cuddly Computing Machine</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/alexwangx">GitHub</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="cuddly-blog" data-version="1.2">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../../index.html">Cuddly Blog</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hadoop</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/hadoop/ops/hadoop_commands.html">Hadoop Commands</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/hadoop/ops/hadoop_practices.html">Hadoop Practices</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/hadoop/ops/hadoop_jmx.html">Hadoop JMX</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/hadoop/ops/hadoop_delroot.html">Hadoop 意外删除挽救</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spark</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/spark/ops/spark-exitcode.html">Spark 任务退出码</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/spark/ops/spark-issues.html">Spark 常见错误</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hbase</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/hbase/hbase_notes.html">Hbase Notes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/hbase/hbase_issues.html">Hbase Issues</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Kafka</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/kafka/kafka_practices.html">Kafka Practices</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/kafka/kafka_issues.html">Kafka Issues</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Druid</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/tutorial-load-data.html">Druid 导入数据</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/druid-internals.html">Druid 0.1.5 架构</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/broker.html">Druid Broker</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/coordinator.html">Druid Coordinator</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/historical.html">Druid Historical</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/middleManager.html">Druid MiddleManager</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/overlord.html">Druid Overlord</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/router.html">Druid Router</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/segment.html">Druid Segments</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Install</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/install/druid.html">Druid 安装</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/install/hadoop_krb.html">Hadoop 配置 Kerberos</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Other</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/other/mac.html">Mac 杂记</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/other/linux.html">Linux 杂记</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/other/maven.html">Maven 杂记</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/other/mysql_install.html">Mysql 安装</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/other/readlist.html">北京中小学孩子读书清单</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../index.html">Flink</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../index.html">Flink Training Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Streaming 介绍</span>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="4">
+    <a class="nav-link" href="streaming.html">Streaming with Apache Flink</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="what-can-be.html">What can be Streamed?</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="example.html">A Complete Example</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">环境配置</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../labs/dev-env.html">Setup your Development Environment</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../labs/use-taxi-data.html">Using the Taxi Data Streams</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../labs/how-to-do.html">How to do the Labs</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../lab1/filtering.html">Lab 1 - Filtering a Stream</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Transforming Data</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../lab1/stateless-trans.html">Stateless Transformations</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../lab1/keyed-streams.html">Keyed Streams</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../lab1/stateful-trans.html">Stateful Transformations</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Cuddly Blog</span>
+    <span class="version">1.2</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">Cuddly Blog</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../../index.html">1.2</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main>
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../../index.html">Cuddly Blog</a></li>
+    <li><a href="../../index.html">Flink</a></li>
+    <li><a href="../index.html">Flink Training Home</a></li>
+    <li>Streaming 介绍</li>
+    <li><a href="streaming.html">Streaming with Apache Flink</a></li>
+  </ul>
+</nav>
+</div>
+<article class="doc">
+<h1 class="page">Streaming with Apache Flink</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>在这次培训中, 我们将重点关注四个关键概念: 流数据的连续处理, 事件时间, 有状态流处理和状态快照.  在本节中, 我们介绍这些概念.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_stream_processing"><a class="anchor" href="#_stream_processing"></a>Stream Processing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>流是数据的自然栖息地.  无论是来自Web服务器的事件, 来自证券交易所的交易还是来自工厂车间机器上的传感器读数, 数据都是作为流的一部分创建的.  但是, 当我们分析数据时, 我们可以围绕有界流或无界流来组织处理, 而我们选择这些范式中的哪一个会产生深远的影响.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../../_images/training/bounded-unbounded.png" alt="bounded unbounded">
+</div>
+</div>
+<div class="paragraph">
+<p><strong>Batch processing</strong> 就是有限数据流的一个例子. 在这种操作模式下, 我们可以选择在产生任何结果之前先提取整个数据集, 这意味着可以对数据进行排序, 计算全局统计数据或生成总结所有输入的最终报告.</p>
+</div>
+<div class="paragraph">
+<p><strong>Stream processing</strong> 另一方面, 流处理涉及无限的数据流.  至少从概念上讲, 输入可能永远不会结束, 因此我们被迫在数据到达时对其进行连续处理.</p>
+</div>
+<div class="paragraph">
+<p>在Flink中, 应用程序由可以由用户定义的运算符转换的数据流组成.  这些数据流形成有向图, 以一个或多个源开始, 以一个或多个接收器结束.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../../_images/training/source-transform-sink-update.png" alt="source transform sink update">
+</div>
+</div>
+<div class="paragraph">
+<p>应用程序可能会消费实时流源（例如消息队列或分布式日志）中的实时数据, 例如Apache Kafka或Kinesis.  但是flink也可以使用来自各种数据源的有限的历史数据.  同样, 由Flink应用程序产生的结果流可以发送到各种系统, 并且可以通过REST API访问Flink内保存的状态.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../../_images/training/flink-application-sources-sinks.png" alt="flink application sources sinks">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_timely_stream_processing"><a class="anchor" href="#_timely_stream_processing"></a>Timely Stream Processing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>对于大多数流媒体应用程序而言, 能够使用用于处理实时数据的相同代码重新处理历史数据, 并产生确定性的, 一致的结果非常有价值.</p>
+</div>
+<div class="paragraph">
+<p>注意事件发生的顺序, 而不是交付事件进行处理的顺序, 并能够推理出一组事件何时（或应该）完成, 也至关重要.  例如, 考虑电子商务交易或金融交易中涉及的事件集.</p>
+</div>
+<div class="paragraph">
+<p>通过使用记录在数据流中的事件时间时间戳, 而不是使用处理数据的机器的时钟, 可以满足及时流处理的这些要求.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_stateful_stream_processing"><a class="anchor" href="#_stateful_stream_processing"></a>Stateful Stream Processing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Flink的操作可能是有状态的.  这意味着如何处理一个事件可能取决于该事件之前所有事件的累积效果.  状态可以用于简单的事情, 例如每分钟统计要显示在仪表板上的事件, 也可以用于更复杂的事情, 例如用于欺诈检测模型的计算功能.</p>
+</div>
+<div class="paragraph">
+<p>Flink应用程序在分布式群集上并行运行.  给定运算符的各种并行实例将在单独的线程中独立执行, 并且通常将在不同的机器上运行.</p>
+</div>
+<div class="paragraph">
+<p>有状态运算符的并行实例集实际上是分片键值存储.  每个并行实例负责处理特定键组的事件, 并且这些键的状态保存在本地.</p>
+</div>
+<div class="paragraph">
+<p>下图显示了作业图中前三个运算符以2的并行度运行的作业, 并终止于并行度为1的接收器.  第三个operator是有状态的, 我们看到第二个Operator和第三个Operator之间正在发生Shuffle 操作.  这样做是为了通过某些键对流进行分区, 以便所有需要一起处理的事件都将被处理.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../../_images/training/parallel-job.png" alt="parallel job">
+</div>
+</div>
+<div class="paragraph">
+<p>始终在本地访问状态, 这有助于Flink应用程序实现高吞吐量和低延迟. 您可以选择将状态保留在JVM堆上, 或者如果状态太大, 则保留在有效组织的磁盘数据结构中.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../../_images/training/local-state.png" alt="local state">
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_robust_stream_processing"><a class="anchor" href="#_robust_stream_processing"></a>Robust Stream Processing</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>通过状态快照和流重放的组合, Flink能够提供容错的, 一次精确的语义.  这些快照捕获了分布式管道的整个状态, 将偏移记录到输入队列中, 并将整个作业图中的状态记录到了摄取数据的那一刻为止.  发生故障时, 将重新倒转源, 恢复状态, 并恢复处理.  如上所述, 这些状态快照是异步捕获的, 而不会妨碍正在进行的处理.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_further_reading"><a class="anchor" href="#_further_reading"></a>Further Reading</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://flink.apache.org/flink-architecture.html" target="_blank" rel="noopener">What is Apache Flink</a> (Apache Flink Project Description)</p>
+</li>
+<li>
+<p><a href="https://ci.apache.org/projects/flink/flink-docs-stable/concepts/programming-model.html" target="_blank" rel="noopener">Flink’s Dataflow Programming Model</a> (Apache Flink Documentation)</p>
+</li>
+<li>
+<p><a href="https://ci.apache.org/projects/flink/flink-docs-stable/concepts/runtime.html" target="_blank" rel="noopener">Flink’s Distributed Runtime Environment</a> (Apache Flink Documentation)</p>
+</li>
+<li>
+<p><a href="https://research.google.com/pubs/pub43864.html" target="_blank" rel="noopener">The Dataflow Model: A Practical Approach to Balancing Correctness, Latency, and Cost in Massive-Scale, Unbounded, Out-of-Order Data Processing</a> (Google Research)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</article>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../../../_/js/site.js"></script>
+<script async src="../../../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

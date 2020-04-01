@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>无状态转换 :: The Cuddly Computing Machine</title>
+    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/flink/training/lab1/stateless-trans.html">
+    <meta name="generator" content="Antora 2.0.0">
+    <link rel="stylesheet" href="../../../../../_/css/site.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-86782445-1"></script>
+    <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-86782445-1')</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="http://alexwangx.github.io">The Cuddly Computing Machine</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/alexwangx">GitHub</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="cuddly-blog" data-version="1.2">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../../index.html">Cuddly Blog</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hadoop</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/hadoop/ops/hadoop_commands.html">Hadoop Commands</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/hadoop/ops/hadoop_practices.html">Hadoop Practices</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/hadoop/ops/hadoop_jmx.html">Hadoop JMX</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/hadoop/ops/hadoop_delroot.html">Hadoop 意外删除挽救</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spark</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/spark/ops/spark-exitcode.html">Spark 任务退出码</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/spark/ops/spark-issues.html">Spark 常见错误</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hbase</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/hbase/hbase_notes.html">Hbase Notes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/hbase/hbase_issues.html">Hbase Issues</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Kafka</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/kafka/kafka_practices.html">Kafka Practices</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/kafka/kafka_issues.html">Kafka Issues</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Druid</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/tutorial-load-data.html">Druid 导入数据</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/druid-internals.html">Druid 0.1.5 架构</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/broker.html">Druid Broker</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/coordinator.html">Druid Coordinator</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/historical.html">Druid Historical</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/middleManager.html">Druid MiddleManager</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/overlord.html">Druid Overlord</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/router.html">Druid Router</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/segment.html">Druid Segments</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Install</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/install/druid.html">Druid 安装</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/install/hadoop_krb.html">Hadoop 配置 Kerberos</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Other</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/other/mac.html">Mac 杂记</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/other/linux.html">Linux 杂记</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/other/maven.html">Maven 杂记</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/other/mysql_install.html">Mysql 安装</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/other/readlist.html">北京中小学孩子读书清单</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../index.html">Flink</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../index.html">Flink Training Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Streaming 介绍</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intro/streaming.html">Streaming with Apache Flink</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intro/what-can-be.html">What can be Streamed?</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intro/example.html">A Complete Example</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">环境配置</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../labs/dev-env.html">Setup your Development Environment</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../labs/use-taxi-data.html">Using the Taxi Data Streams</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../labs/how-to-do.html">How to do the Labs</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="filtering.html">Lab 1 - Filtering a Stream</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Transforming Data</span>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="4">
+    <a class="nav-link" href="stateless-trans.html">Stateless Transformations</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="keyed-streams.html">Keyed Streams</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="stateful-trans.html">Stateful Transformations</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Cuddly Blog</span>
+    <span class="version">1.2</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">Cuddly Blog</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../../index.html">1.2</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main>
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../../index.html">Cuddly Blog</a></li>
+    <li><a href="../../index.html">Flink</a></li>
+    <li><a href="../index.html">Flink Training Home</a></li>
+    <li>Transforming Data</li>
+    <li><a href="stateless-trans.html">Stateless Transformations</a></li>
+  </ul>
+</nav>
+</div>
+<article class="doc">
+<h1 class="page">无状态转换</h1>
+<div class="sect1">
+<h2 id="_map"><a class="anchor" href="#_map"></a>map()</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>在第一个练习中, 我们过滤了出租车事件流.  在同一代码库中, 有一个 <code>GeoUtils</code> 类, 提供了一个静态方法 <code>GeoUtils.mapToGridCell(float lon, float lat)</code> , 该方法将位置（经度, 纬度）映射到一个网格单元, 该网格单元指的是大约100x100米的区域.</p>
+</div>
+<div class="paragraph">
+<p>现在, 通过向每个事件添加 <code>startCell</code> 和 <code>endCell</code> 字段来丰富我们的出租车乘车对象流. 我们可以创建扩展了 <code>TaxiRide</code> 的 <code>EnrichedRide</code> 对象, 并添加以下字段:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public static class EnrichedRide extends TaxiRide {
+  public int startCell;
+  public int endCell;
+
+  public EnrichedRide() {}
+
+  public EnrichedRide(TaxiRide ride) {
+    this.rideId = ride.rideId;
+    this.isStart = ride.isStart;
+    ...
+    this.startCell = GeoUtils.mapToGridCell(ride.startLon, ride.startLat);
+    this.endCell = GeoUtils.mapToGridCell(ride.endLon, ride.endLat);
+  }
+
+  public String toString() {
+    return super.toString() + "," +
+      Integer.toString(this.startCell) + "," +
+      Integer.toString(this.endCell);
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>然后我们可以创建一个转换流的应用程序</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">DataStream&lt;TaxiRide&gt; rides = env.addSource(new TaxiRideSource(...));
+
+DataStream&lt;EnrichedRide&gt; enrichedNYCRides = rides
+    .filter(new RideCleansing.NYCFilter())
+    .map(new Enrichment());
+
+enrichedNYCRides.print();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>使用MapFunction：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public static class Enrichment implements MapFunction&lt;TaxiRide, EnrichedRide&gt; {
+  @Override
+  public EnrichedRide map(TaxiRide taxiRide) throws Exception {
+    return new EnrichedRide(taxiRide);
+  }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_flatmap"><a class="anchor" href="#_flatmap"></a>flatmap()</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>MapFunction</code> 仅在执行一对一转换时才适用：对于进入的每个流元素, <code>map()</code> 将发出一个转换后的元素. 否则, 您将要使用 <code>flatmap()</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">DataStream&lt;TaxiRide&gt; rides = env.addSource(new TaxiRideSource(...));
+
+DataStream&lt;EnrichedRide&gt; enrichedNYCRides = rides
+    .flatMap(new NYCEnrichment());
+
+enrichedNYCRides.print();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>使用 <code>FlatMapFunction</code> ：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>public static class NYCEnrichment implements FlatMapFunction&lt;TaxiRide, EnrichedRide&gt; {
+  @Override
+  public void flatMap(TaxiRide taxiRide, Collector&lt;EnrichedRide&gt; out) throws Exception {
+    FilterFunction&lt;TaxiRide&gt; valid = new RideCleansing.NYCFilter();
+    if (valid.filter(taxiRide)) {
+      out.collect(new EnrichedRide(taxiRide));
+    }
+  }
+}</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>使用 <code>Collector</code> 提供的接口, flatmap() 方法可以发送任意数量的元素.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_further_reading"><a class="anchor" href="#_further_reading"></a>Further Reading</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://ci.apache.org/projects/flink/flink-docs-stable/dev/stream/operators/#datastream-transformations" target="_blank" rel="noopener">DataStream Transformations</a> (Apache Flink Documentation)</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</article>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../../../_/js/site.js"></script>
+<script async src="../../../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

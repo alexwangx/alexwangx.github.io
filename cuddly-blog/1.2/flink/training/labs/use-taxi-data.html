@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Using the Taxi Data Streams :: The Cuddly Computing Machine</title>
+    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/flink/training/labs/use-taxi-data.html">
+    <meta name="generator" content="Antora 2.0.0">
+    <link rel="stylesheet" href="../../../../../_/css/site.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-86782445-1"></script>
+    <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-86782445-1')</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="http://alexwangx.github.io">The Cuddly Computing Machine</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/alexwangx">GitHub</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="cuddly-blog" data-version="1.2">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../../index.html">Cuddly Blog</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hadoop</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/hadoop/ops/hadoop_commands.html">Hadoop Commands</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/hadoop/ops/hadoop_practices.html">Hadoop Practices</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/hadoop/ops/hadoop_jmx.html">Hadoop JMX</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/hadoop/ops/hadoop_delroot.html">Hadoop 意外删除挽救</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spark</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/spark/ops/spark-exitcode.html">Spark 任务退出码</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/spark/ops/spark-issues.html">Spark 常见错误</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hbase</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/hbase/hbase_notes.html">Hbase Notes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/hbase/hbase_issues.html">Hbase Issues</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Kafka</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/kafka/kafka_practices.html">Kafka Practices</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/kafka/kafka_issues.html">Kafka Issues</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Druid</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/tutorial-load-data.html">Druid 导入数据</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/druid-internals.html">Druid 0.1.5 架构</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/broker.html">Druid Broker</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/coordinator.html">Druid Coordinator</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/historical.html">Druid Historical</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/middleManager.html">Druid MiddleManager</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/overlord.html">Druid Overlord</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/router.html">Druid Router</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/segment.html">Druid Segments</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Install</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/install/druid.html">Druid 安装</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/install/hadoop_krb.html">Hadoop 配置 Kerberos</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Other</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/other/mac.html">Mac 杂记</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/other/linux.html">Linux 杂记</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/other/maven.html">Maven 杂记</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/other/mysql_install.html">Mysql 安装</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/other/readlist.html">北京中小学孩子读书清单</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../index.html">Flink</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../index.html">Flink Training Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Streaming 介绍</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intro/streaming.html">Streaming with Apache Flink</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intro/what-can-be.html">What can be Streamed?</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intro/example.html">A Complete Example</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">环境配置</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="dev-env.html">Setup your Development Environment</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="4">
+    <a class="nav-link" href="use-taxi-data.html">Using the Taxi Data Streams</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="how-to-do.html">How to do the Labs</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../lab1/filtering.html">Lab 1 - Filtering a Stream</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Transforming Data</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../lab1/stateless-trans.html">Stateless Transformations</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../lab1/keyed-streams.html">Keyed Streams</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../lab1/stateful-trans.html">Stateful Transformations</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Cuddly Blog</span>
+    <span class="version">1.2</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">Cuddly Blog</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../../index.html">1.2</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main>
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../../index.html">Cuddly Blog</a></li>
+    <li><a href="../../index.html">Flink</a></li>
+    <li><a href="../index.html">Flink Training Home</a></li>
+    <li>环境配置</li>
+    <li><a href="use-taxi-data.html">Using the Taxi Data Streams</a></li>
+  </ul>
+</nav>
+</div>
+<article class="doc">
+<h1 class="page">Using the Taxi Data Streams</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="http://www.nyc.gov/html/tlc/html/home/home.shtml" target="_blank" rel="noopener">New York City Taxi &amp; Limousine Commission</a> 提供了2009年至2015年纽约市出租车乘车的 <a href="https://uofi.app.box.com/NYCtaxidata" target="_blank" rel="noopener">公共数据集</a>. 我们使用此数据的修改后的子集生成有关出租车乘车事件的流.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_1_download_the_taxi_data_files"><a class="anchor" href="#_1_download_the_taxi_data_files"></a>1. Download the taxi data files</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>您可以通过运行以下命令来下载出租车数据文件</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>wget http://training.ververica.com/trainingData/nycTaxiRides.gz
+wget http://training.ververica.com/trainingData/nycTaxiFares.gz</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>使用 wget 或其他方法来获取这些文件并不重要, 但是无论如何, 只要获取数据, <code>都不要解压缩或重命名.gz文件</code> .</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2_schema_of_taxi_ride_events"><a class="anchor" href="#_2_schema_of_taxi_ride_events"></a>2. Schema of Taxi Ride Events</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>我们的出租车数据集包含有关纽约市各个出租车行程的信息. 每次骑行都由两个事件表示: 旅途开始和旅途结束事件. 每个事件包含11个字段</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>rideId         : Long      // a unique id for each ride
+taxiId         : Long      // a unique id for each taxi
+driverId       : Long      // a unique id for each driver
+isStart        : Boolean   // TRUE for ride start events, FALSE for ride end events
+startTime      : DateTime  // the start time of a ride
+endTime        : DateTime  // the end time of a ride,
+                           //   "1970-01-01 00:00:00" for start events
+startLon       : Float     // the longitude of the ride start location
+startLat       : Float     // the latitude of the ride start location
+endLon         : Float     // the longitude of the ride end location
+endLat         : Float     // the latitude of the ride end location
+passengerCnt   : Short     // number of passengers on the ride</pre>
+</div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+注意: 数据集包含坐标信息无效或缺失的记录（经度和纬度为0.0）.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>还有一个包含出租车费用数据的相关数据集, 这些字段包括:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>rideId         : Long      // a unique id for each ride
+taxiId         : Long      // a unique id for each taxi
+driverId       : Long      // a unique id for each driver
+startTime      : DateTime  // the start time of a ride
+paymentType    : String    // CSH or CRD
+tip            : Float     // tip for this ride
+tolls          : Float     // tolls for this ride
+totalFare      : Float     // total fare collected</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_3_在flink程序中生成出租车行驶数据流"><a class="anchor" href="#_3_在flink程序中生成出租车行驶数据流"></a>3.在Flink程序中生成出租车行驶数据流</h2>
+<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+注意: 这些练习已经提供了使用这些出租车数据流的代码.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>我们提供了Flink源函数 <code>(TaxiRideSource)</code>, 该函数读取带有出租车行驶记录的 <code>.gz</code> 文件并发出 <code>TaxiRide</code> 事件流. 源包含了 <a href="https://ci.apache.org/projects/flink/flink-docs-stable/dev/event_time.html">event-time</a>.  <code>TaxiFare</code> 事件有一个类似的源函数 (<code>TaxiFareSource</code>).</p>
+</div>
+<div class="paragraph">
+<p>为了尽可能实际地生成这些流, 事件的发射与其时间戳成比例. 实际上彼此相隔十分钟的两个事件也彼此相隔十分钟.  可以指定加速因子以“快进”流, 即, 给定加速因子为60, 在一分钟内发生的事件将在一秒钟内得到处理. 此外, 可以指定一个最大服务延迟, 该延迟会导致每个事件在指定范围内随机延迟. 这会产生乱序流, 这在许多实际应用中很常见.</p>
+</div>
+<div class="paragraph">
+<p>对于这些练习, 加速因子为600或更高（即, 每秒钟处理需要10分钟的事件时间）, 最大延迟为60（秒）会很好.</p>
+</div>
+<div class="paragraph">
+<p>所有练习都应使用事件时间特征来实施. 事件时间使程序语义与服务速度脱钩, 即使在历史数据或乱序交付的数据的情况下, 也可以确保一致的结果.</p>
+</div>
+<div class="sect2">
+<h3 id="_checkpointing"><a class="anchor" href="#_checkpointing"></a>Checkpointing</h3>
+<div class="paragraph">
+<p>一些练习将改用 <code>CheckpointedTaxiRideSource</code> 和/或 <code>CheckpointedTaxiFareSource</code> . 与` TaxiRideSource` 和 <code>TaxiFareSource</code> 不同, 这些不同的版本能够 checkpoint 状态.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_table_sources"><a class="anchor" href="#_table_sources"></a>Table Sources</h3>
+<div class="paragraph">
+<p>还要注意, 存在可与Table和SQL API一起使用的 <code>TaxiRideTableSource</code> 和 <code>TaxiFareTableSource</code> 表源.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_how_to_use_these_sources"><a class="anchor" href="#_how_to_use_these_sources"></a>How to use these sources</h3>
+<div class="paragraph">
+<p>Java</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// get an ExecutionEnvironment
+StreamExecutionEnvironment env =
+  StreamExecutionEnvironment.getExecutionEnvironment();
+// configure event-time processing
+env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
+
+// get the taxi ride data stream
+DataStream&lt;TaxiRide&gt; rides = env.addSource(
+  new TaxiRideSource("/path/to/nycTaxiRides.gz", maxDelay, servingSpeed));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Scala</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-scala hljs" data-lang="scala">// get an ExecutionEnvironment
+val env = StreamExecutionEnvironment.getExecutionEnvironment
+// configure event-time processing
+env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime)
+
+// get the taxi ride data stream
+val rides = env.addSource(
+  new TaxiRideSource("/path/to/nycTaxiRides.gz", maxDelay, servingSpeed))</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>还有一个 <code>TaxiFareSource</code> 使用nycTaxiFares.gz文件以类似的方式工作. 该源创建了 <code>TaxiFare</code> 事件流.</p>
+</div>
+<div class="paragraph">
+<p>Java</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// get the taxi fare data stream
+DataStream&lt;TaxiFare&gt; fares = env.addSource(
+new TaxiFareSource("/path/to/nycTaxiFares.gz", maxDelay, servingSpeed));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Scala</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-scala hljs" data-lang="scala">// get the taxi fare data stream
+val fares = env.addSource(
+new TaxiFareSource("/path/to/nycTaxiFares.gz", maxDelay, servingSpeed))</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../../../_/js/site.js"></script>
+<script async src="../../../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

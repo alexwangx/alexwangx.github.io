@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>A Complete Example :: The Cuddly Computing Machine</title>
+    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/flink/training/intro/example.html">
+    <meta name="generator" content="Antora 2.0.0">
+    <link rel="stylesheet" href="../../../../../_/css/site.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-86782445-1"></script>
+    <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-86782445-1')</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="http://alexwangx.github.io">The Cuddly Computing Machine</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/alexwangx">GitHub</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="cuddly-blog" data-version="1.2">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../../index.html">Cuddly Blog</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hadoop</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/hadoop/ops/hadoop_commands.html">Hadoop Commands</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/hadoop/ops/hadoop_practices.html">Hadoop Practices</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/hadoop/ops/hadoop_jmx.html">Hadoop JMX</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/hadoop/ops/hadoop_delroot.html">Hadoop 意外删除挽救</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spark</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/spark/ops/spark-exitcode.html">Spark 任务退出码</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/spark/ops/spark-issues.html">Spark 常见错误</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hbase</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/hbase/hbase_notes.html">Hbase Notes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/hbase/hbase_issues.html">Hbase Issues</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Kafka</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/kafka/kafka_practices.html">Kafka Practices</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/kafka/kafka_issues.html">Kafka Issues</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Druid</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/tutorial-load-data.html">Druid 导入数据</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/druid-internals.html">Druid 0.1.5 架构</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/broker.html">Druid Broker</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/coordinator.html">Druid Coordinator</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/historical.html">Druid Historical</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/middleManager.html">Druid MiddleManager</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/overlord.html">Druid Overlord</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/router.html">Druid Router</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/segment.html">Druid Segments</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Install</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/install/druid.html">Druid 安装</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/install/hadoop_krb.html">Hadoop 配置 Kerberos</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Other</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/other/mac.html">Mac 杂记</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/other/linux.html">Linux 杂记</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/other/maven.html">Maven 杂记</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/other/mysql_install.html">Mysql 安装</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/other/readlist.html">北京中小学孩子读书清单</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../index.html">Flink</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../index.html">Flink Training Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Streaming 介绍</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="streaming.html">Streaming with Apache Flink</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="what-can-be.html">What can be Streamed?</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="4">
+    <a class="nav-link" href="example.html">A Complete Example</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">环境配置</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../labs/dev-env.html">Setup your Development Environment</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../labs/use-taxi-data.html">Using the Taxi Data Streams</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../labs/how-to-do.html">How to do the Labs</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../lab1/filtering.html">Lab 1 - Filtering a Stream</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Transforming Data</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../lab1/stateless-trans.html">Stateless Transformations</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../lab1/keyed-streams.html">Keyed Streams</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../lab1/stateful-trans.html">Stateful Transformations</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Cuddly Blog</span>
+    <span class="version">1.2</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">Cuddly Blog</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../../index.html">1.2</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main>
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../../index.html">Cuddly Blog</a></li>
+    <li><a href="../../index.html">Flink</a></li>
+    <li><a href="../index.html">Flink Training Home</a></li>
+    <li>Streaming 介绍</li>
+    <li><a href="example.html">A Complete Example</a></li>
+  </ul>
+</nav>
+</div>
+<article class="doc">
+<h1 class="page">A Complete Example</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>本示例将有关人的记录流作为输入, 并对其进行过滤以仅包括成年人.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">import org.apache.flink.streaming.api.environment.StreamExecutionEnvironment;
+import org.apache.flink.streaming.api.datastream.DataStream;
+import org.apache.flink.api.common.functions.FilterFunction;
+
+public class Example {
+
+	public static void main(String[] args) throws Exception {
+		final StreamExecutionEnvironment env =
+      StreamExecutionEnvironment.getExecutionEnvironment();
+
+    DataStream&lt;Person&gt; flintstones = env.fromElements(
+				new Person("Fred", 35),
+				new Person("Wilma", 35),
+				new Person("Pebbles", 2));
+
+		DataStream&lt;Person&gt; adults = flintstones.filter(new FilterFunction&lt;Person&gt;() {
+			@Override
+			public boolean filter(Person person) throws Exception {
+				return person.age &gt;= 18;
+			}
+		});
+
+		adults.print();
+
+		env.execute();
+	}
+
+	public static class Person {
+		public String name;
+		public Integer age;
+		public Person() {};
+
+		public Person(String name, Integer age) {
+			this.name = name;
+			this.age = age;
+		};
+
+		public String toString() {
+			return this.name.toString() + ": age " + this.age.toString();
+		};
+	}
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_stream_execution_environment"><a class="anchor" href="#_stream_execution_environment"></a>Stream execution environment</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>每个Flink应用程序都需要一个执行环境, 在此示例中为 <code>env</code> . 流应用程序应使用 <code>StreamExecutionEnvironment</code> .</p>
+</div>
+<div class="paragraph">
+<p>在应用程序中进行的DataStream API调用将构建一个作业图, 该作业图将附加到 <code>StreamExecutionEnvironment</code> .  调用 <code>env.execute()</code> 时, 此图将打包并发送到作业管理器, 作业管理器将作业并行化并将其片段分发给任务管理器以执行. 作业的每个并行切片都将在 <code>task slot</code> 中执行.</p>
+</div>
+<div class="paragraph">
+<p>请注意, 如果您不调用execute（）, 则您的应用程序将不会运行.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../../_images/training/processes.svg" alt="processes">
+</div>
+</div>
+<div class="paragraph">
+<p>此分布式运行时取决于您的应用程序是否可序列化. 它还要求所有依赖性对于群集中的每个节点均可用.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_basic_stream_sources"><a class="anchor" href="#_basic_stream_sources"></a>Basic stream sources</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>在上面的示例中, 我们使用 <code>env.fromElements(&#8230;&#8203;) ` 构造了一个 `DataStream&lt;Person&gt;</code> .  这是将简单的流放在一起以用于原型或测试的便捷方法.  <code>StreamExecutionEnvironment</code> 上还有一个 <code>fromCollection(Collection)</code> 方法.  我们可以这样做:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">List&lt;Person&gt; people = new ArrayList&lt;Person&gt;();
+
+people.add(new Person("Fred", 35));
+people.add(new Person("Wilma", 35));
+people.add(new Person("Pebbles", 2));
+
+DataStream&lt;Person&gt; flintstones = env.fromCollection(people);</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在原型制作时将一些数据放入流中的另一种便捷方法是使用socket</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">DataStream&lt;String&gt; lines = env.socketTextStream("localhost", 9999)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>或者一个文件</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">DataStream&lt;String&gt; lines = env.readTextFile("file:///path");</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在实际应用程序中, 最常用的数据源是那些支持低延迟, 高吞吐量并行读取以及倒带和重放（高性能和容错能力的先决条件）的数据源, 例如Apache Kafka, Kinesis和各种文件系统.  REST API和数据库也经常用于流数据源.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_basic_stream_sinks"><a class="anchor" href="#_basic_stream_sinks"></a>Basic stream sinks</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>上面的示例使用 <code>adults.print()</code> 将结果打印到任务管理器日志中(当在IDE中运行时, 它将显示在IDE的控制台中).  这将在流的每个元素上调用 <code>toString()</code> .</p>
+</div>
+<div class="paragraph">
+<p>输出看起来像这样</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>1&gt; Fred: age 35
+2&gt; Wilma: age 35</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>其中 1&gt; 和 2&gt; 指示哪个子任务（即线程）产生了输出.</p>
+</div>
+<div class="paragraph">
+<p>You can also write to a text file</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>stream.writeAsText("/path/to/file")</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>或CSV文件</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>stream.writeAsCsv("/path/to/file")</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>或者socket</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>stream.writeToSocket(host, port, SerializationSchema)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>在生产中, 常用的接收器包括Kafka以及各种数据库和文件系统.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_debugging"><a class="anchor" href="#_debugging"></a>Debugging</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>在生产环境中, 您将向运行应用程序的远程集群提交应用程序JAR文件.  如果失败, 它也将远程失败.  作业管理器和任务管理器日志对于调试此类故障非常有帮助, 但是Flink支持在IDE内进行本地调试要容易得多.  您可以设置断点, 检查局部变量, 并逐步执行代码.  您也可以进入Flink的代码, 如果您想了解Flink的工作原理, 这可能是一种了解其内部细节的好方法.</p>
+</div>
+</div>
+</div>
+</article>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../../../_/js/site.js"></script>
+<script async src="../../../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

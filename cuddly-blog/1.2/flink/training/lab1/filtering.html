@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Lab 1 - Filtering a Stream (Ride Cleansing) :: The Cuddly Computing Machine</title>
+    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/flink/training/lab1/filtering.html">
+    <meta name="generator" content="Antora 2.0.0">
+    <link rel="stylesheet" href="../../../../../_/css/site.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-86782445-1"></script>
+    <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-86782445-1')</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="http://alexwangx.github.io">The Cuddly Computing Machine</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/alexwangx">GitHub</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="cuddly-blog" data-version="1.2">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../../index.html">Cuddly Blog</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hadoop</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/hadoop/ops/hadoop_commands.html">Hadoop Commands</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/hadoop/ops/hadoop_practices.html">Hadoop Practices</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/hadoop/ops/hadoop_jmx.html">Hadoop JMX</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/hadoop/ops/hadoop_delroot.html">Hadoop 意外删除挽救</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spark</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/spark/ops/spark-exitcode.html">Spark 任务退出码</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/spark/ops/spark-issues.html">Spark 常见错误</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hbase</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/hbase/hbase_notes.html">Hbase Notes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/hbase/hbase_issues.html">Hbase Issues</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Kafka</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/kafka/kafka_practices.html">Kafka Practices</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/kafka/kafka_issues.html">Kafka Issues</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Druid</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/tutorial-load-data.html">Druid 导入数据</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/druid-internals.html">Druid 0.1.5 架构</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/broker.html">Druid Broker</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/coordinator.html">Druid Coordinator</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/historical.html">Druid Historical</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/middleManager.html">Druid MiddleManager</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/overlord.html">Druid Overlord</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/router.html">Druid Router</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/druid/segment.html">Druid Segments</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Install</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/install/druid.html">Druid 安装</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/install/hadoop_krb.html">Hadoop 配置 Kerberos</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Other</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/other/mac.html">Mac 杂记</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/other/linux.html">Linux 杂记</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/other/maven.html">Maven 杂记</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/other/mysql_install.html">Mysql 安装</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../alex/other/readlist.html">北京中小学孩子读书清单</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../index.html">Flink</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../index.html">Flink Training Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Streaming 介绍</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intro/streaming.html">Streaming with Apache Flink</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intro/what-can-be.html">What can be Streamed?</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../intro/example.html">A Complete Example</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">环境配置</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../labs/dev-env.html">Setup your Development Environment</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../labs/use-taxi-data.html">Using the Taxi Data Streams</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../labs/how-to-do.html">How to do the Labs</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="filtering.html">Lab 1 - Filtering a Stream</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Transforming Data</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="stateless-trans.html">Stateless Transformations</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="keyed-streams.html">Keyed Streams</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="stateful-trans.html">Stateful Transformations</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Cuddly Blog</span>
+    <span class="version">1.2</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">Cuddly Blog</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../../index.html">1.2</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main>
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../../index.html">Cuddly Blog</a></li>
+    <li><a href="../../index.html">Flink</a></li>
+    <li><a href="../index.html">Flink Training Home</a></li>
+    <li><a href="filtering.html">Lab 1 - Filtering a Stream</a></li>
+  </ul>
+</nav>
+</div>
+<article class="doc">
+<h1 class="page">Lab 1 - Filtering a Stream (Ride Cleansing)</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>如果尚未这样做, 则需要先 <a href="../labs/dev-env.html" class="page">设置Flink开发环境</a> .  有关这些练习的总体介绍, 请参见 <a href="../labs/how-to-do.html" class="page">如何进行练习</a>.</p>
+</div>
+<div class="paragraph">
+<p>"Taxi Ride Cleansing" 练习的任务是通过删除未在纽约市开始或结束的事件来清理TaxiRide事件流.</p>
+</div>
+<div class="paragraph">
+<p><code>GeoUtils</code> 实用程序类提供了一个静态方法 <code>isInNYC(float lon,float lat)</code> , 以检查某个位置是否在NYC区域内.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_input_data"><a class="anchor" href="#_input_data"></a>Input Data</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>这一系列练习是基于一系列的出租车事件. <a href="../labs/use-taxi-data.html" class="page">Taxi Data Stream instructions</a>说明了如何设置出租车 <code>TaxiRideSource</code> , 源生成出 <code>TaxiRide</code> 事件流.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_expected_output"><a class="anchor" href="#_expected_output"></a>Expected Output</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>练习的结果应该是一个 <code>DataStream&lt;TaxiRide&gt;</code> , 该数据流仅包含在 <code>GeoUtils.isInNYC()</code> 定义的纽约市区开始和结束的出租车事件.</p>
+</div>
+<div class="paragraph">
+<p>生成的流应打印为标准输出.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_getting_started"><a class="anchor" href="#_getting_started"></a>Getting Started</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>本练习使用以下类:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Java: <a href="https://github.com/ververica/flink-training-exercises/blob/master/src/main/java/com/ververica/flinktraining/exercises/datastream_java/basics/RideCleansingExercise.java">com.ververica.flinktraining.exercises.datastream_java.basics.RideCleansingExercise</a></p>
+</li>
+<li>
+<p>Scala: <a href="https://github.com/ververica/flink-training-exercises/blob/master/src/main/scala/com/ververica/flinktraining/exercises/datastream_scala/basics/RideCleansingExercise.scala">com.ververica.flinktraining.exercises.datastream_scala.basics.RideCleansingExercise</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>您可以在以下位置找到此练习的测试类:</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/ververica/flink-training-exercises/blob/master/src/test/java/com/ververica/flinktraining/exercises/datastream_java/basics/RideCleansingTest.java">com.ververica.flinktraining.exercises.datastream_java.basics.RideCleansingTest</a></p>
+</div>
+<div class="paragraph">
+<p>像大多数此类练习一样, <code>RideCleansingExercise</code> 类有时会抛出异常.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">throw new MissingSolutionException();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>删除此行后, 单元测试将失败, 直到您提供有效的解决方案. 您可能需要先尝试使用明显损坏的东西, 例如</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">return false;</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>为了验证您在输入错误时单元测试确实失败, 然后着手实施适当的解决方案.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_implementation_hints"><a class="anchor" href="#_implementation_hints"></a>Implementation Hints</h2>
+<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>Filtering Events</p>
+</div>
+<div class="paragraph">
+<p>Flink 的 DataStream API具有 <code>DataStream.filter(FilterFunction)</code> 转换功能, 可过滤数据流中的事件.  可以在 <code>FilterFunction</code> 中调用 <code>GeoUtils.isInNYC()</code> 函数, 以检查某个位置是否在纽约市区域中. 您的过滤器功能应同时检查每次骑行的起点和终点.</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_documentation"><a class="anchor" href="#_documentation"></a>Documentation</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://ci.apache.org/projects/flink/flink-docs-stable/dev/datastream_api.html">DataStream API</a></p>
+</li>
+<li>
+<p><a href="https://ci.apache.org/projects/flink/flink-docs-stable/api/java/">Flink JavaDocs</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_reference_solutions"><a class="anchor" href="#_reference_solutions"></a>Reference Solutions</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>参考解决方案可从GitHub和培训练习项目中获得:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Java: <a href="https://github.com/ververica/flink-training-exercises/blob/master/src/main/java/com/ververica/flinktraining/solutions/datastream_java/basics/RideCleansingSolution.java" target="_blank" rel="noopener">RideCleansingSolution.java</a></p>
+</li>
+<li>
+<p>Scala: <a href="https://github.com/ververica/flink-training-exercises/blob/master/src/main/scala/com/ververica/flinktraining/solutions/datastream_scala/basics/RideCleansingSolution.scala" target="_blank" rel="noopener">RideCleansingSolution.scala</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</article>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../../../_/js/site.js"></script>
+<script async src="../../../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

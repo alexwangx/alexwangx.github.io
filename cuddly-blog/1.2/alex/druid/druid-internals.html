@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Druid 0.1.5 架构 :: The Cuddly Computing Machine</title>
+    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/alex/druid/druid-internals.html">
+    <meta name="generator" content="Antora 2.0.0">
+    <link rel="stylesheet" href="../../../../_/css/site.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-86782445-1"></script>
+    <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-86782445-1')</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="http://alexwangx.github.io">The Cuddly Computing Machine</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/alexwangx">GitHub</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="cuddly-blog" data-version="1.2">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../index.html">Cuddly Blog</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hadoop</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../hadoop/ops/hadoop_commands.html">Hadoop Commands</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../hadoop/ops/hadoop_practices.html">Hadoop Practices</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../hadoop/ops/hadoop_jmx.html">Hadoop JMX</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../hadoop/ops/hadoop_delroot.html">Hadoop 意外删除挽救</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spark</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../spark/ops/spark-exitcode.html">Spark 任务退出码</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../spark/ops/spark-issues.html">Spark 常见错误</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hbase</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../hbase/hbase_notes.html">Hbase Notes</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../hbase/hbase_issues.html">Hbase Issues</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Kafka</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../kafka/kafka_practices.html">Kafka Practices</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../kafka/kafka_issues.html">Kafka Issues</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Druid</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="tutorial-load-data.html">Druid 导入数据</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="druid-internals.html">Druid 0.1.5 架构</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="broker.html">Druid Broker</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="coordinator.html">Druid Coordinator</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="historical.html">Druid Historical</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="middleManager.html">Druid MiddleManager</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="overlord.html">Druid Overlord</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="router.html">Druid Router</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="segment.html">Druid Segments</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Install</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../install/druid.html">Druid 安装</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../install/hadoop_krb.html">Hadoop 配置 Kerberos</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Other</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../other/mac.html">Mac 杂记</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../other/linux.html">Linux 杂记</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../other/maven.html">Maven 杂记</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../other/mysql_install.html">Mysql 安装</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../other/readlist.html">北京中小学孩子读书清单</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../flink/index.html">Flink</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../flink/training/index.html">Flink Training Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Streaming 介绍</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/intro/streaming.html">Streaming with Apache Flink</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/intro/what-can-be.html">What can be Streamed?</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/intro/example.html">A Complete Example</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">环境配置</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/labs/dev-env.html">Setup your Development Environment</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/labs/use-taxi-data.html">Using the Taxi Data Streams</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/labs/how-to-do.html">How to do the Labs</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/training/lab1/filtering.html">Lab 1 - Filtering a Stream</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Transforming Data</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab1/stateless-trans.html">Stateless Transformations</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab1/keyed-streams.html">Keyed Streams</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab1/stateful-trans.html">Stateful Transformations</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Cuddly Blog</span>
+    <span class="version">1.2</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">Cuddly Blog</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../index.html">1.2</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main>
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../index.html">Cuddly Blog</a></li>
+    <li>Druid</li>
+    <li><a href="druid-internals.html">Druid 0.1.5 架构</a></li>
+  </ul>
+</nav>
+</div>
+<article class="doc">
+<h1 class="page">Druid 0.1.5 架构</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>转载: 请附上原文出处链接.</p>
+</li>
+<li>
+<p><a href="https://github.com/alexwangx/alexwangx.github.io/issues" target="_blank" rel="noopener">点击留言</a></p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Druid 是一个能对大数据集提供亚秒级别的查询和数据存储服务. 多用于 OLAP 解决方案,善于处理事件模型数据.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Druid 具有如下特点:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>低延时的数据摄取</p>
+<div class="ulist">
+<ul>
+<li>
+<p>实时或者批量摄取数据</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>高性能的数据聚合</p>
+</li>
+<li>
+<p>亚秒级别的查询</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Druid 使用场景:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>大量新增类型数据,少量更新数据.</p>
+</li>
+<li>
+<p>支持大部分聚合查询和`group by`查询,同时还具有搜索等查询功能.</p>
+</li>
+<li>
+<p>查询延时非常低,一般延时在 100 毫秒~几秒之间完成.</p>
+</li>
+<li>
+<p>数据中包含时间字段(Druid 是基于时间序列的数据库, 对于time 字段做了特殊的优化和设计.)</p>
+</li>
+<li>
+<p>对于多表关联查询, 每个查询只会命中一个大表, 可能会命中多个小表(lookup table).</p>
+<div class="ulist">
+<ul>
+<li>
+<p>lookup table 目前是实验阶段.</p>
+</li>
+<li>
+<p>join 的支持也比较有限.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>支持超高奇数列的 count 等聚合查询.</p>
+</li>
+<li>
+<p>支持 Kafka, HDFS, local 摄取数据.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Druid 不适用的场景:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>实时数据更新操作. Druid 支持实时数据摄取,不支持实时数据更新.(支持使用批处理作业完成更新)</p>
+</li>
+<li>
+<p>离线数据分析系统, 对查询延时不太关心的场景. (可考虑其他解决方案)</p>
+</li>
+<li>
+<p>不支持两张大表 JOIN时快速返回查询结果.(通常这种情况需要耗费很长时间进行计算, 不建议使用此场景.)</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_特性"><a class="anchor" href="#_特性"></a>特性</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Druid 核心架构结合了数据仓库, 时序数据库, 日志搜索系统的特性.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../_images/druid/druid-internals-1.png" alt="druid internals 1">
+</div>
+<div class="title">Figure 1. Druid 特性</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>列式存储格式</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Druid 底层存储实现是列式存储, 这种设计在进行查询时只需要加载特定的列即可,极大地提高了查询的速度.
+每列都针对其特定数据类型进行了优化存储, 从而支持快速扫描和聚合.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>可扩展的分布式系统</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Druid 集群规模通常在十几台或数百台以上, 数据摄取可以达到每秒数百万条记录. 万亿条数据查询延迟在亚秒级到几秒之间.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>大规模并行处理</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Druid可以在整个集群中并行处理查询。</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>支持实时或批量数据摄取</p>
+</li>
+<li>
+<p>高容错,高可靠,易操作,数据自动均衡.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Druid 集群可随意添加删除机器, 集群会在后台自动rebalance.</p>
+</li>
+<li>
+<p>Druid 集群如果有一台机器故障, 不会有任何影响,会自我检测及发现.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>云原生的容错架构, 无数据丢失风险</p>
+<div class="ulist">
+<ul>
+<li>
+<p>可视化, 故障隔离, 容错, 自动恢复, 弹性扩展</p>
+</li>
+<li>
+<p>Druid 数据通常存储在云存储,HDFS 或共享文件系统中. 即使每台 Druid 服务都发生故障,也可以从依赖的存储中恢复数据.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>基于索引快速过滤</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Druid 使用 Concise (默认) 或者 Roaring 位图压缩算法进行创建索引, 以支持快速过滤和跨多列搜索.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>时间优先分区策略</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Druid 会默认使用时间对数据分区,然后可以根据其他字段进行分区.</p>
+</li>
+<li>
+<p>基于时间的紧会访问与查询时间范围匹配的分区, 大大提高基于时间的数据性能.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>近似算法</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Druid 的近似算法包括: count-distinct,ranking,直方图和分位数计算. 比精确计算要快很多.</p>
+</li>
+<li>
+<p>Druid 提供了精确算法: count-distinct, ranking <a href="https://druid.apache.org/docs/latest/development/extensions-contrib/distinctcount.html">distinctcount</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>数据摄取自动汇总(预聚合)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Druid 支持可选择性的是否开启数据汇总功能.</p>
+</li>
+<li>
+<p>这种汇总功能会对数据进行预聚合操作, 可以节省存储空间及提高查询性能.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>位图压缩算法</p>
+</div>
+<div class="ulist">
+<div class="title">Concise Bitmap</div>
+<ul>
+<li>
+<p>原理</p>
+</li>
+<li>
+<p>性能</p>
+</li>
+</ul>
+</div>
+<div class="ulist">
+<div class="title">Roaring Bitmap</div>
+<ul>
+<li>
+<p>原理</p>
+</li>
+<li>
+<p>性能</p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_进程服务"><a class="anchor" href="#_进程服务"></a>进程服务</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Druid 整个架构包括多个进程服务, 从角色的角度可分为如下几个角色跟服务:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Master 由 Coordinator 和 Overlord 组成, 管理数据可用性和数据摄取.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Coordinator 管理数据再集群中的可用性.</p>
+</li>
+<li>
+<p>Overlord 管理数据摄取时的任务分配.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Query 负载处理外部查询请求, 由 Broker 和 Router 组成.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Broker 处理外部客户端的查询请求.</p>
+</li>
+<li>
+<p>Router 负责把请求路由到Broker,Coordinators,Overlords 上面.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Data 数据处理层由 Historical 和 MiddleManager 组成, 负责存储及加载所有可查询数据, 负责管理及执行数据摄取任务进程等工作.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Historical 负责存储可查询的数据.</p>
+</li>
+<li>
+<p>MiddleManager 负责数据摄取工作.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_外部依赖"><a class="anchor" href="#_外部依赖"></a>外部依赖</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">依赖类型</th>
+<th class="tableblock halign-left valign-top">系统</th>
+<th class="tableblock halign-left valign-top">特性</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">存储</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="ulist">
+<ul>
+<li>
+<p>HDFS</p>
+</li>
+<li>
+<p>S3</p>
+</li>
+<li>
+<p>共享存储</p>
+</li>
+</ul>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">* 外部存储只作为数据备份使用
+* Historical 服务会把数据同步到集群内部本地磁盘
+* 查询时不会请求外部存储进行查询, 直接查询本地存储, 因此能完成更低延迟查询
+* 外部存储的设计从而使 Druid 能够做到更高容错机制, 数据无丢失风险.
+* 缺点: 必须要求本地磁盘有足够空间进行存储数据.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Metadata 存储介质</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>MySQL / PostgreSql</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">元数据信息的存储, (segment &amp; task 信息等)</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">分布式协调服务</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>ZooKeeper</p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">用于内部服务的发现, 协调和 leader 选举.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_架构图"><a class="anchor" href="#_架构图"></a>架构图</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>下图展示了查询用户查询请求走向, 元数据信息流程, Data/segments 走向.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../_images/druid/druid-architecture.png" alt="druid architecture">
+</div>
+<div class="title">Figure 2. Architecture diagram</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_数据流图"><a class="anchor" href="#_数据流图"></a>数据流图</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Druid 由多个节点组成, 每个节点扮演不同的角色. 这些节点相互协调工作 (通常使用 Zookeeper 进行协调) 以提供性能.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../_images/druid/druid-architecture-query-data-etc.png" alt="druid architecture query data etc">
+</div>
+<div class="title">Figure 3. 数据流图</div>
+</div>
+<div class="sect2">
+<h3 id="_realtime_middlemanager"><a class="anchor" href="#_realtime_middlemanager"></a>Realtime MiddleManager</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>摄取:  将数据写入Druid时, 首先写入到该节点的内存索引缓冲区. 该缓冲区基于堆内存, 事件以行的方式存储.</p>
+</li>
+<li>
+<p>持久化: 为避免堆溢出, 该索引会定期写入磁盘. 内存中缓冲区将转换为面向列的存储格式, 然后将持久化的索引加载到堆外内存中以进行更快的查询.</p>
+</li>
+<li>
+<p>合并: 后台任务会定期的将不可变的块合并为一个Segment.</p>
+</li>
+<li>
+<p>移交: Segment 最终上传到分布式数据存储, 以提高持久性和可用性. 它还会在MySQL中更新 segment 的元数据, 以供其他节点查看.</p>
+</li>
+</ol>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../_images/druid/druid-middleManager.png" alt="druid middleManager">
+</div>
+<div class="title">Figure 4. Realtime MiddleManager</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_historical"><a class="anchor" href="#_historical"></a>Historical</h3>
+<div class="paragraph">
+<p>这些节点从深度存储中加载 Segment, 然后提供查询. 从 Zookeeper 获得在深度存储中发布的任何新的 Segment 信息, 然后下载并加装 Segment . Historical 会在本地磁盘中缓存一些 Segment, 如果服务重启后可以快速从缓存恢复并提供查询. Historical 还提供读取一致性, 因为它们仅处理不可变的段. Historical 可以配置多个层(tiers). e.g. 可以将具有较高核心数量的节点放在一个层中, 以为经常访问的数据提供服务, 而为其余数据提供资源较少的节点.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../_images/druid/druid-Historical.png" alt="druid Historical">
+</div>
+<div class="title">Figure 5. Historical Nodes in action</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_brokers"><a class="anchor" href="#_brokers"></a>Brokers</h3>
+<div class="paragraph">
+<p>所有用户查询都转到 Broker 节点. 然后, 这些节点将请求重定向到适当的 historical 和 realtime 节点, 将结果聚合后并返回. Broker 使用LRU 缓存进行缓存 (可以更改为使用Memcached). 缓存了一些 Segment 的结果数据, 不支持实时查询的缓存.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../_images/druid/druid-Broker.png" alt="druid Broker">
+</div>
+<div class="title">Figure 6. Broker</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_coordinator"><a class="anchor" href="#_coordinator"></a>Coordinator</h3>
+<div class="paragraph">
+<p>通知 Historical 节点下载,删除,以及Segment负载均衡. 只有一个 Coordinator 节点被选为 leader, 它负责整个操作. Coordinator 通过 Zookeeper 和 mysql 来派发请求. 即使Zookeeper 和 mysql 都故障, 历史数据也可以提供查询.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_druid_为什么快"><a class="anchor" href="#_druid_为什么快"></a>Druid 为什么快?</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_列式存储"><a class="anchor" href="#_列式存储"></a>列式存储</h3>
+<div class="paragraph">
+<p>由于Druid是为分析查询而设计的, 因此它使用列式存储数据. 基于列式存储可以提供更好的压缩率 (因为单个列中的大多数数据都是相似的), 而且再查询的过程中只需要加载实际需要的列数据. 对于字符串列, Druid 基于字典编码, 然后应用LZF压缩以减小数据大小.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_防止不必要的扫描"><a class="anchor" href="#_防止不必要的扫描"></a>防止不必要的扫描</h3>
+<div class="paragraph">
+<p>Druid 维护一个字符串值的倒排索引, 因此我们可以知道在哪个行中存在特定的值. 这样再扫描时只扫描包含特定值的行即可.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../_images/druid/druid-kv.png" alt="druid kv">
+</div>
+</div>
+<div class="paragraph">
+<p>上表的倒排索引看起来像:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Foo : [1,0,0,1,0,1]
+Bar : [0,1,1,0,1,0]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>其中1表示索引中的行中存在特定键. 如果要扫描包含Foo和Bar的所有行, 只需对两个索引取 OR 即可.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_预聚合"><a class="anchor" href="#_预聚合"></a>预聚合</h3>
+<div class="paragraph">
+<p>Druid 可以在摄取时预聚合数据 (Rollup). 这减少了存储数据的大小, 也使聚合查询快得多.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_缓存"><a class="anchor" href="#_缓存"></a>缓存</h3>
+<div class="paragraph">
+<p>Druid 在 Broker 上维护每个 Segment 的查询缓存, 这有助于快速返回结果. Druid还将数据缓存在 historical 和 real-time 服务器中, 以加快扫描速度.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../_images/druid/druid-query-cach.png" alt="druid query cach">
+</div>
+<div class="title">Figure 7. Per segment Cache</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_segment_负载均衡_基于时间序列的分区"><a class="anchor" href="#_segment_负载均衡_基于时间序列的分区"></a>Segment 负载均衡 &amp; 基于时间序列的分区</h3>
+<div class="paragraph">
+<p>Coordinator 负责对 Segment 进行均衡分配, 避免 Segment 在 Historical 节点出现数据倾斜现象.</p>
+</div>
+<div class="paragraph">
+<p>根据时间或者列进行裁剪定位到查询需要扫描的 segments.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_存储设计"><a class="anchor" href="#_存储设计"></a>存储设计</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_datasources_and_segment"><a class="anchor" href="#_datasources_and_segment"></a>Datasources and <a href="segment.html" class="page">Segment</a></h3>
+<div class="paragraph">
+<p>Druid 里面的数据存储在"Datasources"里面, 每个 DataSource 都会按时间进行分区, 可以选择按其他列进一步分区. 每个时间范围的数据统称为一个"chunk"(eg: 数据源按天划分, 则一天的数据成为一个 chunk). 在一个 chunk 内, 数据又会被划分为一个或多个 "segments". 每个 segment 是一个包含几百万行的数据的单独文件, 由于 segment 在时间轴上面的 chunk 上划分, 这样设计在时间轴上考虑这些 segment 的存活非常有用.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../_images/druid/druid-timeline.png" alt="][align=&quot;center&quot;">
+</div>
+<div class="title">Figure 8. Chunk &amp; Segment</div>
+</div>
+<div class="paragraph">
+<p>datasource 所包含的segment 从几个到几百万之多, 每个 segment 由 MiddleManager 创建并生成一个支持快速查询的文件, 创建时处于未提交状态.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>数据转换为列式存储.</p>
+</li>
+<li>
+<p>基于 bitmap 构建索引</p>
+</li>
+<li>
+<p>使用各种算法进行压缩</p>
+<div class="ulist">
+<ul>
+<li>
+<p>对String列使用id字典编码最小化的存储.</p>
+</li>
+<li>
+<p>对于索引使用 bitmap 进行压缩.</p>
+</li>
+<li>
+<p>所有列支持类型感知压缩.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>segment 会周期性的提交跟发布. 此时 segment 会写入到深度存储中,写入之后不可变, 由 MiddleManagers 迁移到 Historical. 同时 segment 信息也会写入到metadata store (segment的模式, 大小, 存储的位置等), Coordinator 通过元数据信息知道哪些数据可用.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://druid.apache.org/docs/latest/design/segments.html">segments 文件的详细信息</a></p>
+</div>
+<div class="paragraph">
+<p><a href="https://druid.apache.org/docs/latest/ingestion/schema-design.html">数据模型的详细信息</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_索引和移交"><a class="anchor" href="#_索引和移交"></a>索引和移交</h3>
+<div class="paragraph">
+<p>索引是一种内部机制, 每个被新建的 segment都会建立索引, 移交机制是确保 segment 移交发布, Historical 已经开始为当前 segment提供服务. 索引工作机制流程:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>当 index task 运行时会创建一个新的segment. 在开始构建segment之前, 它必须确定segment的标识符. 对于要追加的任务,(例如使用 kafka任务或者索引进行追加) 可以通过Overlord的"allocate" API对一些已经存在的segments添加新分区. 对于要覆盖的任务是对一个区间加锁,并创建新的版本号和新的 segments .</p>
+</li>
+<li>
+<p>如果索引任务是实时任务(如 kafka 任务), 此时可以立即查询该segment. 即使未发布也可用.</p>
+</li>
+<li>
+<p>当索引任务已经为 segment 读取完数据时, 它将其推入深度存储, 然后通过将记录写入元数据存储来发布它.</p>
+</li>
+<li>
+<p>如果索引任务是实时任务, 则此时它等待 Historical 进程加载 segment . 如果索引任务不是实时任务, 它将立即退出.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>从 Coordinator / Historical 的角度来看:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Coordinator 会定期(默认 1 分钟) 查询元数据查找新的 segment.</p>
+</li>
+<li>
+<p>当Coordinator 找到了一个已经发布并且的 segment 时,但是此时 segment 还不可用时, 它会选择一个 Historical 来加载这个 segment.</p>
+</li>
+<li>
+<p>Historical组件加载 segment 并开始为它服务.</p>
+</li>
+<li>
+<p>此时, 如果索引任务正在等待切换, 它将退出.  ???</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_segment_标识符"><a class="anchor" href="#_segment_标识符"></a>segment 标识符</h3>
+<div class="paragraph">
+<p>segment 由以下部分组成的四部分标识符:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Datasource name</p>
+</li>
+<li>
+<p>时间间隔(对于包含分段的时间块; 主要对应于在摄取时指定的 <code>segmentGranularity</code> )</p>
+</li>
+<li>
+<p>版本号(通常为 ISO8601 时间戳, 与首次启动 segment 的时间相对应.)</p>
+</li>
+<li>
+<p>分区号 (是一个整数, 在 datasource + interval + version 内是唯一的 , 并不一定会是连续的.)</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>举例: <code>clarity-cloud0_2018-05-21T16:00:00.000Z_2018-05-21T17:00:00.000Z_2018-05-21T15:56:09.909Z_1</code></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>在数据源 <code>clarity-cloud0</code> 的一个segment 中的识别码:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>time chunk 2018-05-21T16:00:00.000Z/2018-05-21T17:00:00.000Z</p>
+</li>
+<li>
+<p>version 2018-05-21T15:56:09.909Z</p>
+</li>
+<li>
+<p>partition number 1</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>分区号为 0 的 segment (块中的第一个分区) 省略了分区号.</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>clarity-cloud0_2018-05-21T16:00:00.000Z_2018-05-21T17:00:00.000Z_2018-05-21T15:56:09.909Z</code></p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_segment_版本控制"><a class="anchor" href="#_segment_版本控制"></a>Segment 版本控制</h3>
+<div class="paragraph">
+<p>Druid 版本号管理分为批处理模式跟实时追加模式.  如果你是追加数据, 那么每个时间块只有一个版本.  如果是覆盖数据, 那么会在相同的 DataSource, 相同的时间间隔, 创建一组新的 segment, 版本号变更. Druid 会删除旧版本号的数据, 使用新的版本号数据提供查询服务.</p>
+</div>
+<div class="paragraph">
+<p>对于用户而言, 该切换是瞬间发生的, Druid 首先会加载新的数据, 等所有数据加载完毕后,立即切换所有新的查询应用到新数据集上. 然后会在几分钟后删除旧的 segment 数据.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_segment_生命周期"><a class="anchor" href="#_segment_生命周期"></a>Segment 生命周期</h3>
+<div class="paragraph">
+<p>Segment 的生命周期包括以下三个部分:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Metadata store:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>当一个 segment 构建完成后, Segment 的元数据信息(通常不会超过几 KB 的 json 数据)会存储到 Metadata store 中.</p>
+</li>
+<li>
+<p>把 Segment 的相关记录信息写入 metadata store 的操作成为发布.</p>
+</li>
+<li>
+<p>每个元数据信息都有一个标志位 <code>used</code> 确定当前 Segment 是否可用.</p>
+</li>
+<li>
+<p>实时任务创建的 Segments 及时没有发布也是可用状态, 当 Segment 完成并且不再有新的数据进来之后, 标记为已发布状态.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Deep storage:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>当 Segment 构建完成后, Segment 数据文件会被推送到 深度存储.</p>
+</li>
+<li>
+<p>推送到深度存储的操作 发生于元数据写入到 metadata store 之前.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Availability for querying: 发布之后, Segment 可以用于数据查询.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><a href="https://druid.apache.org/docs/latest/querying/sql.html#segments-table">Segments 元数据表结构</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_查询处理"><a class="anchor" href="#_查询处理"></a>查询处理</h3>
+<div class="paragraph">
+<p>查询请求会先请求 Broker 服务, Broker 会识别出当前查询与哪些 Segment 有关. Segments 是按照时间列进行裁剪的, 也可以根据其他列进行裁剪, 这取决于数据源的分区方式.  然后 Broker 将把查询请求发送给服务于这些 Segments 的 Historical 服务和 MiddleManager 服务进行查询. Historical / MiddleManager 服务将处理查询请求, 并返回结果. Broker 接收返回的结果,并将查询结果汇聚后返回.</p>
+</div>
+<div class="paragraph">
+<p>Broker pruning(裁剪)是 Druid 限制每个查询请求需要扫描的数据量的重要方式, 但它不是唯一方法. 过滤器提供了更细粒度的裁剪方法, 每个 Segment 内的索引结构可以帮助 Druid 过滤出需要查询的行. 这样Druid可以只读取匹配查询过滤器的行, 从而跳过不需要读取的行.</p>
+</div>
+<div class="paragraph">
+<p>所以Druid通过如下3个方法提供查询的性能:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>根据时间或者列进行裁剪定位到查询需要扫描的 segments</p>
+</li>
+<li>
+<p>在segment内, 通过索引定位需要查询的行</p>
+</li>
+<li>
+<p>在segment内, 只读取查询相关的行和列</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</article>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../../_/js/site.js"></script>
+<script async src="../../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
