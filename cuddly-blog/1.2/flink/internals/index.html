@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Flink 学习笔记 :: The Cuddly Computing Machine</title>
+    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/flink/internals/index.html">
+    <meta name="generator" content="Antora 2.0.0">
+    <link rel="stylesheet" href="../../../../_/css/site.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-86782445-1"></script>
+    <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-86782445-1')</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="http://alexwangx.github.io">The Cuddly Computing Machine</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/alexwangx">GitHub</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="cuddly-blog" data-version="1.2">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../index.html">Cuddly Blog</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Flink</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../training/index.html">Flink Training Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Streaming 介绍</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/intro/intro-1.html">使用Apache Flink 进行流处理</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/intro/intro-2.html">流可以传输什么?</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/intro/intro-3.html">一个完整的例子</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">环境配置</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/labs/devEnvSetup.html">设置您的开发环境</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/labs/taxiData.html">使用出租车数据流</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/labs/howto-exercises.html">如何做实验室</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../training/lab1/rideCleansing.html">Lab 1 - 过滤流</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">数据转换</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab1/stateless.html">无状态转换</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab1/keyed-streams.html">Keyed 流</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab1/stateful.html">有状态的转换</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab1/connected-streams.html">连接流</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../training/lab2/rideEnrichment-flatmap.html">Lab 2 - Stateful Enrichment</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">时间和分析</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab3/event-time-watermarks.html">Event Time and Watermarks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab3/windows.html">Windows</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Lab 3 - Windowing</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab3/hourlyTips.html">Lab 3 - 窗口化分析</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab3/hourlyTips-discussion.html">Lab 3 - 讨论</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">事件驱动的应用</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab4/processfunction.html">ProcessFunction</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab4/side-outputs.html">Side Outputs</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Lab 4 - 到期状态</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab4/rideEnrichment-processfunction.html">Lab 4 - 练习</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab4/expiring-state-discussion.html">Lab 4 - 讨论</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">容错能力</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/fault/state-backends.html">状态后端</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/fault/snapshots.html">检查点和保存点</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../training/app-dev.html">应用开发</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">其他练习</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/extra-labs/longRides.html">长途警报</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">广播状态</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../training/extra-labs/nearestTaxi.html">寻找最近的出租车</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../training/extra-labs/ongoingRides.html">报告正在进行的出租车</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../training/extra-labs/taxiQuery.html">规则引擎</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/extra-labs/eventTimeJoin.html">丰富的 Joins</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../training/resources.html">资源链接</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../introduction/index.html">Flink 简介</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../introduction/architecture.html">Flink 架构介绍</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../introduction/failover.html">Flink 容错机制</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../introduction/scheduling.html">Flink 调度机制</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../introduction/statemachine.html">Flink 状态机</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../introduction/memorymanager.html">Flink 内存管理</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../introduction/dataflow.html">Flink Dataflow</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../introduction/batchdata.html">Flink 批处理</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../introduction/streamdata.html">Flink 流处理</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="index.html">Flink 学习笔记</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spark</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spark ops</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../spark/ops/spark-exitcode.html">Spark 任务退出码</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../spark/ops/spark-issues.html">Spark 常见错误</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../spark/spark-internals/index.html">Spark 2.4.4 架构原理</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../spark/spark-internals/root/spark-overview.html">Overview</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hadoop</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../hadoop/hadoop_krb_install.html">Hadoop 配置 Kerberos</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hadoop ops</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hadoop/hdp-ops/hadoop_commands.html">Hadoop Commands</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hadoop/hdp-ops/hadoop_practices.html">Hadoop Practices</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hadoop/hdp-ops/hadoop_jmx.html">Hadoop JMX</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hadoop/hdp-ops/hadoop_delroot.html">Hadoop 意外删除挽救</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hbase</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hbase ops</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hbase/hbase-ops/hbase_notes.html">Hbase 基本命令</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hbase/hbase-ops/hbase_issues.html">Hbase Issues</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Druid</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../druid/druid-install.html">Druid 安装</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Druid 架构</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/tutorial-load-data.html">Druid 导入数据</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/druid-internals.html">Druid 0.1.5 架构</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/broker.html">Druid Broker</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/coordinator.html">Druid Coordinator</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/historical.html">Druid Historical</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/middleManager.html">Druid MiddleManager</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/overlord.html">Druid Overlord</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/router.html">Druid Router</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/segment.html">Druid Segments</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Kafka</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../kafka/kafka_practices.html">Kafka Practices</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../kafka/kafka_issues.html">Kafka Issues</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Other</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../mac.html">Mac OS</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../linux.html">Linux</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../mysql_install.html">Mysql 安装</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../readlist.html">北京中小学孩子读书清单</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../demo/demo.html">Adoc Demo</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Cuddly Blog</span>
+    <span class="version">1.2</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">Cuddly Blog</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../index.html">1.2</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main>
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../index.html">Cuddly Blog</a></li>
+    <li>Flink</li>
+    <li><a href="index.html">Flink 学习笔记</a></li>
+  </ul>
+</nav>
+</div>
+<article class="doc">
+<h1 class="page">Flink 学习笔记</h1>
+<div class="paragraph">
+<p>结合军长的 <a href="../_attachments/Apache-Flink-Stateful-Computations-over-Data-Streams.pdf" target="_blank" rel="noopener">Flink 思维导图</a> 进行学习.</p>
+</div>
+<div class="paragraph">
+<p>主要分为下面几部分:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Streaming Processing Concepts (common concepts for stream processing)</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Bounded and Unbounded Data and Processing</p>
+</li>
+<li>
+<p>Latency and Throughput</p>
+</li>
+<li>
+<p>Time Semantics</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Processing Time</p>
+</li>
+<li>
+<p>Event Time</p>
+</li>
+<li>
+<p>Watermarks</p>
+</li>
+<li>
+<p>Window</p>
+</li>
+<li>
+<p>Trigger</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Architecuture</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Layered APIs</p>
+<div class="ulist">
+<ul>
+<li>
+<p>SQL/Table API(dynamic tables)</p>
+</li>
+<li>
+<p>DataStrem API(stream,windows)</p>
+</li>
+<li>
+<p>ProcessFunction(events,state,time)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Components of a Flink Setup</p>
+<div class="ulist">
+<ul>
+<li>
+<p>JobManager(also called masters)</p>
+</li>
+<li>
+<p>TaskManagers(also called workers)</p>
+</li>
+<li>
+<p>Clients</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Task Execution</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Operators</p>
+</li>
+<li>
+<p>Tasks</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Setting Parallelism</p>
+</li>
+<li>
+<p>Operator Level</p>
+</li>
+<li>
+<p>Execution Environment Level</p>
+</li>
+<li>
+<p>Client Level</p>
+</li>
+<li>
+<p>System Level(set parallelism in flink-conf.yaml)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Task Failure Recovery</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Restart Strategies</p>
+</li>
+<li>
+<p>Failover Strategies</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Solts and Resources</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>State Management</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>State Backends</p>
+<div class="ulist">
+<ul>
+<li>
+<p>MemoryStateBackend</p>
+</li>
+<li>
+<p>FsStateBackend</p>
+</li>
+<li>
+<p>RocksDBStateBackend</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Kinds of state in Flink</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Operator State</p>
+<div class="ulist">
+<ul>
+<li>
+<p>List state</p>
+</li>
+<li>
+<p>Union List state</p>
+</li>
+<li>
+<p>Broadcast state</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Keyed State</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Value state</p>
+</li>
+<li>
+<p>List state</p>
+</li>
+<li>
+<p>Map state</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Fault Tolerance</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Checkpointing</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Barriers</p>
+</li>
+<li>
+<p>Exactly Once &amp; At Least Once</p>
+</li>
+<li>
+<p>Asynchronous State Snapshots</p>
+</li>
+<li>
+<p>Checkpointing Algorithm(Chandy-Lamport)</p>
+</li>
+<li>
+<p>Incremental Checkpointing</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Savepoints</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>State Rescalable</p>
+</li>
+<li>
+<p>Queryable State</p>
+</li>
+<li>
+<p>State Schema Evolution</p>
+</li>
+<li>
+<p>State Processor API(read, write, and modify savepoints and checkpoints using Flink&#8217;s batch DataSet API)</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>DataStream</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Setup Environment(Local and Remote)</p>
+</li>
+<li>
+<p>Source</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Built-in Source(readTextFile, FromCollection,etc)</p>
+</li>
+<li>
+<p>Custom Source(addSource)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Sink</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Built-in Sink(writeAsText, writeAsCsv,etc)</p>
+</li>
+<li>
+<p>Custom Sink(addSink)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Transformations</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Basic Transformations</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Map</p>
+</li>
+<li>
+<p>Filter</p>
+</li>
+<li>
+<p>FlatMap</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>KeyedStream Transformations</p>
+<div class="ulist">
+<ul>
+<li>
+<p>KeyBy</p>
+</li>
+<li>
+<p>Aggregations</p>
+</li>
+<li>
+<p>Reduce</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Multistream Transformations</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Union</p>
+</li>
+<li>
+<p>Connect, coMap, coFlatMap</p>
+</li>
+<li>
+<p>Split &amp; select</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Distribution Transformations</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Random</p>
+</li>
+<li>
+<p>Round-Robin</p>
+</li>
+<li>
+<p>Rescale</p>
+</li>
+<li>
+<p>Broadcast</p>
+</li>
+<li>
+<p>Global</p>
+</li>
+<li>
+<p>Custom</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Data Types</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Types</p>
+</li>
+<li>
+<p>TypeInformation</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Functions</p>
+</li>
+<li>
+<p>Iterations</p>
+</li>
+<li>
+<p>Time-Based and Window Operators</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Time characteristics</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Processing Time</p>
+</li>
+<li>
+<p>Event Time</p>
+</li>
+<li>
+<p>IngestionTime</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Assign Timestamps and generating watermarks</p>
+</li>
+<li>
+<p>ProcessFunction</p>
+<div class="ulist">
+<ul>
+<li>
+<p>TimeService and Timer</p>
+</li>
+<li>
+<p>Emitting to Side Outputs</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Windows</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Window Assigners</p>
+</li>
+<li>
+<p>Window Functions</p>
+</li>
+<li>
+<p>Triggers</p>
+</li>
+<li>
+<p>Evictors</p>
+</li>
+<li>
+<p>Allowed Lateness</p>
+</li>
+<li>
+<p>Side Output</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Joining</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Window Join</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Tumbling Window Join</p>
+</li>
+<li>
+<p>Sliding Window Join</p>
+</li>
+<li>
+<p>Session Window Join</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Interval Join</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Async I/O</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Libraries</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>CEP(Comples Event Processing)</p>
+</li>
+<li>
+<p>State Processor API</p>
+</li>
+<li>
+<p>Gelly</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Table API &amp; SQL</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Streaming Concepts</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Dynamic Tables</p>
+</li>
+<li>
+<p>Time Attributes</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Processing Time</p>
+</li>
+<li>
+<p>Event Time</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Temporal Tables</p>
+</li>
+<li>
+<p>Query Configuration</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>SQL</p>
+<div class="ulist">
+<ul>
+<li>
+<p>DDL</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Create Table/Databases/Function</p>
+</li>
+<li>
+<p>Drop Table/Databases/Function</p>
+</li>
+<li>
+<p>Alter Table/Databases/Function</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Query</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Operators(Select/Filter/Aggregations/Joins/etc&#8230;&#8203;)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>SQL Client</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Table API</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Java/Scala Table API</p>
+</li>
+<li>
+<p>Python Table API</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Functions</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Built-in Functions</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Scalar Functions</p>
+</li>
+<li>
+<p>Aggregate Functions</p>
+</li>
+<li>
+<p>Column Functions</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>User Defined Functions</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Scalar Functions</p>
+</li>
+<li>
+<p>Table Functions</p>
+</li>
+<li>
+<p>Aggregation Functions</p>
+</li>
+<li>
+<p>Table Aggregation Functions</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Connect to External Systems</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Table Connectors</p>
+</li>
+<li>
+<p>Table Formats</p>
+</li>
+<li>
+<p>Table Schema</p>
+</li>
+<li>
+<p>Update Modes</p>
+</li>
+<li>
+<p>User-defined Table Sources &amp; Sinks</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Planners</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Flink Planner</p>
+</li>
+<li>
+<p>Blink Planner</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Modules</p>
+</li>
+<li>
+<p>Catalog</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Register an External Catalog</p>
+</li>
+<li>
+<p>Register Tables in Catalog</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Hive Integration</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Deployment and Operations</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Deployment Modes</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Local Cluster</p>
+</li>
+<li>
+<p>Standalone Cluster</p>
+</li>
+<li>
+<p>YARN</p>
+</li>
+<li>
+<p>Mesos</p>
+</li>
+<li>
+<p>Docker</p>
+</li>
+<li>
+<p>Kubernetes</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>High Availability</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Standalone Cluster High Availability</p>
+</li>
+<li>
+<p>YARN Cluster High Availability</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Command-Line Interface</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Job Submission</p>
+</li>
+<li>
+<p>Job Management</p>
+</li>
+<li>
+<p>Savepoints</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Python REPL</p>
+</li>
+<li>
+<p>Scala REPL</p>
+</li>
+<li>
+<p>Security</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Kerberos</p>
+</li>
+<li>
+<p>SSL</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>File Systems(consume and persistently store data)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Local File System</p>
+</li>
+<li>
+<p>Pluggable File Systems</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Amazon S3</p>
+</li>
+<li>
+<p>MapR FS</p>
+</li>
+<li>
+<p>OpenStack Swift FS</p>
+</li>
+<li>
+<p>Aliyun Object Storage Service</p>
+</li>
+<li>
+<p>Azure Blob Storage</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>HDFS and Hadoop File System Support</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Debugging and Monitoring</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Metrics</p>
+</li>
+<li>
+<p>Logging</p>
+</li>
+<li>
+<p>Flink web UI</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Monitoring Checkpointing</p>
+</li>
+<li>
+<p>Monitoring Back Pressure</p>
+</li>
+<li>
+<p>Monitoring Watermark</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Flink Rest API</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Managing and monitoring a Flink Cluster</p>
+</li>
+<li>
+<p>Managing and Monitoring Flink Applications</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Application Profiling</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Profiling with Java Flight Recorder</p>
+</li>
+<li>
+<p>Profiling with JITWatch</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>Ecosystem</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Connectors</p>
+<div class="ulist">
+<ul>
+<li>
+<p>FileSystem</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Hive</p>
+</li>
+<li>
+<p>HDFS</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Queue</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Apache Kafka</p>
+</li>
+<li>
+<p>Amazon Kinesis Streams</p>
+</li>
+<li>
+<p>RabbitMQ</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Key-Value</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Cassandra</p>
+</li>
+<li>
+<p>Redis</p>
+</li>
+<li>
+<p>Hbase</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Search Engine</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Elasticsearch</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Services</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Twitter</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Third-Party Projects</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Libraries</p>
+<div class="ulist">
+<ul>
+<li>
+<p>SAMOA</p>
+</li>
+<li>
+<p>Mahout</p>
+</li>
+<li>
+<p>Flink-htm</p>
+</li>
+<li>
+<p>Tink</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>System extensions</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Cascading</p>
+</li>
+<li>
+<p>GRADOOP</p>
+</li>
+<li>
+<p>FastR</p>
+</li>
+<li>
+<p>BigPetStore</p>
+</li>
+<li>
+<p>Zeppeline</p>
+</li>
+<li>
+<p>Beam</p>
+</li>
+<li>
+<p>Alluxio</p>
+</li>
+<li>
+<p>Ignite</p>
+</li>
+<li>
+<p>FlinkK8sOperator</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</article>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../../_/js/site.js"></script>
+<script async src="../../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

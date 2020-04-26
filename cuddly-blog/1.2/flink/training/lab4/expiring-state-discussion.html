@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Keyed 流 :: The Cuddly Computing Machine</title>
-    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/flink/training/lab1/keyed-streams.html">
+    <title>Lab 4 - Discussion :: The Cuddly Computing Machine</title>
+    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/flink/training/lab4/expiring-state-discussion.html">
     <meta name="generator" content="Antora 2.0.0">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-86782445-1"></script>
@@ -77,23 +77,23 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="rideCleansing.html">Lab 1 - 过滤流</a>
+    <a class="nav-link" href="../lab1/rideCleansing.html">Lab 1 - 过滤流</a>
   </li>
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">数据转换</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="stateless.html">无状态转换</a>
-  </li>
-  <li class="nav-item is-current-page" data-depth="4">
-    <a class="nav-link" href="keyed-streams.html">Keyed 流</a>
+    <a class="nav-link" href="../lab1/stateless.html">无状态转换</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="stateful.html">有状态的转换</a>
+    <a class="nav-link" href="../lab1/keyed-streams.html">Keyed 流</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="connected-streams.html">连接流</a>
+    <a class="nav-link" href="../lab1/stateful.html">有状态的转换</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../lab1/connected-streams.html">连接流</a>
   </li>
 </ul>
   </li>
@@ -129,10 +129,10 @@
     <span class="nav-text">事件驱动的应用</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../lab4/processfunction.html">ProcessFunction</a>
+    <a class="nav-link" href="processfunction.html">ProcessFunction</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../lab4/side-outputs.html">Side Outputs</a>
+    <a class="nav-link" href="side-outputs.html">Side Outputs</a>
   </li>
 </ul>
   </li>
@@ -141,10 +141,10 @@
     <span class="nav-text">Lab 4 - 到期状态</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../lab4/rideEnrichment-processfunction.html">Lab 4 - 练习</a>
+    <a class="nav-link" href="rideEnrichment-processfunction.html">Lab 4 - 练习</a>
   </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../lab4/expiring-state-discussion.html">Lab 4 - 讨论</a>
+  <li class="nav-item is-current-page" data-depth="4">
+    <a class="nav-link" href="expiring-state-discussion.html">Lab 4 - 讨论</a>
   </li>
 </ul>
   </li>
@@ -434,143 +434,133 @@
     <li><a href="../../../index.html">Cuddly Blog</a></li>
     <li>Flink</li>
     <li><a href="../index.html">Flink Training Home</a></li>
-    <li>数据转换</li>
-    <li><a href="keyed-streams.html">Keyed 流</a></li>
+    <li>Lab 4 - 到期状态</li>
+    <li><a href="expiring-state-discussion.html">Lab 4 - 讨论</a></li>
   </ul>
 </nav>
 </div>
 <article class="doc">
-<h1 class="page">Keyed 流</h1>
-<div class="sect1">
-<h2 id="_keyby"><a class="anchor" href="#_keyby"></a>keyBy()</h2>
+<h1 class="page">Lab 4 - Discussion</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>能够围绕流的属性之一对流进行分区通常非常有用, 以便将具有该属性的相同值的所有事件组合在一起.
-例如, 假设我们想找到从每个网格单元中运行时间最长的出租车.
-如果我们考虑的是SQL查询, 则意味着要使用 <code>startCell</code> 进行某种 <code>GROUP BY</code> , 而在Flink中, 这需要使用 <code>keyBy(KeySelector)</code> 完成</p>
+<p>此练习的参考解决方案说明了一种思考如何管理否则可能泄漏的状态的方式，但这并不是只有一个明显正确的答案的情况。 该练习的目的是激发人们对如何使用状态和计时器的思考，并将其中涉及的一些问题浮出水面。</p>
+</div>
+<div class="paragraph">
+<p>一个好的解决方案的目标是什么？这应该</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>产生正确的结果</p>
+</li>
+<li>
+<p>不泄漏状态</p>
+</li>
+<li>
+<p>容易理解</p>
+</li>
+<li>
+<p>表现不错</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>现在，我们考虑一下这些目标来研究建议的解决方案。我们在 <code>processElement1</code> 中找到了这段代码（顺便说一下， <code>processElement2</code> 是相同的，只是乘车和票价之间的角色相反）：</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">rides
-  .flatMap(new NYCEnrichment())
-  .keyBy("startCell")</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>每个keyBy都会进行 shuffle 操作, 从而对流进行重新分区. 通常代价非常高, 因为它涉及网络通信以及序列化和反序列化.</p>
-</div>
-<div class="imageblock text-center">
-<div class="content">
-<img src="../../_images/training/keyBy.png" alt="keyBy">
-</div>
-</div>
-<div class="paragraph">
-<p>在上面的示例中, key 已由字段名称 "startCell" 指定.  这种类型的键选择具有一个缺点, 即编译器无法推断用于 key 的字段的类型, 因此Flink会将键值作为元组传递, 这可能很尴尬.  通常最好使用类型正确的KeySelector, eg:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">rides
-  .flatMap(new NYCEnrichment())
-  .keyBy(
-    new KeySelector&lt;EnrichedRide, int&gt;() {
-      @Override
-      public int getKey(EnrichedRide ride) throws Exception {
-        return ride.startCell;
-      }
-    })</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>用lambda可以更简洁地表达:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">rides
-  .flatMap(new NYCEnrichment())
-  .keyBy(ride -&gt; ride.startCell)</code></pre>
-</div>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_keyed_流上的聚合"><a class="anchor" href="#_keyed_流上的聚合"></a>Keyed 流上的聚合</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p>此代码段创建一个新的元组流, 其中包含每个骑乘结束事件的 <code>startCell</code> 和持续时间（以分钟为单位）:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">DataStream&lt;Tuple2&lt;Integer, Minutes&gt;&gt; minutesByStartCell = enrichedNYCRides
-  .flatMap(new FlatMapFunction&lt;EnrichedRide, Tuple2&lt;Integer, Minutes&gt;&gt;() {
-    @Override
-    public void flatMap(EnrichedRide ride,
-              Collector&lt;Tuple2&lt;Integer, Minutes&gt;&gt; out) throws Exception {
-      if (!ride.isStart) {
-        Interval rideInterval = new Interval(ride.startTime, ride.endTime);
-        Minutes duration = rideInterval.toDuration().toStandardMinutes();
-        out.collect(new Tuple2&lt;&gt;(ride.startCell, duration));
-      }
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public void processElement1(TaxiRide ride, Context context, Collector&lt;Tuple2&lt;TaxiRide, TaxiFare&gt;&gt; out) throws Exception {
+    TaxiFare fare = fareState.value();
+    if (fare != null) {
+        fareState.clear();
+        context.timerService().deleteEventTimeTimer(fare.getEventTime());
+        out.collect(new Tuple2(ride, fare));
+    } else {
+        rideState.update(ride);
+        // as soon as the watermark arrives, we can stop waiting for the corresponding fare
+        context.timerService().registerEventTimeTimer(ride.getEventTime());
     }
-  });</code></pre>
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>现在, 我们可以生成一个流, 其中仅包含每个 <code>startCell</code> 迄今为止最长的ride.  可以使用多种方式表示要用作关键字的字段.
-前面我们看到了一个 <code>EnrichedRide</code> POJO的示例, 在其中我们通过使用其名称指定了要使用的字段. 在这个例子下, 我们将使用Tuple2对象, 并在元组中提供从0开始的索引.</p>
+<p>这意味着
+* 每当到达一个不完整的事件时，我们会将其存储在状态中并创建一个计时器
+* 每当到达完成一对配对的事件时，我们都会清除状态并删除匹配事件的计时器（之前已存储）</p>
+</div>
+<div class="paragraph">
+<p>因此很明显，如果两个事件都到达，则不会泄漏任何内容。但是，如果失踪了怎么办</p>
+</div>
+<div class="paragraph">
+<p>在这种情况下，计时器将在某个时间触发，并运行以下代码，这将清除所有可能存在的状态：</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">minutesByStartCell
-  .keyBy(0) // startCell
-  .maxBy(1) // duration
-  .print();</code></pre>
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public void onTimer(long timestamp, OnTimerContext ctx, Collector&lt;Tuple2&lt;TaxiRide, TaxiFare&gt;&gt; out) throws Exception {
+    if (fareState.value() != null) {
+        ctx.output(unmatchedFares, fareState.value());
+        fareState.clear();
+    }
+    if (rideState.value() != null) {
+        ctx.output(unmatchedRides, rideState.value());
+        rideState.clear();
+    }
+}</code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>在输出流中, 每次持续时间达到新的最大值时, 我们都会看到每个键的记录. 比如 50797,8M:</p>
+<p>好的，但是我们如何决定等待多长时间？等到 <code>ride.getEventTime()</code> 够了吗？</p>
+</div>
+<div class="paragraph">
+<p>为 <code>ride.getEventTime</code> 设置事件时间计时器的作用是等待，直到解决乘坐和票价流中的任何乱序为止。 <strong>假设水印是完美的</strong> ，则所有更早的乘车和票价事件都会在水印到达 <code>ride.getEventTime</code> 时到达。</p>
+</div>
+<div class="paragraph">
+<p>在这些练习中，加水印实际上是完美的-不可能有迟到的事件。 但是在现实环境中，您应该期待一些后期事件，并且我们应该期望我们的实现在这种情况下能够正确运行。 此参考解决方案将执行以下操作：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>匹配对中的一个事件将首先到达，并创建一个计时器以安排其最终删除</p>
+</li>
+<li>
+<p>该计时器将触发，事件将被清除</p>
+</li>
+<li>
+<p>匹配事件迟到，并创建另一个计时器，在这种情况下，该计时器的时间已经过去</p>
+</li>
+<li>
+<p>下一个到达的水印触发该计时器，并且状态被清除</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>换句话说，当事件迟到时，不会泄漏任何状态，但是不会生成结果联接。 因此，如果您希望尽管数据迟到而仍然无法获得结果，则应创建计时器，通过将必要的状态保留一些额外的时间来适应某些延迟，例如，</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-text hljs" data-lang="text">...
-4&gt; (64549,5M)
-4&gt; (46298,18M)
-1&gt; (51549,14M)
-1&gt; (53043,13M)
-1&gt; (56031,22M)
-1&gt; (50797,6M)
-...
-1&gt; (50797,8M)
-...
-1&gt; (50797,11M)
-...
-1&gt; (50797,12M)</code></pre>
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">context.timerService().registerEventTimeTimer(ride.getEventTime() + ALLOWED_LATENESS);</code></pre>
 </div>
+</div>
+<div class="paragraph">
+<p>尝试容纳任意延迟事件不是一个好主意，因为这样做需要无限期地为每个延迟事件保持某种状态。</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_隐含状态"><a class="anchor" href="#_隐含状态"></a>(隐含)状态</h2>
+<h2 id="_wrap_up"><a class="anchor" href="#_wrap_up"></a>Wrap-up</h2>
 <div class="sectionbody">
+<div class="sect2">
+<h3 id="_改为使用处理时间计时器呢"><a class="anchor" href="#_改为使用处理时间计时器呢"></a>改为使用处理时间计时器呢？</h3>
 <div class="paragraph">
-<p>这是我们看到的第一个有状态流的示例. 尽管状态是透明处理的, 但是Flink必须跟踪每个不同 key 的最大持续时间.
-每当状态涉及到您的应用程序时, 您都应该考虑状态可能会变大. 只要 Key 空间是无界的, 那么 Flink 将需要的状态量也是那么多.
-在使用流时, 通常考虑在有限窗口而不是整个流上进行聚合来思考.</p>
+<p>当然，这会起作用，但是测试可能会比较尴尬。</p>
 </div>
 </div>
-</div>
-<div class="sect1">
-<h2 id="_reduce_和其他聚合器"><a class="anchor" href="#_reduce_和其他聚合器"></a>reduce() 和其他聚合器</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_为什么不使用_state_time_to_live_替代呢"><a class="anchor" href="#_为什么不使用_state_time_to_live_替代呢"></a>为什么不使用 <a href="https://ci.apache.org/projects/flink/flink-docs-stable/dev/stream/state/state.html#state-time-to-live-ttl" target="_blank" rel="noopener">State Time-To-Live</a> 替代呢？</h3>
 <div class="paragraph">
-<p>上面使用的 <code>maxBy()</code> 只是Flink的 <code>KeyedStream</code> 上可用的许多聚合函数的一个示例. 还有一个更通用的 <code>reduce()</code> 函数, 可用于实现自己的自定义聚合.</p>
+<p>好主意。 通常，您可能需要考虑使用状态TTL来实现GDPR合规性（例如），并使用计时器来实现业务逻辑。 对于将计时器用于业务逻辑的示例，请看一下 <a href="../extra-labs/longRides.html" class="page">长途警报</a> 练习。 否则，请继续下一课。</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_进一步阅读"><a class="anchor" href="#_进一步阅读"></a>进一步阅读</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><a href="https://ci.apache.org/projects/flink/flink-docs-release-1.10/zh/dev/stream/operators/#datastream-transformations" target="_blank" rel="noopener">DataStream Transformations</a> (Apache Flink Documentation)</p>
 </div>
 </div>
 </div>

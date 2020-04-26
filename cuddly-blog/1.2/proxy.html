@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: The Cuddly Computing Machine</title>
-    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/index.html">
+    <title>SSR &amp; V2ray :: The Cuddly Computing Machine</title>
+    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/proxy.html">
     <meta name="generator" content="Antora 2.0.0">
     <link rel="stylesheet" href="../../_/css/site.css">
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-86782445-1"></script>
@@ -428,16 +428,532 @@
 <main>
 <div class="toolbar" role="navigation">
 <button class="nav-toggle"></button>
-  <a href="index.html" class="home-link is-current"></a>
+  <a href="index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Cuddly Blog</a></li>
+    <li><a href="proxy.html">SSR &amp; V2ray</a></li>
+  </ul>
 </nav>
 </div>
 <article class="doc">
-<div class="imageblock text-right">
-<div class="content">
-<img src="_images/BSD.png" alt="BSD">
+<h1 class="page">SSR &amp; V2ray</h1>
+<div class="sect1">
+<h2 id="_ssr_安装"><a class="anchor" href="#_ssr_安装"></a>SSR 安装</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="https://github.com/shadowsocksr-backup/shadowsocks-rss/wiki/Server-Setup">ShadowsocksR 服务端安装教程</a></p>
+</li>
+<li>
+<p><a href="https://github.com/shadowsocksr-backup/shadowsocks-rss/blob/master/ssr.md">ShadowsocksR 协议插件文档</a></p>
+</li>
+<li>
+<p><a href="https://github.com/shadowsocksr-backup/shadowsocks-rss/wiki/config.json">配置文件各项说明</a></p>
+</li>
+</ol>
 </div>
-<div class="title">Figure 1. Done is better than perfect !</div>
+<div class="listingblock">
+<div class="content">
+<pre>wget --no-check-certificate https://raw.githubusercontent.com/teddysun/shadowsocks_install/master/shadowsocksR.sh
+chmod +x shadowsocksR.sh
+./shadowsocksR.sh 2&gt;&amp;1 | tee shadowsocksR.log</pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_配置"><a class="anchor" href="#_配置"></a>配置</h3>
+<div class="sect3">
+<h4 id="_server_配置"><a class="anchor" href="#_server_配置"></a>server 配置</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+    "server":"0.0.0.0",
+    "server_ipv6":"[::]",
+    "server_port":3821,
+    "local_address":"127.0.0.1",
+    "local_port":1080,
+    "password":"123456",
+    "timeout":120,
+    "method":"aes-256-cfb",
+    "protocol":"origin",
+    "protocol_param":"",
+    "obfs":"plain",
+    "obfs_param":"",
+    "redirect":"",
+    "dns_ipv6":false,
+    "fast_open":false,
+    "workers":1
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_server_端多用户配置"><a class="anchor" href="#_server_端多用户配置"></a>server 端多用户配置</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+"server":"0.0.0.0",
+"server_ipv6": "[::]",
+"local_address":"127.0.0.1",
+"local_port":1080,
+"port_password":{
+    "8989":"password1",
+    "8990":"password2",
+    "8991":"password3"
+},
+"timeout":300,
+"method":"aes-256-cfb",
+"protocol": "origin",
+"protocol_param": "",
+"obfs": "plain",
+"obfs_param": "",
+"redirect": "",
+"dns_ipv6": false,
+"fast_open": false,
+"workers": 1
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_client_配置"><a class="anchor" href="#_client_配置"></a>client 配置</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "random" : false,
+  "authPass" : null,
+  "useOnlinePac" : false,
+  "TTL" : 0,
+  "global" : false,
+  "reconnectTimes" : 3,
+  "index" : 0,
+  "proxyType" : 0,
+  "proxyHost" : null,
+  "authUser" : null,
+  "proxyAuthPass" : null,
+  "isDefault" : false,
+  "pacUrl" : null,
+  "configs" : [
+    {
+      "enable" : true,
+      "password" : "AsZsM5LrHcQ%7Y^%",
+      "method" : "aes-256-cfb",
+      "remarks" : "AsZsM5LrHcQ%7Y^%",
+      "server" : "your_proxy_server_ip",
+      "kcptun" : {
+        "nocomp" : false,
+        "key" : "it's a secrect",
+        "crypt" : "aes",
+        "datashard" : 10,
+        "mtu" : 1350,
+        "mode" : "fast",
+        "parityshard" : 3,
+        "arguments" : ""
+      },
+      "enabled_kcptun" : false,
+      "server_port" : 3821,
+      "remarks_base64" : "QXNac001THJIY1ElN1leJQ=="
+    }
+  ],
+  "proxyPort" : 0,
+  "randomAlgorithm" : 0,
+  "proxyEnable" : false,
+  "enabled" : true,
+  "autoban" : false,
+  "proxyAuthUser" : null,
+  "shareOverLan" : false,
+  "localPort" : 1080
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_服务启动"><a class="anchor" href="#_服务启动"></a>服务启动</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">启动: /etc/init.d/shadowsocks start
+停止: /etc/init.d/shadowsocks stop
+重启: /etc/init.d/shadowsocks restart
+状态: /etc/init.d/shadowsocks status
+
+配置文件路径: /etc/shadowsocks.json
+日志文件路径: /var/log/shadowsocks.log
+代码安装目录: /usr/local/shadowsocks</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_卸载"><a class="anchor" href="#_卸载"></a>卸载</h3>
+<div class="listingblock">
+<div class="content">
+<pre>./shadowsocksR.sh uninstall</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_v2ray_安装"><a class="anchor" href="#_v2ray_安装"></a>V2ray 安装</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="https://www.v2ray.com/chapter_00/install.html#linuxscript">下载安装</a></p>
+</li>
+<li>
+<p><a href="https://toutyrater.github.io/advanced/tls.html">V2ray 配置</a></p>
+</li>
+<li>
+<p><a href="https://github.com/233boy/v2ray/wiki/%E4%BD%BF%E7%94%A8Cloudflare%E4%B8%AD%E8%BD%ACV2Ray%E6%B5%81%E9%87%8F">使用Cloudflare中转V2Ray流量</a></p>
+</li>
+<li>
+<p><a href="https://blog.sprov.xyz/2019/03/11/cdn-v2ray-safe-proxy/">拯救被墙的IP，CDN + v2ray，安全的科学上网方法</a></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>运行下面的指令下载并安装 V2Ray。当 yum 或 apt-get 可用的情况下，此脚本会自动安装 unzip 和 daemon。这两个组件是安装 V2Ray 的必要组件。如果你使用的系统不支持 yum 或 apt-get，请自行安装 unzip 和 daemon</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>bash &lt;(curl -L -s https://install.direct/go.sh)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>此脚本会自动安装以下文件：</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>/usr/bin/v2ray/v2ray：V2Ray 程序；</p>
+</li>
+<li>
+<p>/usr/bin/v2ray/v2ctl：V2Ray 工具；</p>
+</li>
+<li>
+<p>/etc/v2ray/config.json：配置文件；</p>
+</li>
+<li>
+<p>/usr/bin/v2ray/geoip.dat：IP 数据文件</p>
+</li>
+<li>
+<p>/usr/bin/v2ray/geosite.dat：域名数据文件</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>运行脚本位于系统的以下位置：</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>/etc/systemd/system/v2ray.service: Systemd</p>
+</li>
+<li>
+<p>/etc/init.d/v2ray: SysV</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>脚本运行完成后，你需要：</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>编辑 /etc/v2ray/config.json 文件来配置你需要的代理方式；</p>
+</li>
+<li>
+<p>运行 service v2ray start 来启动 V2Ray 进程；</p>
+</li>
+<li>
+<p>之后可以使用 service v2ray start|stop|status|reload|restart|force-reload 控制 V2Ray 的运行。</p>
+</li>
+</ol>
+</div>
+<div class="sect2">
+<h3 id="_配置_2"><a class="anchor" href="#_配置_2"></a>配置</h3>
+<div class="sect3">
+<h4 id="_server_配置_2"><a class="anchor" href="#_server_配置_2"></a>server 配置</h4>
+<div class="listingblock">
+<div class="title">/etc/v2ray/config.json</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+	"log": {
+		"access": "/var/log/v2ray/access.log",
+		"error": "/var/log/v2ray/error.log",
+		"loglevel": "warning"
+	},
+	"inbounds": [
+		{
+			"port": 1000,
+			"protocol": "vmess",
+			"settings": {
+				"clients": [
+					{
+						"id": "uuid",
+						"level": 1,
+						"alterId": 233
+					}
+				]
+			},
+			"streamSettings": {
+				"network": "ws"
+			},
+			"sniffing": {
+				"enabled": true,
+				"destOverride": [
+					"http",
+					"tls"
+				]
+			}
+		}
+		//include_ss
+		//include_socks
+		//include_mtproto
+		//include_in_config
+		//
+	],
+	"outbounds": [
+		{
+			"protocol": "freedom",
+			"settings": {}
+		},
+		{
+			"protocol": "blackhole",
+			"settings": {},
+			"tag": "blocked"
+		},
+		{
+			"protocol": "freedom",
+			"settings": {},
+			"tag": "direct"
+		},
+		{
+			"protocol": "mtproto",
+			"settings": {},
+			"tag": "tg-out"
+		}
+		//include_out_config
+		//
+	],
+	"dns": {
+		"server": [
+			"1.1.1.1",
+			"1.0.0.1",
+			"8.8.8.8",
+			"8.8.4.4",
+			"localhost"
+		]
+	},
+	"routing": {
+		"domainStrategy": "IPOnDemand",
+		"rules": [
+			{
+				"type": "field",
+				"ip": [
+					"0.0.0.0/8",
+					"10.0.0.0/8",
+					"100.64.0.0/10",
+					"127.0.0.0/8",
+					"169.254.0.0/16",
+					"172.16.0.0/12",
+					"192.0.0.0/24",
+					"192.0.2.0/24",
+					"192.168.0.0/16",
+					"198.18.0.0/15",
+					"198.51.100.0/24",
+					"203.0.113.0/24",
+					"::1/128",
+					"fc00::/7",
+					"fe80::/10"
+				],
+				"outboundTag": "blocked"
+			},
+			{
+				"type": "field",
+				"inboundTag": ["tg-in"],
+				"outboundTag": "tg-out"
+			}
+			,
+			{
+				"type": "field",
+				"domain": [
+					"domain:epochtimes.com",
+					"domain:epochtimes.com.tw",
+					"domain:epochtimes.fr",
+					"domain:epochtimes.de",
+					"domain:epochtimes.jp",
+					"domain:epochtimes.ru",
+					"domain:epochtimes.co.il",
+					"domain:epochtimes.co.kr",
+					"domain:epochtimes-romania.com",
+					"domain:erabaru.net",
+					"domain:lagranepoca.com",
+					"domain:theepochtimes.com",
+					"domain:ntdtv.com",
+					"domain:ntd.tv",
+					"domain:ntdtv-dc.com",
+					"domain:ntdtv.com.tw",
+					"domain:minghui.org",
+					"domain:renminbao.com",
+					"domain:dafahao.com",
+					"domain:dongtaiwang.com",
+					"domain:falundafa.org",
+					"domain:wujieliulan.com",
+					"domain:ninecommentaries.com",
+					"domain:shenyun.com"
+				],
+				"outboundTag": "blocked"
+			}			,
+                {
+                    "type": "field",
+                    "protocol": [
+                        "bittorrent"
+                    ],
+                    "outboundTag": "blocked"
+                }
+			//include_ban_ad
+			//include_rules
+			//
+		]
+	},
+	"transport": {
+		"kcpSettings": {
+            "uplinkCapacity": 100,
+            "downlinkCapacity": 100,
+            "congestion": true
+        },
+		"sockopt": {
+			"tcpFastOpen": true
+		}
+	}
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_client_配置_2"><a class="anchor" href="#_client_配置_2"></a>client 配置</h4>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
+  "log": {
+    "error": "",
+    "loglevel": "info",
+    "access": ""
+  },
+  "inbounds": [
+    {
+      "listen": "127.0.0.1",
+      "protocol": "socks",
+      "settings": {
+        "ip": "",
+        "userLevel": 0,
+        "udp": false,
+        "auth": "noauth"
+      },
+      "port": "1086"
+    },
+    {
+      "listen": "127.0.0.1",
+      "protocol": "http",
+      "settings": {
+        "timeout": 360
+      },
+      "port": "1087"
+    }
+  ],
+  "outbounds": [
+    {
+      "mux": {
+        "enabled": false,
+        "concurrency": 8
+      },
+      "protocol": "vmess",
+      "streamSettings": {
+        "wsSettings": {
+          "path": "/tls",
+          "headers": {
+            "host": "www.yourdomain.com"
+          }
+        },
+        "tlsSettings": {
+          "serverName": "www.yourdomain.com",
+          "allowInsecure": false
+        },
+        "security": "tls",
+        "network": "ws"
+      },
+      "tag": "agentout",
+      "settings": {
+        "vnext": [
+          {
+            "address": "www.yourdomain.com",
+            "users": [
+              {
+                "id": "uuid",
+                "alterId": 233,
+                "level": 1,
+                "security": "auto"
+              }
+            ],
+            "port": 443
+          }
+        ]
+      }
+    },
+    {
+      "tag": "direct",
+      "protocol": "freedom",
+      "settings": {
+        "domainStrategy": "AsIs",
+        "redirect": "",
+        "userLevel": 0
+      }
+    },
+    {
+      "tag": "blockout",
+      "protocol": "blackhole",
+      "settings": {
+        "response": {
+          "type": "none"
+        }
+      }
+    }
+  ],
+  "dns": {
+    "servers": [
+      ""
+    ]
+  },
+  "routing": {
+    "strategy": "rules",
+    "settings": {
+      "domainStrategy": "IPIfNonMatch",
+      "rules": [
+        {
+          "outboundTag": "direct",
+          "type": "field",
+          "ip": [
+            "geoip:cn",
+            "geoip:private"
+          ],
+          "domain": [
+            "geosite:cn",
+            "geosite:speedtest"
+          ]
+        }
+      ]
+    }
+  },
+  "transport": {}
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 </article>
 </main>

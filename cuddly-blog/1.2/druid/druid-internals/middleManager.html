@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Mastering Flink :: The Cuddly Computing Machine</title>
-    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/flink/index.html">
+    <title>MiddleManager :: The Cuddly Computing Machine</title>
+    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/druid/druid-internals/middleManager.html">
     <meta name="generator" content="Antora 2.0.0">
-    <link rel="stylesheet" href="../../../_/css/site.css">
+    <link rel="stylesheet" href="../../../../_/css/site.css">
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-86782445-1"></script>
     <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-86782445-1')</script>
   </head>
@@ -34,7 +34,7 @@
     <div class="panels">
 <div class="nav-panel-menu is-active" data-panel="menu">
   <nav class="nav-menu">
-    <h3 class="title"><a href="../index.html">Cuddly Blog</a></h3>
+    <h3 class="title"><a href="../../index.html">Cuddly Blog</a></h3>
 <ul class="nav-list">
   <li class="nav-item" data-depth="0">
 <ul class="nav-list">
@@ -44,20 +44,20 @@
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="training/index.html">Flink Training Home</a>
+    <a class="nav-link" href="../../flink/training/index.html">Flink Training Home</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Streaming 介绍</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="training/intro/intro-1.html">使用Apache Flink 进行流处理</a>
+    <a class="nav-link" href="../../flink/training/intro/intro-1.html">使用Apache Flink 进行流处理</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="training/intro/intro-2.html">流可以传输什么?</a>
+    <a class="nav-link" href="../../flink/training/intro/intro-2.html">流可以传输什么?</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="training/intro/intro-3.html">一个完整的例子</a>
+    <a class="nav-link" href="../../flink/training/intro/intro-3.html">一个完整的例子</a>
   </li>
 </ul>
   </li>
@@ -66,49 +66,49 @@
     <span class="nav-text">环境配置</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="training/labs/devEnvSetup.html">设置您的开发环境</a>
+    <a class="nav-link" href="../../flink/training/labs/devEnvSetup.html">设置您的开发环境</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="training/labs/taxiData.html">使用出租车数据流</a>
+    <a class="nav-link" href="../../flink/training/labs/taxiData.html">使用出租车数据流</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="training/labs/howto-exercises.html">如何做实验室</a>
+    <a class="nav-link" href="../../flink/training/labs/howto-exercises.html">如何做实验室</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="training/lab1/rideCleansing.html">Lab 1 - 过滤流</a>
+    <a class="nav-link" href="../../flink/training/lab1/rideCleansing.html">Lab 1 - 过滤流</a>
   </li>
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">数据转换</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="training/lab1/stateless.html">无状态转换</a>
+    <a class="nav-link" href="../../flink/training/lab1/stateless.html">无状态转换</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="training/lab1/keyed-streams.html">Keyed 流</a>
+    <a class="nav-link" href="../../flink/training/lab1/keyed-streams.html">Keyed 流</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="training/lab1/stateful.html">有状态的转换</a>
+    <a class="nav-link" href="../../flink/training/lab1/stateful.html">有状态的转换</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="training/lab1/connected-streams.html">连接流</a>
+    <a class="nav-link" href="../../flink/training/lab1/connected-streams.html">连接流</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="training/lab2/rideEnrichment-flatmap.html">Lab 2 - Stateful Enrichment</a>
+    <a class="nav-link" href="../../flink/training/lab2/rideEnrichment-flatmap.html">Lab 2 - Stateful Enrichment</a>
   </li>
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">时间和分析</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="training/lab3/event-time-watermarks.html">Event Time and Watermarks</a>
+    <a class="nav-link" href="../../flink/training/lab3/event-time-watermarks.html">Event Time and Watermarks</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="training/lab3/windows.html">Windows</a>
+    <a class="nav-link" href="../../flink/training/lab3/windows.html">Windows</a>
   </li>
 </ul>
   </li>
@@ -117,10 +117,10 @@
     <span class="nav-text">Lab 3 - Windowing</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="training/lab3/hourlyTips.html">Lab 3 - 窗口化分析</a>
+    <a class="nav-link" href="../../flink/training/lab3/hourlyTips.html">Lab 3 - 窗口化分析</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="training/lab3/hourlyTips-discussion.html">Lab 3 - 讨论</a>
+    <a class="nav-link" href="../../flink/training/lab3/hourlyTips-discussion.html">Lab 3 - 讨论</a>
   </li>
 </ul>
   </li>
@@ -129,10 +129,10 @@
     <span class="nav-text">事件驱动的应用</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="training/lab4/processfunction.html">ProcessFunction</a>
+    <a class="nav-link" href="../../flink/training/lab4/processfunction.html">ProcessFunction</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="training/lab4/side-outputs.html">Side Outputs</a>
+    <a class="nav-link" href="../../flink/training/lab4/side-outputs.html">Side Outputs</a>
   </li>
 </ul>
   </li>
@@ -141,10 +141,10 @@
     <span class="nav-text">Lab 4 - 到期状态</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="training/lab4/rideEnrichment-processfunction.html">Lab 4 - 练习</a>
+    <a class="nav-link" href="../../flink/training/lab4/rideEnrichment-processfunction.html">Lab 4 - 练习</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="training/lab4/expiring-state-discussion.html">Lab 4 - 讨论</a>
+    <a class="nav-link" href="../../flink/training/lab4/expiring-state-discussion.html">Lab 4 - 讨论</a>
   </li>
 </ul>
   </li>
@@ -153,80 +153,80 @@
     <span class="nav-text">容错能力</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="training/fault/state-backends.html">状态后端</a>
+    <a class="nav-link" href="../../flink/training/fault/state-backends.html">状态后端</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="training/fault/snapshots.html">检查点和保存点</a>
+    <a class="nav-link" href="../../flink/training/fault/snapshots.html">检查点和保存点</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="training/app-dev.html">应用开发</a>
+    <a class="nav-link" href="../../flink/training/app-dev.html">应用开发</a>
   </li>
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">其他练习</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="training/extra-labs/longRides.html">长途警报</a>
+    <a class="nav-link" href="../../flink/training/extra-labs/longRides.html">长途警报</a>
   </li>
   <li class="nav-item" data-depth="4">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">广播状态</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="training/extra-labs/nearestTaxi.html">寻找最近的出租车</a>
+    <a class="nav-link" href="../../flink/training/extra-labs/nearestTaxi.html">寻找最近的出租车</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="training/extra-labs/ongoingRides.html">报告正在进行的出租车</a>
+    <a class="nav-link" href="../../flink/training/extra-labs/ongoingRides.html">报告正在进行的出租车</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="training/extra-labs/taxiQuery.html">规则引擎</a>
+    <a class="nav-link" href="../../flink/training/extra-labs/taxiQuery.html">规则引擎</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="training/extra-labs/eventTimeJoin.html">丰富的 Joins</a>
+    <a class="nav-link" href="../../flink/training/extra-labs/eventTimeJoin.html">丰富的 Joins</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="training/resources.html">资源链接</a>
+    <a class="nav-link" href="../../flink/training/resources.html">资源链接</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="introduction/index.html">Flink 简介</a>
+    <a class="nav-link" href="../../flink/introduction/index.html">Flink 简介</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="introduction/architecture.html">Flink 架构介绍</a>
+    <a class="nav-link" href="../../flink/introduction/architecture.html">Flink 架构介绍</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="introduction/failover.html">Flink 容错机制</a>
+    <a class="nav-link" href="../../flink/introduction/failover.html">Flink 容错机制</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="introduction/scheduling.html">Flink 调度机制</a>
+    <a class="nav-link" href="../../flink/introduction/scheduling.html">Flink 调度机制</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="introduction/statemachine.html">Flink 状态机</a>
+    <a class="nav-link" href="../../flink/introduction/statemachine.html">Flink 状态机</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="introduction/memorymanager.html">Flink 内存管理</a>
+    <a class="nav-link" href="../../flink/introduction/memorymanager.html">Flink 内存管理</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="introduction/dataflow.html">Flink Dataflow</a>
+    <a class="nav-link" href="../../flink/introduction/dataflow.html">Flink Dataflow</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="introduction/batchdata.html">Flink 批处理</a>
+    <a class="nav-link" href="../../flink/introduction/batchdata.html">Flink 批处理</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="introduction/streamdata.html">Flink 流处理</a>
+    <a class="nav-link" href="../../flink/introduction/streamdata.html">Flink 流处理</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="internals/index.html">Flink 学习笔记</a>
+    <a class="nav-link" href="../../flink/internals/index.html">Flink 学习笔记</a>
   </li>
 </ul>
   </li>
@@ -243,19 +243,19 @@
     <span class="nav-text">Spark ops</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../spark/ops/spark-exitcode.html">Spark 任务退出码</a>
+    <a class="nav-link" href="../../spark/ops/spark-exitcode.html">Spark 任务退出码</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../spark/ops/spark-issues.html">Spark 常见错误</a>
+    <a class="nav-link" href="../../spark/ops/spark-issues.html">Spark 常见错误</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../spark/spark-internals/index.html">Spark 2.4.4 架构原理</a>
+    <a class="nav-link" href="../../spark/spark-internals/index.html">Spark 2.4.4 架构原理</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../spark/spark-internals/root/spark-overview.html">Overview</a>
+    <a class="nav-link" href="../../spark/spark-internals/root/spark-overview.html">Overview</a>
   </li>
 </ul>
   </li>
@@ -270,23 +270,23 @@
     <span class="nav-text">Hadoop</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../hadoop/hadoop_krb_install.html">Hadoop 配置 Kerberos</a>
+    <a class="nav-link" href="../../hadoop/hadoop_krb_install.html">Hadoop 配置 Kerberos</a>
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Hadoop ops</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../hadoop/hdp-ops/hadoop_commands.html">Hadoop Commands</a>
+    <a class="nav-link" href="../../hadoop/hdp-ops/hadoop_commands.html">Hadoop Commands</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../hadoop/hdp-ops/hadoop_practices.html">Hadoop Practices</a>
+    <a class="nav-link" href="../../hadoop/hdp-ops/hadoop_practices.html">Hadoop Practices</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../hadoop/hdp-ops/hadoop_jmx.html">Hadoop JMX</a>
+    <a class="nav-link" href="../../hadoop/hdp-ops/hadoop_jmx.html">Hadoop JMX</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../hadoop/hdp-ops/hadoop_delroot.html">Hadoop 意外删除挽救</a>
+    <a class="nav-link" href="../../hadoop/hdp-ops/hadoop_delroot.html">Hadoop 意外删除挽救</a>
   </li>
 </ul>
   </li>
@@ -305,10 +305,10 @@
     <span class="nav-text">Hbase ops</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../hbase/hbase-ops/hbase_notes.html">Hbase 基本命令</a>
+    <a class="nav-link" href="../../hbase/hbase-ops/hbase_notes.html">Hbase 基本命令</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../hbase/hbase-ops/hbase_issues.html">Hbase Issues</a>
+    <a class="nav-link" href="../../hbase/hbase-ops/hbase_issues.html">Hbase Issues</a>
   </li>
 </ul>
   </li>
@@ -323,38 +323,38 @@
     <span class="nav-text">Druid</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../druid/druid-install.html">Druid 安装</a>
+    <a class="nav-link" href="../druid-install.html">Druid 安装</a>
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Druid 架构</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../druid/druid-internals/tutorial-load-data.html">Druid 导入数据</a>
+    <a class="nav-link" href="tutorial-load-data.html">Druid 导入数据</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../druid/druid-internals/druid-internals.html">Druid 0.1.5 架构</a>
+    <a class="nav-link" href="druid-internals.html">Druid 0.1.5 架构</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../druid/druid-internals/broker.html">Druid Broker</a>
+    <a class="nav-link" href="broker.html">Druid Broker</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../druid/druid-internals/coordinator.html">Druid Coordinator</a>
+    <a class="nav-link" href="coordinator.html">Druid Coordinator</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../druid/druid-internals/historical.html">Druid Historical</a>
+    <a class="nav-link" href="historical.html">Druid Historical</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="middleManager.html">Druid MiddleManager</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../druid/druid-internals/middleManager.html">Druid MiddleManager</a>
+    <a class="nav-link" href="overlord.html">Druid Overlord</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../druid/druid-internals/overlord.html">Druid Overlord</a>
+    <a class="nav-link" href="router.html">Druid Router</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../druid/druid-internals/router.html">Druid Router</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../druid/druid-internals/segment.html">Druid Segments</a>
+    <a class="nav-link" href="segment.html">Druid Segments</a>
   </li>
 </ul>
   </li>
@@ -369,10 +369,10 @@
     <span class="nav-text">Kafka</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../kafka/kafka_practices.html">Kafka Practices</a>
+    <a class="nav-link" href="../../kafka/kafka_practices.html">Kafka Practices</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../kafka/kafka_issues.html">Kafka Issues</a>
+    <a class="nav-link" href="../../kafka/kafka_issues.html">Kafka Issues</a>
   </li>
 </ul>
   </li>
@@ -385,19 +385,19 @@
     <span class="nav-text">Other</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../mac.html">Mac OS</a>
+    <a class="nav-link" href="../../mac.html">Mac OS</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../linux.html">Linux</a>
+    <a class="nav-link" href="../../linux.html">Linux</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../mysql_install.html">Mysql 安装</a>
+    <a class="nav-link" href="../../mysql_install.html">Mysql 安装</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../readlist.html">北京中小学孩子读书清单</a>
+    <a class="nav-link" href="../../readlist.html">北京中小学孩子读书清单</a>
   </li>
   <li class="nav-item" data-depth="2">
-    <a class="nav-link" href="../demo/demo.html">Adoc Demo</a>
+    <a class="nav-link" href="../../demo/demo.html">Adoc Demo</a>
   </li>
 </ul>
   </li>
@@ -416,7 +416,7 @@
       <span class="title">Cuddly Blog</span>
       <ul class="versions">
         <li class="version is-current is-latest">
-          <a href="../index.html">1.2</a>
+          <a href="../../index.html">1.2</a>
         </li>
       </ul>
     </li>
@@ -428,18 +428,56 @@
 <main>
 <div class="toolbar" role="navigation">
 <button class="nav-toggle"></button>
-  <a href="../index.html" class="home-link"></a>
+  <a href="../../index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
-    <li><a href="../index.html">Cuddly Blog</a></li>
-    <li><a href="index.html">Mastering Flink</a></li>
+    <li><a href="../../index.html">Cuddly Blog</a></li>
+    <li>Druid</li>
+    <li>Druid 架构</li>
+    <li><a href="middleManager.html">Druid MiddleManager</a></li>
   </ul>
 </nav>
 </div>
 <article class="doc">
-<h1 class="page">Mastering Flink</h1>
+<h1 class="page">MiddleManager</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>转载: 请附上原文出处链接.</p>
+</li>
+<li>
+<p><a href="https://github.com/alexwangx/alexwangx.github.io/issues" target="_blank" rel="noopener">点击留言</a></p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
-<p>FIXME</p>
+<p>MiddleManager 是执行提交任务的服务, 它负载接收 Overlord 分配的索引任务, 同时创建新的进程用于启动 Peon 来执行索引任务,每一个 MiddleManager 可以运行多个 Peon 实例, 每个 Peon 一次只能运行一个任务.</p>
+</div>
+<div class="paragraph">
+<p>在运行MiddleManager实例的机器上, 我们可以在 <code>${java.io.tmpdir}</code> 目录下观察到以 XXX_index_XXX 开头的目录, 每一个目录都对应一个Peon实例. 同时 <code>restore.json</code> 文件中保存着当前所有运行着的索引任务信息,一方面用于记录任务状态,另一方面如果MiddleManager崩溃,可以利用该文件重启索引任务.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_peon"><a class="anchor" href="#_peon"></a>Peon</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Peon 是 Indexing Service 的最小工作单元, 也是索引任务的具体执行者, 所有当前正在运行的 Peon 任务都可以通过 Overlord 提供的 web 可视化界面进行访问.</p>
+</div>
+</div>
 </div>
 </article>
 </main>
@@ -448,7 +486,7 @@
   <p>This page was built using the Antora default UI.</p>
   <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
 </footer>
-<script src="../../../_/js/site.js"></script>
-<script async src="../../../_/js/vendor/highlight.js"></script>
+<script src="../../../../_/js/site.js"></script>
+<script async src="../../../../_/js/vendor/highlight.js"></script>
   </body>
 </html>

@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Keyed 流 :: The Cuddly Computing Machine</title>
-    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/flink/training/lab1/keyed-streams.html">
+    <title>Lab 4 - 事件时间计时器（到期状态） :: The Cuddly Computing Machine</title>
+    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/flink/training/lab4/rideEnrichment-processfunction.html">
     <meta name="generator" content="Antora 2.0.0">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-86782445-1"></script>
@@ -77,23 +77,23 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="rideCleansing.html">Lab 1 - 过滤流</a>
+    <a class="nav-link" href="../lab1/rideCleansing.html">Lab 1 - 过滤流</a>
   </li>
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">数据转换</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="stateless.html">无状态转换</a>
-  </li>
-  <li class="nav-item is-current-page" data-depth="4">
-    <a class="nav-link" href="keyed-streams.html">Keyed 流</a>
+    <a class="nav-link" href="../lab1/stateless.html">无状态转换</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="stateful.html">有状态的转换</a>
+    <a class="nav-link" href="../lab1/keyed-streams.html">Keyed 流</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="connected-streams.html">连接流</a>
+    <a class="nav-link" href="../lab1/stateful.html">有状态的转换</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../lab1/connected-streams.html">连接流</a>
   </li>
 </ul>
   </li>
@@ -129,10 +129,10 @@
     <span class="nav-text">事件驱动的应用</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../lab4/processfunction.html">ProcessFunction</a>
+    <a class="nav-link" href="processfunction.html">ProcessFunction</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../lab4/side-outputs.html">Side Outputs</a>
+    <a class="nav-link" href="side-outputs.html">Side Outputs</a>
   </li>
 </ul>
   </li>
@@ -140,11 +140,11 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Lab 4 - 到期状态</span>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../lab4/rideEnrichment-processfunction.html">Lab 4 - 练习</a>
+  <li class="nav-item is-current-page" data-depth="4">
+    <a class="nav-link" href="rideEnrichment-processfunction.html">Lab 4 - 练习</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../lab4/expiring-state-discussion.html">Lab 4 - 讨论</a>
+    <a class="nav-link" href="expiring-state-discussion.html">Lab 4 - 讨论</a>
   </li>
 </ul>
   </li>
@@ -434,143 +434,136 @@
     <li><a href="../../../index.html">Cuddly Blog</a></li>
     <li>Flink</li>
     <li><a href="../index.html">Flink Training Home</a></li>
-    <li>数据转换</li>
-    <li><a href="keyed-streams.html">Keyed 流</a></li>
+    <li>Lab 4 - 到期状态</li>
+    <li><a href="rideEnrichment-processfunction.html">Lab 4 - 练习</a></li>
   </ul>
 </nav>
 </div>
 <article class="doc">
-<h1 class="page">Keyed 流</h1>
-<div class="sect1">
-<h2 id="_keyby"><a class="anchor" href="#_keyby"></a>keyBy()</h2>
+<h1 class="page">Lab 4 - 事件时间计时器（到期状态）</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>能够围绕流的属性之一对流进行分区通常非常有用, 以便将具有该属性的相同值的所有事件组合在一起.
-例如, 假设我们想找到从每个网格单元中运行时间最长的出租车.
-如果我们考虑的是SQL查询, 则意味着要使用 <code>startCell</code> 进行某种 <code>GROUP BY</code> , 而在Flink中, 这需要使用 <code>keyBy(KeySelector)</code> 完成</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">rides
-  .flatMap(new NYCEnrichment())
-  .keyBy("startCell")</code></pre>
-</div>
+<p>这项练习的目的是，以比 <a href="../lab2/rideEnrichment-flatmap.html" class="page">以前的练习</a> 更健壮的方式，将每次乘坐的TaxiRide START和TaxiFare记录结合在一起。</p>
 </div>
 <div class="paragraph">
-<p>每个keyBy都会进行 shuffle 操作, 从而对流进行重新分区. 通常代价非常高, 因为它涉及网络通信以及序列化和反序列化.</p>
-</div>
-<div class="imageblock text-center">
-<div class="content">
-<img src="../../_images/training/keyBy.png" alt="keyBy">
-</div>
+<p>在此应用程序中使用 <code>RichCoFlatMap</code> 的问题在于，在实际系统中，我们必须期望某些记录会丢失或损坏。 这意味着随着时间的流逝，我们将积累越来越多的不匹配的 <code>TaxiRide</code> 和 <code>TaxiFare</code> 记录集合，等待与永远不会到达的事件数据进行匹配。 最终，我们的工作将耗尽内存。</p>
 </div>
 <div class="paragraph">
-<p>在上面的示例中, key 已由字段名称 "startCell" 指定.  这种类型的键选择具有一个缺点, 即编译器无法推断用于 key 的字段的类型, 因此Flink会将键值作为元组传递, 这可能很尴尬.  通常最好使用类型正确的KeySelector, eg:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">rides
-  .flatMap(new NYCEnrichment())
-  .keyBy(
-    new KeySelector&lt;EnrichedRide, int&gt;() {
-      @Override
-      public int getKey(EnrichedRide ride) throws Exception {
-        return ride.startCell;
-      }
-    })</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>用lambda可以更简洁地表达:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">rides
-  .flatMap(new NYCEnrichment())
-  .keyBy(ride -&gt; ride.startCell)</code></pre>
-</div>
+<p>您可以通过使用 <code>CoProcessFunction</code> 中可用的计时器来最终解决并清除所有保留的不匹配状态，从而解决此问题。</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_keyed_流上的聚合"><a class="anchor" href="#_keyed_流上的聚合"></a>Keyed 流上的聚合</h2>
+<h2 id="_输入数据"><a class="anchor" href="#_输入数据"></a>输入数据</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>此代码段创建一个新的元组流, 其中包含每个骑乘结束事件的 <code>startCell</code> 和持续时间（以分钟为单位）:</p>
+<p>在本练习中，您将使用两个数据流，一个流使用 <code>TaxiRideSource</code> 生成的 <code>TaxiRide</code> 事件，另一个使用 <code>TaxiFareSource</code> 生成的 <code>TaxiFare</code> 事件。</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">DataStream&lt;Tuple2&lt;Integer, Minutes&gt;&gt; minutesByStartCell = enrichedNYCRides
-  .flatMap(new FlatMapFunction&lt;EnrichedRide, Tuple2&lt;Integer, Minutes&gt;&gt;() {
-    @Override
-    public void flatMap(EnrichedRide ride,
-              Collector&lt;Tuple2&lt;Integer, Minutes&gt;&gt; out) throws Exception {
-      if (!ride.isStart) {
-        Interval rideInterval = new Interval(ride.startTime, ride.endTime);
-        Minutes duration = rideInterval.toDuration().toStandardMinutes();
-        out.collect(new Tuple2&lt;&gt;(ride.startCell, duration));
-      }
-    }
-  });</code></pre>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_模拟缺失数据"><a class="anchor" href="#_模拟缺失数据"></a>模拟缺失数据</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>我们已经安排了输入记录中可预测的部分丢失，因此您可以验证自己是否在正确地处理清除相应的状态。</p>
 </div>
 <div class="paragraph">
-<p>现在, 我们可以生成一个流, 其中仅包含每个 <code>startCell</code> 迄今为止最长的ride.  可以使用多种方式表示要用作关键字的字段.
-前面我们看到了一个 <code>EnrichedRide</code> POJO的示例, 在其中我们通过使用其名称指定了要使用的字段. 在这个例子下, 我们将使用Tuple2对象, 并在元组中提供从0开始的索引.</p>
+<p>练习代码在 TaxiRides 的 <code>FilterFunction</code> 中执行此操作。它会丢弃所有END事件，以及第1000个START事件。</p>
 </div>
+<div class="sect2">
+<h3 id="_java"><a class="anchor" href="#_java"></a>Java</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">minutesByStartCell
-  .keyBy(0) // startCell
-  .maxBy(1) // duration
-  .print();</code></pre>
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">DataStream&lt;TaxiRide&gt; rides = env
+  .addSource(new TaxiRideSource(ridesFile, servingSpeedFactor))
+  .filter((TaxiRide ride) -&gt; (ride.isStart &amp;&amp; (ride.rideId % 1000 != 0)))</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p>在输出流中, 每次持续时间达到新的最大值时, 我们都会看到每个键的记录. 比如 50797,8M:</p>
 </div>
+<div class="sect2">
+<h3 id="_scala"><a class="anchor" href="#_scala"></a>Scala</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-text hljs" data-lang="text">...
-4&gt; (64549,5M)
-4&gt; (46298,18M)
-1&gt; (51549,14M)
-1&gt; (53043,13M)
-1&gt; (56031,22M)
-1&gt; (50797,6M)
-...
-1&gt; (50797,8M)
-...
-1&gt; (50797,11M)
-...
-1&gt; (50797,12M)</code></pre>
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">val rides = env
+  .addSource(new TaxiRideSource(ridesFile, servingSpeedFactor))
+  .filter { ride =&gt; ride.isStart &amp;&amp; (ride.rideId % 1000 != 0) }</code></pre>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_隐含状态"><a class="anchor" href="#_隐含状态"></a>(隐含)状态</h2>
+<h2 id="_预期产量"><a class="anchor" href="#_预期产量"></a>预期产量</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>这是我们看到的第一个有状态流的示例. 尽管状态是透明处理的, 但是Flink必须跟踪每个不同 key 的最大持续时间.
-每当状态涉及到您的应用程序时, 您都应该考虑状态可能会变大. 只要 Key 空间是无界的, 那么 Flink 将需要的状态量也是那么多.
-在使用流时, 通常考虑在有限窗口而不是整个流上进行聚合来思考.</p>
+<p>该练习的结果是 <code>Tuple2&lt;TaxiRide，TaxiFare&gt;</code> 记录的数据流，每个不同的 <code>rideId</code> 都有一个。您应将每次乘车起步的事件及其相应的票价数据加入该事件。</p>
+</div>
+<div class="paragraph">
+<p>为了清楚地了解正在发生的情况，请创建侧面输出，在其中收集在 <code>CoProcessFunction</code> 的 <code>OnTimer</code> 方法中丢弃的每个不匹配的 <code>TaxiRide</code> 和 <code>TaxiFare</code> 。</p>
+</div>
+<div class="paragraph">
+<p>联接基本正常后，就不用再打印联接记录了。 相反，请打印输出到侧面输出的所有数据，并验证结果是否合理。 如果使用上面建议的过滤器，则应该会看到类似的内容。 这些是 <code>TaxiFare</code> 记录，曾在状态中存储了一段时间，但由于匹配的 <code>TaxiRide</code> 事件尚未到达而最终被丢弃。</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>1&gt; 1000,2013000992,2013000989,2013-01-01 00:05:38,CSH,0.0,4.8,18.3
+3&gt; 2000,2013001967,2013001964,2013-01-01 00:08:25,CSH,0.0,0.0,17.5
+3&gt; 4000,2013003768,2013003765,2013-01-01 00:13:00,CSH,0.0,0.0,26.5
+4&gt; 3000,2013002904,2013002901,2013-01-01 00:11:00,CRD,4.38,0.0,22.38
+4&gt; 5000,2013004578,2013004575,2013-01-01 00:15:03,CSH,0.0,0.0,11.0</pre>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_reduce_和其他聚合器"><a class="anchor" href="#_reduce_和其他聚合器"></a>reduce() 和其他聚合器</h2>
+<h2 id="_入门"><a class="anchor" href="#_入门"></a>入门</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>上面使用的 <code>maxBy()</code> 只是Flink的 <code>KeyedStream</code> 上可用的许多聚合函数的一个示例. 还有一个更通用的 <code>reduce()</code> 函数, 可用于实现自己的自定义聚合.</p>
+<div class="sect2">
+<h3 id="_tests"><a class="anchor" href="#_tests"></a>Tests</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/ververica/flink-training-exercises/blob/master/src/test/java/com/ververica/flinktraining/exercises/datastream_java/process/ExpiringStateTest.java" target="_blank" rel="noopener">com.ververica.flinktraining.exercises.datastream_java.process.ExpiringStateTest</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_exercise_classes"><a class="anchor" href="#_exercise_classes"></a>Exercise Classes</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Java: <a href="https://github.com/ververica/flink-training-exercises/blob/master/src/main/java/com/ververica/flinktraining/exercises/datastream_java/process/ExpiringStateExercise.java" target="_blank" rel="noopener">com.ververica.flinktraining.exercises.datastream_java.process.ExpiringStateExercise</a></p>
+</li>
+<li>
+<p>Scala: <a href="https://github.com/ververica/flink-training-exercises/blob/master/src/main/scala/com/ververica/flinktraining/exercises/datastream_scala/process/ExpiringStateExercise.scala" target="_blank" rel="noopener">com.ververica.flinktraining.exercises.datastream_scala.process.ExpiringStateExercise</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_documentation"><a class="anchor" href="#_documentation"></a>Documentation</h3>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://ci.apache.org/projects/flink/flink-docs-stable/dev/stream/operators/process_function.html" target="_blank" rel="noopener">ProcessFunction</a></p>
+</li>
+<li>
+<p><a href="https://ci.apache.org/projects/flink/flink-docs-stable/dev/stream/side_output.html" target="_blank" rel="noopener">Side Outputs</a></p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_进一步阅读"><a class="anchor" href="#_进一步阅读"></a>进一步阅读</h2>
+<h2 id="_参考解决方案"><a class="anchor" href="#_参考解决方案"></a>参考解决方案</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><a href="https://ci.apache.org/projects/flink/flink-docs-release-1.10/zh/dev/stream/operators/#datastream-transformations" target="_blank" rel="noopener">DataStream Transformations</a> (Apache Flink Documentation)</p>
+<p>参考解决方案可从GitHub获得：
+* Java: <a href="https://github.com/ververica/flink-training-exercises/blob/master/src/main/java/com/ververica/flinktraining/solutions/datastream_java/process/ExpiringStateSolution.java" target="_blank" rel="noopener">ExpiringStateSolution.java</a>
+* Scala: <a href="https://github.com/ververica/flink-training-exercises/blob/master/src/main/scala/com/ververica/flinktraining/solutions/datastream_scala/process/ExpiringStateSolution.scala" target="_blank" rel="noopener">ExpiringStateSolution.scala</a></p>
 </div>
 </div>
 </div>

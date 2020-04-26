@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Apache Flink Training :: The Cuddly Computing Machine</title>
-    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/flink/training/index.html">
+    <title>Flink 调度机制 :: The Cuddly Computing Machine</title>
+    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/flink/introduction/scheduling.html">
     <meta name="generator" content="Antora 2.0.0">
     <link rel="stylesheet" href="../../../../_/css/site.css">
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-86782445-1"></script>
@@ -42,22 +42,22 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Flink</span>
 <ul class="nav-list">
-  <li class="nav-item is-current-page" data-depth="2">
+  <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="index.html">Flink Training Home</a>
+    <a class="nav-link" href="../training/index.html">Flink Training Home</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Streaming 介绍</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="intro/intro-1.html">使用Apache Flink 进行流处理</a>
+    <a class="nav-link" href="../training/intro/intro-1.html">使用Apache Flink 进行流处理</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="intro/intro-2.html">流可以传输什么?</a>
+    <a class="nav-link" href="../training/intro/intro-2.html">流可以传输什么?</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="intro/intro-3.html">一个完整的例子</a>
+    <a class="nav-link" href="../training/intro/intro-3.html">一个完整的例子</a>
   </li>
 </ul>
   </li>
@@ -66,49 +66,49 @@
     <span class="nav-text">环境配置</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="labs/devEnvSetup.html">设置您的开发环境</a>
+    <a class="nav-link" href="../training/labs/devEnvSetup.html">设置您的开发环境</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="labs/taxiData.html">使用出租车数据流</a>
+    <a class="nav-link" href="../training/labs/taxiData.html">使用出租车数据流</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="labs/howto-exercises.html">如何做实验室</a>
+    <a class="nav-link" href="../training/labs/howto-exercises.html">如何做实验室</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="lab1/rideCleansing.html">Lab 1 - 过滤流</a>
+    <a class="nav-link" href="../training/lab1/rideCleansing.html">Lab 1 - 过滤流</a>
   </li>
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">数据转换</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="lab1/stateless.html">无状态转换</a>
+    <a class="nav-link" href="../training/lab1/stateless.html">无状态转换</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="lab1/keyed-streams.html">Keyed 流</a>
+    <a class="nav-link" href="../training/lab1/keyed-streams.html">Keyed 流</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="lab1/stateful.html">有状态的转换</a>
+    <a class="nav-link" href="../training/lab1/stateful.html">有状态的转换</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="lab1/connected-streams.html">连接流</a>
+    <a class="nav-link" href="../training/lab1/connected-streams.html">连接流</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="lab2/rideEnrichment-flatmap.html">Lab 2 - Stateful Enrichment</a>
+    <a class="nav-link" href="../training/lab2/rideEnrichment-flatmap.html">Lab 2 - Stateful Enrichment</a>
   </li>
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">时间和分析</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="lab3/event-time-watermarks.html">Event Time and Watermarks</a>
+    <a class="nav-link" href="../training/lab3/event-time-watermarks.html">Event Time and Watermarks</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="lab3/windows.html">Windows</a>
+    <a class="nav-link" href="../training/lab3/windows.html">Windows</a>
   </li>
 </ul>
   </li>
@@ -117,10 +117,10 @@
     <span class="nav-text">Lab 3 - Windowing</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="lab3/hourlyTips.html">Lab 3 - 窗口化分析</a>
+    <a class="nav-link" href="../training/lab3/hourlyTips.html">Lab 3 - 窗口化分析</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="lab3/hourlyTips-discussion.html">Lab 3 - 讨论</a>
+    <a class="nav-link" href="../training/lab3/hourlyTips-discussion.html">Lab 3 - 讨论</a>
   </li>
 </ul>
   </li>
@@ -129,10 +129,10 @@
     <span class="nav-text">事件驱动的应用</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="lab4/processfunction.html">ProcessFunction</a>
+    <a class="nav-link" href="../training/lab4/processfunction.html">ProcessFunction</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="lab4/side-outputs.html">Side Outputs</a>
+    <a class="nav-link" href="../training/lab4/side-outputs.html">Side Outputs</a>
   </li>
 </ul>
   </li>
@@ -141,10 +141,10 @@
     <span class="nav-text">Lab 4 - 到期状态</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="lab4/rideEnrichment-processfunction.html">Lab 4 - 练习</a>
+    <a class="nav-link" href="../training/lab4/rideEnrichment-processfunction.html">Lab 4 - 练习</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="lab4/expiring-state-discussion.html">Lab 4 - 讨论</a>
+    <a class="nav-link" href="../training/lab4/expiring-state-discussion.html">Lab 4 - 讨论</a>
   </li>
 </ul>
   </li>
@@ -153,75 +153,75 @@
     <span class="nav-text">容错能力</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="fault/state-backends.html">状态后端</a>
+    <a class="nav-link" href="../training/fault/state-backends.html">状态后端</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="fault/snapshots.html">检查点和保存点</a>
+    <a class="nav-link" href="../training/fault/snapshots.html">检查点和保存点</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="app-dev.html">应用开发</a>
+    <a class="nav-link" href="../training/app-dev.html">应用开发</a>
   </li>
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">其他练习</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="extra-labs/longRides.html">长途警报</a>
+    <a class="nav-link" href="../training/extra-labs/longRides.html">长途警报</a>
   </li>
   <li class="nav-item" data-depth="4">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">广播状态</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="extra-labs/nearestTaxi.html">寻找最近的出租车</a>
+    <a class="nav-link" href="../training/extra-labs/nearestTaxi.html">寻找最近的出租车</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="extra-labs/ongoingRides.html">报告正在进行的出租车</a>
+    <a class="nav-link" href="../training/extra-labs/ongoingRides.html">报告正在进行的出租车</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="extra-labs/taxiQuery.html">规则引擎</a>
+    <a class="nav-link" href="../training/extra-labs/taxiQuery.html">规则引擎</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="extra-labs/eventTimeJoin.html">丰富的 Joins</a>
+    <a class="nav-link" href="../training/extra-labs/eventTimeJoin.html">丰富的 Joins</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="resources.html">资源链接</a>
+    <a class="nav-link" href="../training/resources.html">资源链接</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../introduction/index.html">Flink 简介</a>
+    <a class="nav-link" href="index.html">Flink 简介</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../introduction/architecture.html">Flink 架构介绍</a>
+    <a class="nav-link" href="architecture.html">Flink 架构介绍</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../introduction/failover.html">Flink 容错机制</a>
+    <a class="nav-link" href="failover.html">Flink 容错机制</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="scheduling.html">Flink 调度机制</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../introduction/scheduling.html">Flink 调度机制</a>
+    <a class="nav-link" href="statemachine.html">Flink 状态机</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../introduction/statemachine.html">Flink 状态机</a>
+    <a class="nav-link" href="memorymanager.html">Flink 内存管理</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../introduction/memorymanager.html">Flink 内存管理</a>
+    <a class="nav-link" href="dataflow.html">Flink Dataflow</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../introduction/dataflow.html">Flink Dataflow</a>
+    <a class="nav-link" href="batchdata.html">Flink 批处理</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../introduction/batchdata.html">Flink 批处理</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../introduction/streamdata.html">Flink 流处理</a>
+    <a class="nav-link" href="streamdata.html">Flink 流处理</a>
   </li>
 </ul>
   </li>
@@ -433,67 +433,99 @@
   <ul>
     <li><a href="../../index.html">Cuddly Blog</a></li>
     <li>Flink</li>
-    <li><a href="index.html">Flink Training Home</a></li>
+    <li><a href="index.html">Flink 简介</a></li>
+    <li><a href="scheduling.html">Flink 调度机制</a></li>
   </ul>
 </nav>
 </div>
 <article class="doc">
-<h1 class="page">Apache Flink Training</h1>
-<div id="preamble">
+<h1 class="page">Flink 调度机制</h1>
+<div class="sect1">
+<h2 id="_调度"><a class="anchor" href="#_调度"></a>调度</h2>
 <div class="sectionbody">
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
+<div class="paragraph">
+<p>Flink中的运行资源被叫做 <strong>Task Slot</strong>. 每个TM都会有一个或者更多个slot.每个slot都可以并行的执行一个pipeline任务.一个pipeline任务包含多个连续的tasks. 比如有N个并行的map实例跟N个并行的reduce实例. 所以Flink经常会并发的执行连续的task.</p>
+</div>
+<div class="paragraph">
+<p>这里有个程序,包括data source, MapFunction, ReduceFunction.</p>
+</div>
 <div class="ulist">
 <ul>
 <li>
-<p>完全 Google 翻译, 请看原文. ☺ ☃ ☞ <a href="https://training.ververica.com/" target="_blank" rel="noopener">Flink Training Home</a></p>
+<p>source跟map的并行度是4.</p>
+</li>
+<li>
+<p>reduce的并行度是3. 当前程序的数据流管道的顺序是 <code>Source - Map - Reduce</code> . 当前集群上有2个TM,每个TM有3个slot. 这个程序的执行情况如图:</p>
 </li>
 </ul>
 </div>
-</td>
-</tr>
-</table>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../_images/introduction/slots.png" alt="slots">
 </div>
-<div class="paragraph">
-<p><a href="https://flink.apache.org/" target="_blank" rel="noopener">ApacheFlink®</a>是一个开源平台, 用于可伸缩的流和批处理数据处理. 它提供了用于定义批处理和流式数据流程序的表达性API, 以及用于执行这些作业的强大且可扩展的引擎.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_培训的目的和范围"><a class="anchor" href="#_培训的目的和范围"></a>培训的目的和范围</h2>
+<h2 id="_jobmanager"><a class="anchor" href="#_jobmanager"></a>JobManager</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>这次培训对Apache Flink进行了深刻的介绍, 其中包括的内容足以使您开始编写可伸缩的流ETL, 分析和事件驱动的应用程序, 同时省略了许多（极其重要的）细节. 重点是为Flink的API提供简单的介绍, 以管理状态和时间, 并期望您已掌握了这些基本知识, 可以更好地掌握文档中剩下的知识.</p>
+<p>在job运行期间,JM负责跟踪这些task.什么时候调度这些task.相应成功的task及处理失败的task.
+在JM端,会接收到Client提交的JobGraph形式的Flink Job,JM会将一个JobGraph转换映射为一个ExecutionGraph. 如下图:</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../_images/introduction/job_and_execution_graph.png" alt="job and execution graph">
+</div>
 </div>
 <div class="paragraph">
-<p>具体来说, 您将学习:</p>
+<p>其中JobVertex表示了对数据流进行的转换操作, 比如map,flatMap,filter,keyBy等操作, 而IntermediateDataSet是由上游的JobVertex所生成, 同时作为下游的JobVertex的输入.</p>
+</div>
+<div class="paragraph">
+<p>而ExecutionGraph是JobGraph的并行表示, 也就是实际JobManager调度一个Job在TaskManager上运行的逻辑视图. 它也是一个DAG图. 该图由ExecutionJobVertex,IntermediateResult(或IntermediateResultPartition)组成. ExecutionJobVertex:实际对应于JobGraph图中的JobVertex,只不过在ExecutionJobVertex内部是一种并行表示,由多个并行的ExecutionVertex所组成.</p>
+</div>
+<div class="paragraph">
+<p>JobGraph是唯一被Flink的数据流引擎所识别的表述作业的数据结构,该图抽象体现了流处理和批处理在运行时的统一.
+JobGraph包括:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>如何建立开发 Flink 程序的环境</p>
-</li>
+<p>作业顶点(JobVertex)</p>
+<div class="ulist">
+<ul>
 <li>
-<p>如何实现流数据处理管道</p>
-</li>
-<li>
-<p>Flink 如何以及为什么管理状态</p>
-</li>
-<li>
-<p>如何使用事件时间来一致地计算准确的分析</p>
-</li>
-<li>
-<p>如何在连续流上构建事件驱动的应用程序</p>
-</li>
-<li>
-<p>Flink 如何通过一次精确的语义提供容错的有状态流处理</p>
+<p>一个JobVertex关联着若干个JobEdge作为输入端以及若干个IntermediateDataSet作为其生产的结果集；</p>
 </li>
 </ul>
+</div>
+</li>
+<li>
+<p>中间数据集(IntermediateDataSet)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>一个IntermediateDataSet关联着一个JobVertex作为生产者以及若干个JobEdge作为消费者；</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>作业边(JobEdge)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>一个JobEdge关联着一个IntermediateDataSet可认为是源以及一个JobVertex可认为是目标消费者；</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../_images/introduction/JobGraph-visualization.png" alt="JobGraph visualization">
+</div>
 </div>
 </div>
 </div>

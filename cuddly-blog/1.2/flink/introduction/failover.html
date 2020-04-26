@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Apache Flink Training :: The Cuddly Computing Machine</title>
-    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/flink/training/index.html">
+    <title>Flink 容错机制 :: The Cuddly Computing Machine</title>
+    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/flink/introduction/failover.html">
     <meta name="generator" content="Antora 2.0.0">
     <link rel="stylesheet" href="../../../../_/css/site.css">
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-86782445-1"></script>
@@ -42,22 +42,22 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Flink</span>
 <ul class="nav-list">
-  <li class="nav-item is-current-page" data-depth="2">
+  <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="index.html">Flink Training Home</a>
+    <a class="nav-link" href="../training/index.html">Flink Training Home</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Streaming 介绍</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="intro/intro-1.html">使用Apache Flink 进行流处理</a>
+    <a class="nav-link" href="../training/intro/intro-1.html">使用Apache Flink 进行流处理</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="intro/intro-2.html">流可以传输什么?</a>
+    <a class="nav-link" href="../training/intro/intro-2.html">流可以传输什么?</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="intro/intro-3.html">一个完整的例子</a>
+    <a class="nav-link" href="../training/intro/intro-3.html">一个完整的例子</a>
   </li>
 </ul>
   </li>
@@ -66,49 +66,49 @@
     <span class="nav-text">环境配置</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="labs/devEnvSetup.html">设置您的开发环境</a>
+    <a class="nav-link" href="../training/labs/devEnvSetup.html">设置您的开发环境</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="labs/taxiData.html">使用出租车数据流</a>
+    <a class="nav-link" href="../training/labs/taxiData.html">使用出租车数据流</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="labs/howto-exercises.html">如何做实验室</a>
+    <a class="nav-link" href="../training/labs/howto-exercises.html">如何做实验室</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="lab1/rideCleansing.html">Lab 1 - 过滤流</a>
+    <a class="nav-link" href="../training/lab1/rideCleansing.html">Lab 1 - 过滤流</a>
   </li>
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">数据转换</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="lab1/stateless.html">无状态转换</a>
+    <a class="nav-link" href="../training/lab1/stateless.html">无状态转换</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="lab1/keyed-streams.html">Keyed 流</a>
+    <a class="nav-link" href="../training/lab1/keyed-streams.html">Keyed 流</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="lab1/stateful.html">有状态的转换</a>
+    <a class="nav-link" href="../training/lab1/stateful.html">有状态的转换</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="lab1/connected-streams.html">连接流</a>
+    <a class="nav-link" href="../training/lab1/connected-streams.html">连接流</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="lab2/rideEnrichment-flatmap.html">Lab 2 - Stateful Enrichment</a>
+    <a class="nav-link" href="../training/lab2/rideEnrichment-flatmap.html">Lab 2 - Stateful Enrichment</a>
   </li>
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">时间和分析</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="lab3/event-time-watermarks.html">Event Time and Watermarks</a>
+    <a class="nav-link" href="../training/lab3/event-time-watermarks.html">Event Time and Watermarks</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="lab3/windows.html">Windows</a>
+    <a class="nav-link" href="../training/lab3/windows.html">Windows</a>
   </li>
 </ul>
   </li>
@@ -117,10 +117,10 @@
     <span class="nav-text">Lab 3 - Windowing</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="lab3/hourlyTips.html">Lab 3 - 窗口化分析</a>
+    <a class="nav-link" href="../training/lab3/hourlyTips.html">Lab 3 - 窗口化分析</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="lab3/hourlyTips-discussion.html">Lab 3 - 讨论</a>
+    <a class="nav-link" href="../training/lab3/hourlyTips-discussion.html">Lab 3 - 讨论</a>
   </li>
 </ul>
   </li>
@@ -129,10 +129,10 @@
     <span class="nav-text">事件驱动的应用</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="lab4/processfunction.html">ProcessFunction</a>
+    <a class="nav-link" href="../training/lab4/processfunction.html">ProcessFunction</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="lab4/side-outputs.html">Side Outputs</a>
+    <a class="nav-link" href="../training/lab4/side-outputs.html">Side Outputs</a>
   </li>
 </ul>
   </li>
@@ -141,10 +141,10 @@
     <span class="nav-text">Lab 4 - 到期状态</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="lab4/rideEnrichment-processfunction.html">Lab 4 - 练习</a>
+    <a class="nav-link" href="../training/lab4/rideEnrichment-processfunction.html">Lab 4 - 练习</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="lab4/expiring-state-discussion.html">Lab 4 - 讨论</a>
+    <a class="nav-link" href="../training/lab4/expiring-state-discussion.html">Lab 4 - 讨论</a>
   </li>
 </ul>
   </li>
@@ -153,75 +153,75 @@
     <span class="nav-text">容错能力</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="fault/state-backends.html">状态后端</a>
+    <a class="nav-link" href="../training/fault/state-backends.html">状态后端</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="fault/snapshots.html">检查点和保存点</a>
+    <a class="nav-link" href="../training/fault/snapshots.html">检查点和保存点</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="app-dev.html">应用开发</a>
+    <a class="nav-link" href="../training/app-dev.html">应用开发</a>
   </li>
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">其他练习</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="extra-labs/longRides.html">长途警报</a>
+    <a class="nav-link" href="../training/extra-labs/longRides.html">长途警报</a>
   </li>
   <li class="nav-item" data-depth="4">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">广播状态</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="extra-labs/nearestTaxi.html">寻找最近的出租车</a>
+    <a class="nav-link" href="../training/extra-labs/nearestTaxi.html">寻找最近的出租车</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="extra-labs/ongoingRides.html">报告正在进行的出租车</a>
+    <a class="nav-link" href="../training/extra-labs/ongoingRides.html">报告正在进行的出租车</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="extra-labs/taxiQuery.html">规则引擎</a>
+    <a class="nav-link" href="../training/extra-labs/taxiQuery.html">规则引擎</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="extra-labs/eventTimeJoin.html">丰富的 Joins</a>
+    <a class="nav-link" href="../training/extra-labs/eventTimeJoin.html">丰富的 Joins</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="resources.html">资源链接</a>
+    <a class="nav-link" href="../training/resources.html">资源链接</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../introduction/index.html">Flink 简介</a>
+    <a class="nav-link" href="index.html">Flink 简介</a>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../introduction/architecture.html">Flink 架构介绍</a>
+    <a class="nav-link" href="architecture.html">Flink 架构介绍</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="failover.html">Flink 容错机制</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../introduction/failover.html">Flink 容错机制</a>
+    <a class="nav-link" href="scheduling.html">Flink 调度机制</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../introduction/scheduling.html">Flink 调度机制</a>
+    <a class="nav-link" href="statemachine.html">Flink 状态机</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../introduction/statemachine.html">Flink 状态机</a>
+    <a class="nav-link" href="memorymanager.html">Flink 内存管理</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../introduction/memorymanager.html">Flink 内存管理</a>
+    <a class="nav-link" href="dataflow.html">Flink Dataflow</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../introduction/dataflow.html">Flink Dataflow</a>
+    <a class="nav-link" href="batchdata.html">Flink 批处理</a>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../introduction/batchdata.html">Flink 批处理</a>
-  </li>
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../introduction/streamdata.html">Flink 流处理</a>
+    <a class="nav-link" href="streamdata.html">Flink 流处理</a>
   </li>
 </ul>
   </li>
@@ -433,67 +433,157 @@
   <ul>
     <li><a href="../../index.html">Cuddly Blog</a></li>
     <li>Flink</li>
-    <li><a href="index.html">Flink Training Home</a></li>
+    <li><a href="index.html">Flink 简介</a></li>
+    <li><a href="failover.html">Flink 容错机制</a></li>
   </ul>
 </nav>
 </div>
 <article class="doc">
-<h1 class="page">Apache Flink Training</h1>
+<h1 class="page">Flink 容错机制</h1>
 <div id="preamble">
 <div class="sectionbody">
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>完全 Google 翻译, 请看原文. ☺ ☃ ☞ <a href="https://training.ververica.com/" target="_blank" rel="noopener">Flink Training Home</a></p>
-</li>
-</ul>
-</div>
-</td>
-</tr>
-</table>
-</div>
 <div class="paragraph">
-<p><a href="https://flink.apache.org/" target="_blank" rel="noopener">ApacheFlink®</a>是一个开源平台, 用于可伸缩的流和批处理数据处理. 它提供了用于定义批处理和流式数据流程序的表达性API, 以及用于执行这些作业的强大且可扩展的引擎.</p>
+<p>Flink的容错机制的核心部分是绘制分布式数据流和Operator状态的一致快照.这些快照作为一个一致的检查点,在发生故障的情况下系统可以回退.
+Flink 分布式Checkpointing是通过Asynchronous Barrier Snapshots的算法实现的，该算法借鉴了 <a href="http://research.microsoft.com/en-us/um/people/lamport/pubs/chandy.pdf" target="_blank" rel="noopener">Chandy-Lamport算法</a> 的主要思想，同时做了一些改进，这些改进在论文 <a href="https://arxiv.org/abs/1506.08603" target="_blank" rel="noopener">Lightweight Asynchronous Snapshots for Distributed Dataflows</a> (分布式数据流的轻量级异步快照) 中进行了详尽的描述.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_培训的目的和范围"><a class="anchor" href="#_培训的目的和范围"></a>培训的目的和范围</h2>
+<h2 id="_barriers"><a class="anchor" href="#_barriers"></a>Barriers</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>这次培训对Apache Flink进行了深刻的介绍, 其中包括的内容足以使您开始编写可伸缩的流ETL, 分析和事件驱动的应用程序, 同时省略了许多（极其重要的）细节. 重点是为Flink的API提供简单的介绍, 以管理状态和时间, 并期望您已掌握了这些基本知识, 可以更好地掌握文档中剩下的知识.</p>
+<p>Stream Barrier是Flink分布式Snapshotting中的核心元素,它会作为数据流的记录一样被插入到数据流中,将数据流中的记录进行分组,并沿着数据流的方向向前推进.一个Barrier将数据流中的记录与进入当前快照的记录集和进入下一个快照的记录分隔开,每个Barrier会携带一个Snapshot ID,属于该Snapshot的记录会被推向该Barrier的前方.因为Barrier非常轻量,所以并不会中断数据流.</p>
 </div>
-<div class="paragraph">
-<p>具体来说, 您将学习:</p>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../_images/introduction/stream_barriers.png" alt="stream barriers">
+</div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>如何建立开发 Flink 程序的环境</p>
+<p>出现一个Barrier,在该Barrier之前出现的记录都属于该Barrier对应的Snapshot,在该Barrier之后出现的记录属于下一个Snapshot</p>
 </li>
 <li>
-<p>如何实现流数据处理管道</p>
-</li>
-<li>
-<p>Flink 如何以及为什么管理状态</p>
-</li>
-<li>
-<p>如何使用事件时间来一致地计算准确的分析</p>
-</li>
-<li>
-<p>如何在连续流上构建事件驱动的应用程序</p>
-</li>
-<li>
-<p>Flink 如何通过一次精确的语义提供容错的有状态流处理</p>
+<p>当一个中间Operator从它的所有输入流中接收到一个快照n的Barriers时,它就会向所有流出的流发出一个快照.一旦sink算子(流DAG的末端)从所有输入流中接收到barrier n,它就会向检查点协调器确认快照n.在所有sinks都确认了一个快照之后,它被认为是完成的.</p>
 </li>
 </ul>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../_images/introduction/barrier.png" alt="barrier">
+</div>
+</div>
+<div class="paragraph">
+<p>在Checkpoint过程中,还有一个比较重要的操作——Stream Aligning.当Operator接收到多个输入的数据流时,需要在Snapshot Barrier中对数据流进行排列对齐.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>一旦Operator从传入的流接收到 checkpoint barrier n,它就无法处理来自该流的任何其他记录,直到它从其他输入中接收到barrier n.否则会把属于checkpoint n的记录和属于checkpoint n+1的记录混在一起.</p>
+</li>
+<li>
+<p>接收到Barrier n的Stream被临时搁置,来自这些Stream的记录不会被处理,而是被放在一个Buffer中.</p>
+</li>
+<li>
+<p>一旦最后一个Stream接收到Barrier n,Operator会emit所有暂存在Buffer中的记录,然后向Checkpoint Coordinator发送Snapshot n.</p>
+</li>
+<li>
+<p>继续处理下一个barrier的记录.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>基于Stream Aligning操作能够实现Exactly Once语义，但是也会给流处理应用带来延迟，因为为了排列对齐Barrier，会暂时缓存一部分Stream的记录到Buffer中，尤其是在数据流并行度很高的场景下可能更加明显，通常以最迟对齐Barrier的一个Stream为处理Buffer中缓存记录的时刻点。在Flink中，提供了一个开关，选择是否使用Stream Aligning，如果关掉则Exactly Once会变成At least once。</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_state"><a class="anchor" href="#_state"></a>State</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Snapshot并不仅仅是对数据流做了一个Checkpoint,它也包含了一个Operator内部所持有的状态.这样才能够在保证在流处理系统失败时能够正确地恢复数据流处理.
+Operator的状态包含两种:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>一种是系统状态,一个Operator进行计算处理的时候需要对数据进行缓冲,所以数据缓冲区的状态是与Operator相关联的,以窗口操作的缓冲区为例,Flink系统会收集或聚合记录数据并放到缓冲区中,直到该缓冲区中的数据被处理完成.</p>
+</li>
+<li>
+<p>另一种是用户自定义状态（状态可以通过转换函数进行创建和修改）,它可以是函数中的Java对象这样的简单变量,也可以是与函数相关的Key/Value状态.</p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="_state_backend"><a class="anchor" href="#_state_backend"></a>State Backend</h3>
+<div class="paragraph">
+<p>当对具体的某一种 State 做 Checkpoint 的时候,这个时候就需要具体的 Backends 做为后备支持.Flink 目前提供了有如下的 Backends 的实现:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>MemoryStateBackend</p>
+<div class="ulist">
+<ul>
+<li>
+<p>如果作业没有配置指定 Backends 的话,就会默认采取 MemoryStateBackend 策略. MemoryStateBackend 把数据以内部对象的形式保存在 Java 的堆内存中.Key / Value 形式的 State 和 Window 操作会以 Hash 表的形式存储值和触发器等.</p>
+</li>
+<li>
+<p>在做 Checkpoint 之后,该 Backend 会对 State 做镜像并且做为 checkpoint 确认消息的一部分发送到 JobManager 中.同样也是存储在 该 JobManager 的堆内存里.</p>
+</li>
+<li>
+<p>默认大小是5MB.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>FsStateBackend</p>
+<div class="ulist">
+<ul>
+<li>
+<p>采用该种策略做为 Backends 的作业需要配置一个文件系统的 URL 参数,例如: <code>hdfs:///flink/checkpoints</code> 或者是  <code><a href="file:///data/flink/checkpoints" class="bare">file:///data/flink/checkpoints</a></code>  该种 Backends 的策略会把这些 State 先保存在 TaskManager 的内存中.一旦 checkpoint 后,就会把数据写入到之前配置 URL地址里去.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>RocksDBStateBackend</p>
+<div class="ulist">
+<ul>
+<li>
+<p>RocksDB 是一个内嵌的由 Facebook 开发的针对闪存以及内存的 Key-Value Store 存储系统. 同样的,采取该策略也需要配置和 FsStateBackends 一样的 URL 参数.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../_images/introduction/state-backend.png" alt="state backend">
+</div>
+</div>
+<div class="paragraph">
+<p>状态的快照可能很大,Streaming应用的状态会被存储到一个可配置的存储系统中,例如HDFS.在一个Checkpoint执行过程中,存储的状态信息及其交互过程如图:
+所得到的快照包含:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>每个流数据源的启动快照时流中的偏移/位置.</p>
+</li>
+<li>
+<p>每个operator内部的状态信息都会作为当前快照的一部分.</p>
+</li>
+</ul>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../_images/introduction/checkpointing-big.png" alt="checkpointing big">
+</div>
+</div>
 </div>
 </div>
 </div>

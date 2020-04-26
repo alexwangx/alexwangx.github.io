@@ -1,0 +1,994 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Flink 批处理 :: The Cuddly Computing Machine</title>
+    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/flink/introduction/batchdata.html">
+    <meta name="generator" content="Antora 2.0.0">
+    <link rel="stylesheet" href="../../../../_/css/site.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-86782445-1"></script>
+    <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-86782445-1')</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="http://alexwangx.github.io">The Cuddly Computing Machine</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/alexwangx">GitHub</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="cuddly-blog" data-version="1.2">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../index.html">Cuddly Blog</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Flink</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../training/index.html">Flink Training Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Streaming 介绍</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/intro/intro-1.html">使用Apache Flink 进行流处理</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/intro/intro-2.html">流可以传输什么?</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/intro/intro-3.html">一个完整的例子</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">环境配置</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/labs/devEnvSetup.html">设置您的开发环境</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/labs/taxiData.html">使用出租车数据流</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/labs/howto-exercises.html">如何做实验室</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../training/lab1/rideCleansing.html">Lab 1 - 过滤流</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">数据转换</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab1/stateless.html">无状态转换</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab1/keyed-streams.html">Keyed 流</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab1/stateful.html">有状态的转换</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab1/connected-streams.html">连接流</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../training/lab2/rideEnrichment-flatmap.html">Lab 2 - Stateful Enrichment</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">时间和分析</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab3/event-time-watermarks.html">Event Time and Watermarks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab3/windows.html">Windows</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Lab 3 - Windowing</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab3/hourlyTips.html">Lab 3 - 窗口化分析</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab3/hourlyTips-discussion.html">Lab 3 - 讨论</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">事件驱动的应用</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab4/processfunction.html">ProcessFunction</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab4/side-outputs.html">Side Outputs</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Lab 4 - 到期状态</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab4/rideEnrichment-processfunction.html">Lab 4 - 练习</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab4/expiring-state-discussion.html">Lab 4 - 讨论</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">容错能力</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/fault/state-backends.html">状态后端</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/fault/snapshots.html">检查点和保存点</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../training/app-dev.html">应用开发</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">其他练习</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/extra-labs/longRides.html">长途警报</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">广播状态</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../training/extra-labs/nearestTaxi.html">寻找最近的出租车</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../training/extra-labs/ongoingRides.html">报告正在进行的出租车</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../training/extra-labs/taxiQuery.html">规则引擎</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/extra-labs/eventTimeJoin.html">丰富的 Joins</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../training/resources.html">资源链接</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Flink 简介</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="architecture.html">Flink 架构介绍</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="failover.html">Flink 容错机制</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="scheduling.html">Flink 调度机制</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="statemachine.html">Flink 状态机</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="memorymanager.html">Flink 内存管理</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="dataflow.html">Flink Dataflow</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="batchdata.html">Flink 批处理</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="streamdata.html">Flink 流处理</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../internals/index.html">Flink 学习笔记</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spark</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spark ops</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../spark/ops/spark-exitcode.html">Spark 任务退出码</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../spark/ops/spark-issues.html">Spark 常见错误</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../spark/spark-internals/index.html">Spark 2.4.4 架构原理</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../spark/spark-internals/root/spark-overview.html">Overview</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hadoop</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../hadoop/hadoop_krb_install.html">Hadoop 配置 Kerberos</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hadoop ops</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hadoop/hdp-ops/hadoop_commands.html">Hadoop Commands</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hadoop/hdp-ops/hadoop_practices.html">Hadoop Practices</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hadoop/hdp-ops/hadoop_jmx.html">Hadoop JMX</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hadoop/hdp-ops/hadoop_delroot.html">Hadoop 意外删除挽救</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hbase</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hbase ops</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hbase/hbase-ops/hbase_notes.html">Hbase 基本命令</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hbase/hbase-ops/hbase_issues.html">Hbase Issues</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Druid</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../druid/druid-install.html">Druid 安装</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Druid 架构</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/tutorial-load-data.html">Druid 导入数据</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/druid-internals.html">Druid 0.1.5 架构</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/broker.html">Druid Broker</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/coordinator.html">Druid Coordinator</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/historical.html">Druid Historical</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/middleManager.html">Druid MiddleManager</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/overlord.html">Druid Overlord</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/router.html">Druid Router</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/segment.html">Druid Segments</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Kafka</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../kafka/kafka_practices.html">Kafka Practices</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../kafka/kafka_issues.html">Kafka Issues</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Other</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../mac.html">Mac OS</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../linux.html">Linux</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../mysql_install.html">Mysql 安装</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../readlist.html">北京中小学孩子读书清单</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../demo/demo.html">Adoc Demo</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Cuddly Blog</span>
+    <span class="version">1.2</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">Cuddly Blog</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../index.html">1.2</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main>
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../index.html">Cuddly Blog</a></li>
+    <li>Flink</li>
+    <li><a href="index.html">Flink 简介</a></li>
+    <li><a href="batchdata.html">Flink 批处理</a></li>
+  </ul>
+</nav>
+</div>
+<article class="doc">
+<h1 class="page">Flink 批处理</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Flink中的DataSet程序是定期在数据集上实现算子操作(eg, filtering, mapping, joining, grouping). 数据集来自任何一个源(eg:  by reading files, or from local collections). 处理结果通过sinks将数据写入文件或标准输出.</p>
+</div>
+<div class="paragraph">
+<p>WordCount程序示例:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public class WordCountExample {
+    public static void main(String[] args) throws Exception {
+        final ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
+
+        DataSet&lt;String&gt; text = env.fromElements(
+            "Who's there?",
+            "I think I hear them. Stand, ho! Who's there?");
+
+        DataSet&lt;Tuple2&lt;String, Integer&gt;&gt; wordCounts = text
+            .flatMap(new LineSplitter())
+            .groupBy(0)
+            .sum(1);
+
+        wordCounts.print();
+    }
+
+    public static class LineSplitter implements FlatMapFunction&lt;String, Tuple2&lt;String, Integer&gt;&gt; {
+        @Override
+        public void flatMap(String line, Collector&lt;Tuple2&lt;String, Integer&gt;&gt; out) {
+            for (String word : line.split(" ")) {
+                out.collect(new Tuple2&lt;String, Integer&gt;(word, 1));
+            }
+        }
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_data_sources"><a class="anchor" href="#_data_sources"></a>Data Sources</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>File-based:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>readTextFile(Stringpath)</code>  默认读取TextInputFormat格式,每行作为一个字符串.</p>
+</li>
+<li>
+<p><code>readTextFileWithValue(Stringpath)</code>  返回StringValues对象.</p>
+</li>
+<li>
+<p><code>readCsvFile(Stringpath)</code>  返回Java POJOS或者tuples.</p>
+</li>
+<li>
+<p><code>readFileofPremitives(path, delimiter, class)</code>  解析一行数据到指定的class.</p>
+</li>
+<li>
+<p><code>readHadoopFile(FileInputFormat, Key, Value, path)</code>  读取Hadoop文件.</p>
+</li>
+<li>
+<p><code>readSequenceFile(Key, Value, path)</code>  读取SequenceFile格式的文件.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Collection-based:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>fromCollection(Collection)</code> - 通过java集合创建一个数据流.</p>
+</li>
+<li>
+<p><code>fromCollection(Iterator, Class)</code> - 通过iterator创建数据流.</p>
+</li>
+<li>
+<p><code>fromElements(T &#8230;&#8203;)</code> - 通过一个序列对象创建数据流.</p>
+</li>
+<li>
+<p>etc</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Generic</p>
+<div class="ulist">
+<ul>
+<li>
+<p>readFile(inputFormat, path) / FileInputFormat - Accepts a file input format.</p>
+</li>
+<li>
+<p>createInput(inputFormat) / InputFormat - Accepts a generic input format.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><code>Examples</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
+
+// read text file from local files system
+DataSet&lt;String&gt; localLines = env.readTextFile("file:///path/to/my/textfile");
+
+// read text file from a HDFS running at nnHost:nnPort
+DataSet&lt;String&gt; hdfsLines = env.readTextFile("hdfs://nnHost:nnPort/path/to/my/textfile");
+
+// read a CSV file with three fields
+DataSet&lt;Tuple3&lt;Integer, String, Double&gt;&gt; csvInput = env.readCsvFile("hdfs:///the/CSV/file")
+                         .types(Integer.class, String.class, Double.class);
+
+// read a CSV file with five fields, taking only two of them
+DataSet&lt;Tuple2&lt;String, Double&gt;&gt; csvInput = env.readCsvFile("hdfs:///the/CSV/file")
+                               .includeFields("10010")  // take the first and the fourth field
+                         .types(String.class, Double.class);
+
+// read a CSV file with three fields into a POJO (Person.class) with corresponding fields
+DataSet&lt;Person&gt;&gt; csvInput = env.readCsvFile("hdfs:///the/CSV/file")
+                         .pojoType(Person.class, "name", "age", "zipcode");
+
+
+// read a file from the specified path of type TextInputFormat
+DataSet&lt;Tuple2&lt;LongWritable, Text&gt;&gt; tuples =
+ env.readHadoopFile(new TextInputFormat(), LongWritable.class, Text.class, "hdfs://nnHost:nnPort/path/to/file");
+
+// read a file from the specified path of type SequenceFileInputFormat
+DataSet&lt;Tuple2&lt;IntWritable, Text&gt;&gt; tuples =
+ env.readSequenceFile(IntWritable.class, Text.class, "hdfs://nnHost:nnPort/path/to/file");
+
+// creates a set from some given elements
+DataSet&lt;String&gt; value = env.fromElements("Foo", "bar", "foobar", "fubar");
+
+// generate a number sequence
+DataSet&lt;Long&gt; numbers = env.generateSequence(1, 10000000);
+
+// Read data from a relational database using the JDBC input format
+DataSet&lt;Tuple2&lt;String, Integer&gt; dbData =
+    env.createInput(
+      JDBCInputFormat.buildJDBCInputFormat()
+                     .setDrivername("org.apache.derby.jdbc.EmbeddedDriver")
+                     .setDBUrl("jdbc:derby:memory:persons")
+                     .setQuery("select name, age from persons")
+                     .setRowTypeInfo(new RowTypeInfo(BasicTypeInfo.STRING_TYPE_INFO, BasicTypeInfo.INT_TYPE_INFO))
+                     .finish()
+    );
+
+// Note: Flink's program compiler needs to infer the data types of the data items which are returned
+// by an InputFormat. If this information cannot be automatically inferred, it is necessary to
+// manually provide the type information as shown in the examples above.</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_data_sinks"><a class="anchor" href="#_data_sinks"></a>Data Sinks</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><code>Examples</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// text data
+DataSet&lt;String&gt; textData = // [...]
+
+// write DataSet to a file on the local file system
+textData.writeAsText("file:///my/result/on/localFS");
+
+// write DataSet to a file on a HDFS with a namenode running at nnHost:nnPort
+textData.writeAsText("hdfs://nnHost:nnPort/my/result/on/localFS");
+
+// write DataSet to a file and overwrite the file if it exists
+textData.writeAsText("file:///my/result/on/localFS", WriteMode.OVERWRITE);
+
+// tuples as lines with pipe as the separator "a|b|c"
+DataSet&lt;Tuple3&lt;String, Integer, Double&gt;&gt; values = // [...]
+values.writeAsCsv("file:///path/to/the/result/file", "\n", "|");
+
+// this writes tuples in the text formatting "(a, b, c)", rather than as CSV lines
+values.writeAsText("file:///path/to/the/result/file");
+
+// this writes values as strings using a user-defined TextFormatter object
+values.writeAsFormattedText("file:///path/to/the/result/file",
+    new TextFormatter&lt;Tuple2&lt;Integer, Integer&gt;&gt;() {
+        public String format (Tuple2&lt;Integer, Integer&gt; value) {
+            return value.f1 + " - " + value.f0;
+        }
+    });
+```
+**Using a custom output format**
+```java
+DataSet&lt;Tuple3&lt;String, Integer, Double&gt;&gt; myResult = [...]
+
+// write Tuple DataSet to a relational database
+myResult.output(
+    // build and configure OutputFormat
+    JDBCOutputFormat.buildJDBCOutputFormat()
+                    .setDrivername("org.apache.derby.jdbc.EmbeddedDriver")
+                    .setDBUrl("jdbc:derby:memory:persons")
+                    .setQuery("insert into persons (name, age, height) values (?,?,?)")
+                    .finish()
+    );</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_transformations"><a class="anchor" href="#_transformations"></a>Transformations</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>在transformation部分,有些算子操作和流处理的是一样的,这里不做一一介绍.只介绍一些在流处理中没有的操作.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../_images/introduction/batch-transfor.png" alt="batch transfor">
+</div>
+</div>
+<div class="paragraph">
+<p><a href="https://ci.apache.org/projects/flink/flink-docs-release-1.10/dev/batch/#dataset-transformations">具体参考: DataStream Transformations</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_broadcast_variables"><a class="anchor" href="#_broadcast_variables"></a>Broadcast Variables</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>广播变量允许用户将特定的DataSet发送到各个节点的内存中.值得注意的是,由于是发送dataSet,因此这个dataSet的大小不能太大.</p>
+</div>
+<div class="paragraph">
+<p>广播变量的使用主要分为2步:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>将dataSet广播出去:withBroadcastSet(DataSet, String)</p>
+</li>
+<li>
+<p>获取:在其他operator中,通过继承RichXXFunction,重写open方法来获得:getRuntimeContext().getBroadcastVariable(String)</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// 1. The DataSet to be broadcast
+DataSet&lt;Integer&gt; toBroadcast = env.fromElements(1, 2, 3);
+
+DataSet&lt;String&gt; data = env.fromElements("a", "b");
+
+data.map(new RichMapFunction&lt;String, String&gt;() {
+    @Override
+    public void open(Configuration parameters) throws Exception {
+      // 3. Access the broadcast DataSet as a Collection
+      Collection&lt;Integer&gt; broadcastSet = getRuntimeContext().getBroadcastVariable("broadcastSetName");
+    }
+
+
+    @Override
+    public String map(String value) throws Exception {
+        ...
+    }
+}).withBroadcastSet(toBroadcast, "broadcastSetName"); // 2. Broadcast the DataSet</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/apache/flink/blob/master/flink-examples/flink-examples-batch/src/main/java/org/apache/flink/examples/java/clustering/KMeans.java">可参考一个K-mean算法的例子,也用到了广播变量</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_distributed_cache"><a class="anchor" href="#_distributed_cache"></a>Distributed Cache</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Flink提供了一个类似于Hadoop的分布式缓存,让并行运行实例的函数可以像访问本地文件一样去直接访问.这个功能可以被使用来分享外部静态的数据比如:字典数据,机器学习的逻辑回归模型等.</p>
+</div>
+<div class="paragraph">
+<p><code>在ExecutionEnvironment中去注册缓存文件.</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
+
+// register a file from HDFS
+env.registerCachedFile("hdfs:///path/to/your/file", "hdfsFile")
+
+// register a local executable file (script, executable, ...)
+env.registerCachedFile("file:///path/to/exec/file", "localExecFile", true)
+
+// define your program and execute
+...
+DataSet&lt;String&gt; input = ...
+DataSet&lt;Integer&gt; result = input.map(new MyMapper());
+...
+env.execute();</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>用户可以在自己的实现功能逻辑里面访问缓存文件,注意:自己实现的功能类,必须继承RichMapFunction类,因为只有这个类可以访问上下文(RuntimeContext).</strong></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// extend a RichFunction to have access to the RuntimeContext
+public final class MyMapper extends RichMapFunction&lt;String, Integer&gt; {
+
+    @Override
+    public void open(Configuration config) {
+
+      // access cached file via RuntimeContext and DistributedCache
+      File myFile = getRuntimeContext().getDistributedCache().getFile("hdfsFile");
+      // read the file (or navigate the directory)
+      ...
+    }
+
+    @Override
+    public Integer map(String value) throws Exception {
+      // use content of cached file
+      ...
+    }
+}</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_迭代"><a class="anchor" href="#_迭代"></a>迭代</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>迭代可适用于多个领域,如:机器学习,图计算等.
+Flink程序通过把一个step函数嵌入到迭代器中实现迭代. 迭代器分为:Iterate,Delta Iterate(增量迭代). 两个迭代器反复调用step函数直到当前迭代器到达退出状态.</p>
+</div>
+<div class="sect2">
+<h3 id="_iterate迭代器"><a class="anchor" href="#_iterate迭代器"></a>Iterate迭代器</h3>
+<div class="paragraph">
+<p>在迭代器中,step函数去消费上游的数据(eg:上一个迭代器的输出.或者数据流).然后计算需要迭代的数据集.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../_images/introduction/iterations_iterate_operator.png" alt="iterations iterate operator">
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Iteration Input: 上一个迭代器的输出.或者数据流.</p>
+</li>
+<li>
+<p>Step Function: 迭代器需要执行的函数,他是任何你需要的算子逻辑的组成(e.g. map, reduce, join, etc.)</p>
+</li>
+<li>
+<p>Next Partial Solution: 当前迭代的输出,回流到下一次迭代的输入.</p>
+</li>
+<li>
+<p>Iteration Result: 当前迭代输出给下游.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>终止迭代的方式:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Maximum number of iterations: 设置迭代次数.</p>
+</li>
+<li>
+<p>Custom aggregator convergence: 自定义迭代终止条件.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><code>PI例子</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">final ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
+
+// Create initial IterativeDataSet
+// 基于输入流构建IterativeDataSet,这是一个迭代的起始,通常称之为迭代头.此处设置最多迭代10000次.
+IterativeDataSet&lt;Integer&gt; initial = env.fromElements(0).iterate(10000);
+
+// 我们指定一系列的转换操作用于表述在迭代过程中执行的逻辑(这里简单以map转换作为示例)
+DataSet&lt;Integer&gt; iteration = initial.map(new MapFunction&lt;Integer, Integer&gt;() {
+    @Override
+    public Integer map(Integer i) throws Exception {
+        double x = Math.random();
+        double y = Math.random();
+
+        return i + ((x * x + y * y &lt; 1) ? 1 : 0);
+    }
+});
+
+//将反馈流反馈给迭代头就意味着一个迭代的完整逻辑的完成,那么它就可以"关闭"这个闭合的"环"了.
+//通过调用IterativeDataSet的closeWith这一实例方法可以关闭一个迭代.
+//传递给closeWith的数据流将会反馈给迭代头
+// Iteratively transform the IterativeDataSet
+DataSet&lt;Integer&gt; count = initial.closeWith(iteration);
+
+count.map(new MapFunction&lt;Integer, Double&gt;() {
+    @Override
+    public Double map(Integer count) throws Exception {
+        return count / (double) 10000 * 4;
+    }
+}).print();
+
+env.execute("Iterative Pi Example");</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><strong>一个简单自增的例子</strong></p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../_images/introduction/iterations_iterate_operator_example.png" alt="iterations iterate operator example">
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Iteration Input: 输入是1..5个数字.迭代次数是10次.</p>
+</li>
+<li>
+<p>Step function: step函数是一个简单的map operator, 主要功能就是对每个数+1.</p>
+</li>
+<li>
+<p>Next Partial Solution: 反复迭代.</p>
+</li>
+<li>
+<p>Iteration Result: 10次迭代之后输出结果.</p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>// 1st           2nd                       10th
+map(1) -&gt; 2      map(2) -&gt; 3      ...      map(10) -&gt; 11
+map(2) -&gt; 3      map(3) -&gt; 4      ...      map(11) -&gt; 12
+map(3) -&gt; 4      map(4) -&gt; 5      ...      map(12) -&gt; 13
+map(4) -&gt; 5      map(5) -&gt; 6      ...      map(13) -&gt; 14
+map(5) -&gt; 6      map(6) -&gt; 7      ...      map(14) -&gt; 15</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_增量迭代"><a class="anchor" href="#_增量迭代"></a>增量迭代</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>增量迭代与普通迭代的区别是:增量迭代是更新上一步迭代的结果,而不是全部重新计算一次.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../_images/introduction/iterations_delta_iterate_operator.png" alt="iterations delta iterate operator">
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Iteration Input: 上一个迭代器的输出.或者数据流.</p>
+</li>
+<li>
+<p>Step Function: 迭代器需要执行的函数,他是任何你需要的算子逻辑的组成(e.g. map, reduce, join, etc.)</p>
+</li>
+<li>
+<p>Next Workset/Update Solution Set: 分为workSet和solutionSet</p>
+<div class="ulist">
+<ul>
+<li>
+<p>workset负责迭代计算,并回流到下一次迭代的输入.</p>
+</li>
+<li>
+<p>solutionSet维护这上一次迭代后的信息.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Iteration Result: 迭代结束之后solutionSet把结果集写出.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>终止迭代的方式:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>为空的workset结果集.</p>
+</li>
+<li>
+<p>设置迭代次数. Custom aggregator convergence: 自定义迭代终止条件.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><code>示例</code></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// read the initial data sets
+// 初始的解集
+DataSet&lt;Tuple2&lt;Long, Double&gt;&gt; initialSolutionSet = // [...]
+
+// 初始的工作集
+DataSet&lt;Tuple2&lt;Long, Double&gt;&gt; initialDeltaSet = // [...]
+
+int maxIterations = 100;//最大迭代次数
+int keyPosition = 0;//元组中字段的下标,该下标所表示的字段将会作为解集的键.
+
+// 生成增量迭代器.
+DeltaIteration&lt;Tuple2&lt;Long, Double&gt;, Tuple2&lt;Long, Double&gt;&gt; iteration = initialSolutionSet
+    .iterateDelta(initialDeltaSet, maxIterations, keyPosition);
+
+// 获得workset
+DataSet&lt;Tuple2&lt;Long, Double&gt;&gt; candidateUpdates = iteration.getWorkset()
+    .groupBy(1)
+    .reduceGroup(new ComputeCandidateChanges());
+
+//通过workSet以及solutionSet的join操作,每次迭代时对workSet应用solutionSet中的状态值,实现了增量迭代的效果.
+DataSet&lt;Tuple2&lt;Long, Double&gt;&gt; deltas = candidateUpdates
+    .join(iteration.getSolutionSet())
+    .where(0)
+    .equalTo(0)
+    .with(new CompareChangesToCurrent());
+
+DataSet&lt;Tuple2&lt;Long, Double&gt;&gt; nextWorkset = deltas
+    .filter(new FilterByThreshold());
+
+iteration.closeWith(deltas, nextWorkset)
+  .writeAsCsv(outputPath);</code></pre>
+</div>
+</div>
+</div>
+</div>
+</article>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../../_/js/site.js"></script>
+<script async src="../../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

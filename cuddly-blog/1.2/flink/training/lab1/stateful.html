@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Keyed 流 :: The Cuddly Computing Machine</title>
-    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/flink/training/lab1/keyed-streams.html">
+    <title>有状态转换 :: The Cuddly Computing Machine</title>
+    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/flink/training/lab1/stateful.html">
     <meta name="generator" content="Antora 2.0.0">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-86782445-1"></script>
@@ -86,10 +86,10 @@
   <li class="nav-item" data-depth="4">
     <a class="nav-link" href="stateless.html">无状态转换</a>
   </li>
-  <li class="nav-item is-current-page" data-depth="4">
+  <li class="nav-item" data-depth="4">
     <a class="nav-link" href="keyed-streams.html">Keyed 流</a>
   </li>
-  <li class="nav-item" data-depth="4">
+  <li class="nav-item is-current-page" data-depth="4">
     <a class="nav-link" href="stateful.html">有状态的转换</a>
   </li>
   <li class="nav-item" data-depth="4">
@@ -435,142 +435,170 @@
     <li>Flink</li>
     <li><a href="../index.html">Flink Training Home</a></li>
     <li>数据转换</li>
-    <li><a href="keyed-streams.html">Keyed 流</a></li>
+    <li><a href="stateful.html">有状态的转换</a></li>
   </ul>
 </nav>
 </div>
 <article class="doc">
-<h1 class="page">Keyed 流</h1>
+<h1 class="page">有状态转换</h1>
 <div class="sect1">
-<h2 id="_keyby"><a class="anchor" href="#_keyby"></a>keyBy()</h2>
+<h2 id="_为什么_flink_要管理状态"><a class="anchor" href="#_为什么_flink_要管理状态"></a>为什么 Flink 要管理状态</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>能够围绕流的属性之一对流进行分区通常非常有用, 以便将具有该属性的相同值的所有事件组合在一起.
-例如, 假设我们想找到从每个网格单元中运行时间最长的出租车.
-如果我们考虑的是SQL查询, 则意味着要使用 <code>startCell</code> 进行某种 <code>GROUP BY</code> , 而在Flink中, 这需要使用 <code>keyBy(KeySelector)</code> 完成</p>
+<p>你的应用程序当然能够使用状态, 而无需Flink参与管理状态-但是Flink为它管理的状态提供了一些引人注目的功能:</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">rides
-  .flatMap(new NYCEnrichment())
-  .keyBy("startCell")</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>每个keyBy都会进行 shuffle 操作, 从而对流进行重新分区. 通常代价非常高, 因为它涉及网络通信以及序列化和反序列化.</p>
-</div>
-<div class="imageblock text-center">
-<div class="content">
-<img src="../../_images/training/keyBy.png" alt="keyBy">
-</div>
-</div>
-<div class="paragraph">
-<p>在上面的示例中, key 已由字段名称 "startCell" 指定.  这种类型的键选择具有一个缺点, 即编译器无法推断用于 key 的字段的类型, 因此Flink会将键值作为元组传递, 这可能很尴尬.  通常最好使用类型正确的KeySelector, eg:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">rides
-  .flatMap(new NYCEnrichment())
-  .keyBy(
-    new KeySelector&lt;EnrichedRide, int&gt;() {
-      @Override
-      public int getKey(EnrichedRide ride) throws Exception {
-        return ride.startCell;
-      }
-    })</code></pre>
-</div>
+<div class="ulist">
+<ul>
+<li>
+<p>local: Flink 状态保持在处理它的节点本地, 并且可以以内存速度访问.</p>
+</li>
+<li>
+<p>持久: Flink 状态可以自动 checkpoint 并恢复</p>
+</li>
+<li>
+<p>纵向扩展: Flink 状态可以保留在嵌入式 RocksDB 实例中, 该实例可以通过添加更多本地磁盘来扩展</p>
+</li>
+<li>
+<p>水平扩展: 随着群集的增长和收缩, Flink 状态可以重新分配</p>
+</li>
+<li>
+<p>可查询: 可以通过 REST API 查询 Flink 状态</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>用lambda可以更简洁地表达:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">rides
-  .flatMap(new NYCEnrichment())
-  .keyBy(ride -&gt; ride.startCell)</code></pre>
-</div>
+<p>在本课程中, 您将学习如何使用Flink的API管理 keyed 状态.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_keyed_流上的聚合"><a class="anchor" href="#_keyed_流上的聚合"></a>Keyed 流上的聚合</h2>
+<h2 id="_rich_functions"><a class="anchor" href="#_rich_functions"></a>Rich Functions</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>此代码段创建一个新的元组流, 其中包含每个骑乘结束事件的 <code>startCell</code> 和持续时间（以分钟为单位）:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">DataStream&lt;Tuple2&lt;Integer, Minutes&gt;&gt; minutesByStartCell = enrichedNYCRides
-  .flatMap(new FlatMapFunction&lt;EnrichedRide, Tuple2&lt;Integer, Minutes&gt;&gt;() {
-    @Override
-    public void flatMap(EnrichedRide ride,
-              Collector&lt;Tuple2&lt;Integer, Minutes&gt;&gt; out) throws Exception {
-      if (!ride.isStart) {
-        Interval rideInterval = new Interval(ride.startTime, ride.endTime);
-        Minutes duration = rideInterval.toDuration().toStandardMinutes();
-        out.collect(new Tuple2&lt;&gt;(ride.startCell, duration));
-      }
-    }
-  });</code></pre>
-</div>
+<p>至此, 我们已经看到了 Flink 的几个功能接口, 包括 <code>FilterFunction</code> , <code>MapFunction</code> 和 <code>FlatMapFunction</code> . 这些都是“单一抽象方法”模式的示例.</p>
 </div>
 <div class="paragraph">
-<p>现在, 我们可以生成一个流, 其中仅包含每个 <code>startCell</code> 迄今为止最长的ride.  可以使用多种方式表示要用作关键字的字段.
-前面我们看到了一个 <code>EnrichedRide</code> POJO的示例, 在其中我们通过使用其名称指定了要使用的字段. 在这个例子下, 我们将使用Tuple2对象, 并在元组中提供从0开始的索引.</p>
+<p>对于每个接口, Flink还提供了一个所谓的 “丰富” 变体, 例如 <code>RichFlatMapFunction</code> , 它具有一些其他方法, 包括:</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">minutesByStartCell
-  .keyBy(0) // startCell
-  .maxBy(1) // duration
-  .print();</code></pre>
-</div>
+<div class="ulist">
+<ul>
+<li>
+<p>open(Configuration c)</p>
+</li>
+<li>
+<p>close()</p>
+</li>
+<li>
+<p>getRuntimeContext()</p>
+</li>
+</ul>
 </div>
 <div class="paragraph">
-<p>在输出流中, 每次持续时间达到新的最大值时, 我们都会看到每个键的记录. 比如 50797,8M:</p>
+<p>在 operator 初始化期间, <code>open()</code> 被调用一次. 例如, 这是加载一些静态数据或打开与外部服务的连接的机会.</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-text hljs" data-lang="text">...
-4&gt; (64549,5M)
-4&gt; (46298,18M)
-1&gt; (51549,14M)
-1&gt; (53043,13M)
-1&gt; (56031,22M)
-1&gt; (50797,6M)
-...
-1&gt; (50797,8M)
-...
-1&gt; (50797,11M)
-...
-1&gt; (50797,12M)</code></pre>
-</div>
+<div class="paragraph">
+<p><code>getRuntimeContext()</code> 提供对上下文的访问, 但是最值得注意的是, 它是您如何创建和访问由 Flink 管理的状态的方法.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_隐含状态"><a class="anchor" href="#_隐含状态"></a>(隐含)状态</h2>
+<h2 id="_一个_keyed_state_的例子"><a class="anchor" href="#_一个_keyed_state_的例子"></a>一个 Keyed State 的例子</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>这是我们看到的第一个有状态流的示例. 尽管状态是透明处理的, 但是Flink必须跟踪每个不同 key 的最大持续时间.
-每当状态涉及到您的应用程序时, 您都应该考虑状态可能会变大. 只要 Key 空间是无界的, 那么 Flink 将需要的状态量也是那么多.
-在使用流时, 通常考虑在有限窗口而不是整个流上进行聚合来思考.</p>
+<p>在此示例中, 我们具有由 <code>Tuple2&lt;String, Double&gt;</code> 事件组成的传感器读数流, 这些事件指定每个传感器读数的传感器ID和值. 我们的目标是对来自每个传感器的数据进行平滑处理, 我​​们将使用称为 <code>Smoother</code> 的 <code>RichMapFunction</code> 进行处理.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">DataStream&lt;Tuple2&lt;String, Double&gt;&gt; input = …
+DataStream&lt;Tuple2&lt;String, Double&gt;&gt; smoothed = input.keyBy(0).map(new Smoother());</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>为此, 我们的 <code>Smoother</code> 将需要以某种方式记录每个传感器的最新数据, 这将使用 <code>Flink</code> 的 `keyed state ` 接口来完成.</p>
+</div>
+<div class="paragraph">
+<p>当您使用像这样的 <code>keyed</code> 流时, Flink 将为所管理的每个状态项维护一个 <code>key/value</code> 存储.</p>
+</div>
+<div class="paragraph">
+<p>Flink 支持几种不同类型的 <code>keyed state</code>, 但是在此示例中, 我们将使用最简单的一种, 即 <code>ValueState</code> . 这意味着Flink将为每个key 储一个对象, 在这种情况下, 将存储为 <code>MovingAverage</code> 类型的对象. 出于性能原因, Flink 为特定类型(包括 <code>ListState</code> 和 <code>MapState</code> )提供了特殊支持.</p>
+</div>
+<div class="paragraph">
+<p><code>Smoother</code> 类有两种方法: <code>open()</code> 和 <code>map()</code>. 在 open 方法中, 我们通过定义 <code>ValueStateDescriptor&lt;MovingAverage&gt;</code> 来建立对托管状态的使用. 构造函数的参数为此 keyed state ("moving average") 指定一个名称, 并提供可用于序列化这些对象的信息(在本例中为类MovingAverage.class).</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">public static class Smoother extends RichMapFunction&lt;Tuple2&lt;String, Double&gt;, Tuple2&lt;String, Double&gt;&gt; {
+  private ValueState&lt;MovingAverage&gt; averageState;
+
+  @Override
+  public void open (Configuration conf) {
+    ValueStateDescriptor&lt;MovingAverage&gt; descriptor =
+      new ValueStateDescriptor&lt;&gt;("moving average", MovingAverage.class);
+    averageState = getRuntimeContext().getState(descriptor);
+  }
+
+  @Override
+  public Tuple2&lt;String, Double&gt; map (Tuple2&lt;String, Double&gt; item) throws Exception {
+    // access the state for this key
+    MovingAverage average = averageState.value();
+
+    // create a new MovingAverage (with window size 2) if none exists for this key
+    if (average == null) average = new MovingAverage(2);
+
+    // add this event to the moving average
+    average.add(item.f1);
+    averageState.update(average);
+
+    // return the smoothed result
+    return new Tuple2(item.f0, average.getAverage());
+  }
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><code>Smoother</code> 中的 map 方法负责使用 <code>MovingAverage</code> 平滑每个事件. 每次 map 处理一个 event 时, 该 event 都与特定的键(即特定的传感器)相关联, 并且我们的 <code>ValueState</code> 对象 (averageState) 上的方法隐式地作用于与该 key 绑定的状态下进行操作. 因此, 换句话说, 调用 <code>averageState.value()</code> 返回相应传感器的当前`MovingAverage` 对象, 因此, 当我们调用 <code>average.add(item.f1)</code> 时, 我们将此事件添加到同一键的先前事件中(即 同一传感器).</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_reduce_和其他聚合器"><a class="anchor" href="#_reduce_和其他聚合器"></a>reduce() 和其他聚合器</h2>
+<h2 id="_清理状态"><a class="anchor" href="#_清理状态"></a>清理状态</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>上面使用的 <code>maxBy()</code> 只是Flink的 <code>KeyedStream</code> 上可用的许多聚合函数的一个示例. 还有一个更通用的 <code>reduce()</code> 函数, 可用于实现自己的自定义聚合.</p>
+<p>上面的示例存在一个潜在的问题: 如果 key 空间不受限制, 将会发生什么？Flink 为每个使用的不同的 key 在某处存储一个 <code>MovingAverage</code> 实例. 如果传感器数量有限, 那就很好了, 但是在 keys 无限制增长的应用中, 有必要清除不再需要的 key 的状态. 这是通过在状态对象上调用 <code>clear()</code> 来完成的, 如下所示:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">averageState.clear()</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>例如, 您可能要在指定的 key 不活动一段时间之后执行此操作. 再我们学习关于 <code>ProcessFunction ` 的课程时 <a href="../lab4/processfunction.html" class="page">event-driven applications</a>, 将会看到如何使用 `Timers</code> 去实现.</p>
+</div>
+<div class="paragraph">
+<p>1.6版中的 Flink 还添加了 “状态生存时间”（TTL）特性. 您可以使用它来指定何时希望自动清除陈旧 key 的状态.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_non_keyed_state"><a class="anchor" href="#_non_keyed_state"></a>Non-keyed State</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>也可以在  non-keyed 上下文中使用托管状态.  有时将其称为 <code>operator</code> 状态. 所涉及的接口有些不同, 并且由于用户定义的函数通常需要  non-keyed 状态, 因此在此不再赘述.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
 <h2 id="_进一步阅读"><a class="anchor" href="#_进一步阅读"></a>进一步阅读</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p><a href="https://ci.apache.org/projects/flink/flink-docs-release-1.10/zh/dev/stream/operators/#datastream-transformations" target="_blank" rel="noopener">DataStream Transformations</a> (Apache Flink Documentation)</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://ci.apache.org/projects/flink/flink-docs-master/zh/dev/stream/state/state.html" target="_blank" rel="noopener">Working with State</a> (Apache Flink Documentation)</p>
+</li>
+<li>
+<p><a href="https://ci.apache.org/projects/flink/flink-docs-master/zh/dev/stream/state/state.html#%E4%BD%BF%E7%94%A8-managed-keyed-state" target="_blank" rel="noopener">Using Managed Operator State</a> (Apache Flink Documentation)</p>
+</li>
+</ul>
 </div>
 </div>
 </div>

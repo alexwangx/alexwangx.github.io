@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: The Cuddly Computing Machine</title>
-    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/index.html">
+    <title>mysql 安装 :: The Cuddly Computing Machine</title>
+    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/mysql_install.html">
     <meta name="generator" content="Antora 2.0.0">
     <link rel="stylesheet" href="../../_/css/site.css">
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-86782445-1"></script>
@@ -390,7 +390,7 @@
   <li class="nav-item" data-depth="2">
     <a class="nav-link" href="linux.html">Linux</a>
   </li>
-  <li class="nav-item" data-depth="2">
+  <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="mysql_install.html">Mysql 安装</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -428,16 +428,169 @@
 <main>
 <div class="toolbar" role="navigation">
 <button class="nav-toggle"></button>
-  <a href="index.html" class="home-link is-current"></a>
+  <a href="index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Cuddly Blog</a></li>
+    <li>Other</li>
+    <li><a href="mysql_install.html">Mysql 安装</a></li>
+  </ul>
 </nav>
 </div>
 <article class="doc">
-<div class="imageblock text-right">
-<div class="content">
-<img src="_images/BSD.png" alt="BSD">
+<h1 class="page">mysql 安装</h1>
+<div class="sect1">
+<h2 id="_centos"><a class="anchor" href="#_centos"></a>Centos</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>yum -y install mysql-server</code></p>
+</li>
+<li>
+<p><code>service mysqld start</code></p>
+</li>
+</ol>
 </div>
-<div class="title">Figure 1. Done is better than perfect !</div>
+<div class="sect2">
+<h3 id="_install_mysql5_6"><a class="anchor" href="#_install_mysql5_6"></a>install mysql5.6</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>下载repo: <code>wget <a href="http://repo.mysql.com/mysql-community-release-el6-5.noarch.rpm" class="bare">http://repo.mysql.com/mysql-community-release-el6-5.noarch.rpm</a></code></p>
+</li>
+<li>
+<p>安装这个repo: <code>yum localinstall mysql-community-release-el6-5.noarch.rpm</code></p>
+</li>
+<li>
+<p>查看repo是否被添加: <code>yum repolist enabled | grep "mysql.<strong>-community.</strong>"</code></p>
+</li>
+<li>
+<p>按住mysql: <code>yum install mysql-community-server</code></p>
+</li>
+<li>
+<p>初始化db: <code>mysql_install_db --user=mysql</code></p>
+</li>
+<li>
+<p>启动mysql: <code>service mysqld start</code></p>
+</li>
+<li>
+<p>开启远程: <code>update user set host = '%' where user = 'root' and host = 'localhost';</code></p>
+</li>
+<li>
+<p><code>flush privileges;</code></p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_homebrew安装"><a class="anchor" href="#_homebrew安装"></a>homebrew安装</h3>
+<div class="paragraph">
+<p>初始化</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">sudo mysql_install_db --verbose --user=`whoami` --basedir="$(brew --prefix mysql)" --datadir=/usr/local/var/mysql --tmpdir=/tmp --explicit_defaults_for_timestamp</code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>启动</p>
+<div class="ulist">
+<ul>
+<li>
+<p>/usr/local/opt/mysql/bin/mysqld_safe &amp;</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>停止</p>
+<div class="ulist">
+<ul>
+<li>
+<p>mysqladmin -uroot -proot shutdown</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>屏蔽权限启动</p>
+<div class="ulist">
+<ul>
+<li>
+<p>mysqld_safe --skip-grant-table &amp;</p>
+</li>
+<li>
+<p>mysql -u root mysql</p>
+</li>
+<li>
+<p>UPDATE user SET Password=PASSWORD('newpassword') where USER='root';</p>
+</li>
+<li>
+<p>FLUSH PRIVILEGES;</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>修改密码</p>
+<div class="ulist">
+<ul>
+<li>
+<p>/usr/local/opt/mysql/bin/mysqladmin -u root password 'new-password'</p>
+</li>
+<li>
+<p>/usr/local/opt/mysql/bin/mysql_secure_installation</p>
+</li>
+<li>
+<p>mysql -u root -p</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_新增用户及授权"><a class="anchor" href="#_新增用户及授权"></a>新增用户及授权</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>mysql 新增用户及授权</p>
+<div class="listingblock">
+<div class="content">
+<pre>SELECT user.Host,user.User,user.Password FROM user  order by user ;
+delete from user where user='idfa' and host = 'localhost'</pre>
+</div>
+</div>
+</li>
+<li>
+<p>新建用户,授权只读(多个host执行多次)</p>
+<div class="listingblock">
+<div class="content">
+<pre>insert into mysql.user(Host,User,Password) values("192.168.1.111","idfa",password("B2nwTD6xGd"));
+grant select on mobile.ipad_idfa to idfa@192.168.1.111 ;
+grant select on mobile.iphone_idfa to idfa@192.168.1.111 ;
+flush privileges;</pre>
+</div>
+</div>
+</li>
+<li>
+<p>撤销所有授权</p>
+<div class="listingblock">
+<div class="content">
+<pre>revoke all on mobile.ipad_idfa from idfa@192.168.1.111 ;
+revoke all on mobile.iphone_idfa from idfa@192.168.1.111 ;
+flush privileges;</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
 </div>
 </article>
 </main>

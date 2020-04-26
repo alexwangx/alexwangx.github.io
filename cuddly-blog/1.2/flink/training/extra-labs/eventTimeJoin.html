@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Keyed 流 :: The Cuddly Computing Machine</title>
-    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/flink/training/lab1/keyed-streams.html">
+    <title>丰富的 Joins :: The Cuddly Computing Machine</title>
+    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/flink/training/extra-labs/eventTimeJoin.html">
     <meta name="generator" content="Antora 2.0.0">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-86782445-1"></script>
@@ -77,23 +77,23 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="rideCleansing.html">Lab 1 - 过滤流</a>
+    <a class="nav-link" href="../lab1/rideCleansing.html">Lab 1 - 过滤流</a>
   </li>
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">数据转换</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="stateless.html">无状态转换</a>
-  </li>
-  <li class="nav-item is-current-page" data-depth="4">
-    <a class="nav-link" href="keyed-streams.html">Keyed 流</a>
+    <a class="nav-link" href="../lab1/stateless.html">无状态转换</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="stateful.html">有状态的转换</a>
+    <a class="nav-link" href="../lab1/keyed-streams.html">Keyed 流</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="connected-streams.html">连接流</a>
+    <a class="nav-link" href="../lab1/stateful.html">有状态的转换</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../lab1/connected-streams.html">连接流</a>
   </li>
 </ul>
   </li>
@@ -168,25 +168,25 @@
     <span class="nav-text">其他练习</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../extra-labs/longRides.html">长途警报</a>
+    <a class="nav-link" href="longRides.html">长途警报</a>
   </li>
   <li class="nav-item" data-depth="4">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">广播状态</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../extra-labs/nearestTaxi.html">寻找最近的出租车</a>
+    <a class="nav-link" href="nearestTaxi.html">寻找最近的出租车</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../extra-labs/ongoingRides.html">报告正在进行的出租车</a>
+    <a class="nav-link" href="ongoingRides.html">报告正在进行的出租车</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../extra-labs/taxiQuery.html">规则引擎</a>
+    <a class="nav-link" href="taxiQuery.html">规则引擎</a>
   </li>
 </ul>
   </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../extra-labs/eventTimeJoin.html">丰富的 Joins</a>
+  <li class="nav-item is-current-page" data-depth="4">
+    <a class="nav-link" href="eventTimeJoin.html">丰富的 Joins</a>
   </li>
 </ul>
   </li>
@@ -434,143 +434,169 @@
     <li><a href="../../../index.html">Cuddly Blog</a></li>
     <li>Flink</li>
     <li><a href="../index.html">Flink Training Home</a></li>
-    <li>数据转换</li>
-    <li><a href="keyed-streams.html">Keyed 流</a></li>
+    <li>其他练习</li>
+    <li><a href="eventTimeJoin.html">丰富的 Joins</a></li>
   </ul>
 </nav>
 </div>
 <article class="doc">
-<h1 class="page">Keyed 流</h1>
+<h1 class="page">丰富的 Joins</h1>
 <div class="sect1">
-<h2 id="_keyby"><a class="anchor" href="#_keyby"></a>keyBy()</h2>
+<h2 id="_介绍"><a class="anchor" href="#_介绍"></a>介绍</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>能够围绕流的属性之一对流进行分区通常非常有用, 以便将具有该属性的相同值的所有事件组合在一起.
-例如, 假设我们想找到从每个网格单元中运行时间最长的出租车.
-如果我们考虑的是SQL查询, 则意味着要使用 <code>startCell</code> 进行某种 <code>GROUP BY</code> , 而在Flink中, 这需要使用 <code>keyBy(KeySelector)</code> 完成</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">rides
-  .flatMap(new NYCEnrichment())
-  .keyBy("startCell")</code></pre>
-</div>
+<p>本练习的目的是探索通过将客户信息作为客户更新流到达而丰富金融交易流的技术。 关于富集 join的思考方式有多种，本练习的目的是探讨有关此主题的一些变体。</p>
 </div>
 <div class="paragraph">
-<p>每个keyBy都会进行 shuffle 操作, 从而对流进行重新分区. 通常代价非常高, 因为它涉及网络通信以及序列化和反序列化.</p>
+<p>我们已经为 <code>Trade</code> 流和 <code>Customer</code> 流实现了源。 这些来源是简单的模拟，仅提供有关一个客户以及该客户交易的事件。 这两个流可以在它们共有的 <code>customerId</code> 字段上连接。</p>
+</div>
+<div class="sect2">
+<h3 id="_定时"><a class="anchor" href="#_定时"></a>定时</h3>
+<div class="paragraph">
+<p>按事件时间进行组织时，这两个流的行为如下所示 - 我们首先在时间0了解 <code>Customer</code> ，然后在时间500再了解，等等-第一次 <code>Trade</code> 发生在时间1000，依此类推：</p>
 </div>
 <div class="imageblock text-center">
 <div class="content">
-<img src="../../_images/training/keyBy.png" alt="keyBy">
+<img src="../../_images/training/join-event-time.png" alt="join event time">
 </div>
 </div>
 <div class="paragraph">
-<p>在上面的示例中, key 已由字段名称 "startCell" 指定.  这种类型的键选择具有一个缺点, 即编译器无法推断用于 key 的字段的类型, 因此Flink会将键值作为元组传递, 这可能很尴尬.  通常最好使用类型正确的KeySelector, eg:</p>
+<p>但是，在处理时间来看，这两个流恰好按顺序到达，但彼此竞争。 例如，第二条 <code>Customer</code> 记录在事件时间内早于第一个 <code>Trade</code> ，但在处理时间之后到达：</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../../_images/training/join-processing-time.png" alt="join processing time">
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_数据类型"><a class="anchor" href="#_数据类型"></a>数据类型</h3>
+<div class="paragraph">
+<p><code>Trade</code> 记录包含：</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">rides
-  .flatMap(new NYCEnrichment())
-  .keyBy(
-    new KeySelector&lt;EnrichedRide, int&gt;() {
-      @Override
-      public int getKey(EnrichedRide ride) throws Exception {
-        return ride.startCell;
-      }
-    })</code></pre>
+<pre>timestamp      : long    // timestamp (milliseconds since the epoch)
+customerId     : long    // a unique id for each event
+tradeInfo      : String  // payload</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>用lambda可以更简洁地表达:</p>
+<p><code>Customer</code> 记录包含：</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">rides
-  .flatMap(new NYCEnrichment())
-  .keyBy(ride -&gt; ride.startCell)</code></pre>
+<pre>timestamp      : long    // timestamp (milliseconds since the epoch)
+customerId     : long    // a unique id for each event
+customerInfo   : String  // payload</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>join 的结果将是一个 <code>EnrichedTrade</code> ：</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>trade          : Trade
+customer       : Customer</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>您将在此处找到定义的这些基本类型：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://github.com/ververica/flink-training-exercises/blob/master/src/main/java/com/ververica/flinktraining/exercises/datastream_java/datatypes/Customer.java" target="_blank" rel="noopener">Customer.java</a></p>
+</li>
+<li>
+<p><a href="https://github.com/ververica/flink-training-exercises/blob/master/src/main/java/com/ververica/flinktraining/exercises/datastream_java/datatypes/Trade.java" target="_blank" rel="noopener">Trade.java</a></p>
+</li>
+<li>
+<p><a href="https://github.com/ververica/flink-training-exercises/blob/master/src/main/java/com/ververica/flinktraining/exercises/datastream_java/datatypes/EnrichedTrade.java">^EnrichedTrade.java</a></p>
+</li>
+</ul>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_keyed_流上的聚合"><a class="anchor" href="#_keyed_流上的聚合"></a>Keyed 流上的聚合</h2>
+<h2 id="_处理时间join"><a class="anchor" href="#_处理时间join"></a>处理时间join</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>此代码段创建一个新的元组流, 其中包含每个骑乘结束事件的 <code>startCell</code> 和持续时间（以分钟为单位）:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">DataStream&lt;Tuple2&lt;Integer, Minutes&gt;&gt; minutesByStartCell = enrichedNYCRides
-  .flatMap(new FlatMapFunction&lt;EnrichedRide, Tuple2&lt;Integer, Minutes&gt;&gt;() {
-    @Override
-    public void flatMap(EnrichedRide ride,
-              Collector&lt;Tuple2&lt;Integer, Minutes&gt;&gt; out) throws Exception {
-      if (!ride.isStart) {
-        Interval rideInterval = new Interval(ride.startTime, ride.endTime);
-        Minutes duration = rideInterval.toDuration().toStandardMinutes();
-        out.collect(new Tuple2&lt;&gt;(ride.startCell, duration));
-      }
-    }
-  });</code></pre>
-</div>
+<p>这是实施 join 的最简单方法，适用于欺诈检测之类的用例，在这些案例中，精确，确定的结果不是必须的，而保持较低的延迟非常有价值。 这里的总体思路是，利用可获得的任何客户信息立即 join 每笔交易。</p>
 </div>
 <div class="paragraph">
-<p>现在, 我们可以生成一个流, 其中仅包含每个 <code>startCell</code> 迄今为止最长的ride.  可以使用多种方式表示要用作关键字的字段.
-前面我们看到了一个 <code>EnrichedRide</code> POJO的示例, 在其中我们通过使用其名称指定了要使用的字段. 在这个例子下, 我们将使用Tuple2对象, 并在元组中提供从0开始的索引.</p>
+<p>您可以在 <code>ProcessingTimeJoinExercise</code> 类中找到这种连接的有效实现。</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">minutesByStartCell
-  .keyBy(0) // startCell
-  .maxBy(1) // duration
-  .print();</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>在输出流中, 每次持续时间达到新的最大值时, 我们都会看到每个键的记录. 比如 50797,8M:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-text hljs" data-lang="text">...
-4&gt; (64549,5M)
-4&gt; (46298,18M)
-1&gt; (51549,14M)
-1&gt; (53043,13M)
-1&gt; (56031,22M)
-1&gt; (50797,6M)
-...
-1&gt; (50797,8M)
-...
-1&gt; (50797,11M)
-...
-1&gt; (50797,12M)</code></pre>
+<div class="sect2">
+<h3 id="_练习"><a class="anchor" href="#_练习"></a>练习</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>为此实现编写一些测试。</p>
+</li>
+<li>
+<p>思考的问题： <code>ProcessingTimeJoinExercise</code> 实现了类似于外部联接的操作（可能存在没有匹配的 <code>Customer</code> 的 <code>Trade</code>  ，在这种情况下，此实现将产生 <code>(Trade, null)</code> 作为结果）。 在某些情况下，如果有匹配的 <code>Customer</code> 到达，那么值得等待一段时间吗？ 您将如何实施呢？</p>
+</li>
+</ol>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_隐含状态"><a class="anchor" href="#_隐含状态"></a>(隐含)状态</h2>
+<h2 id="_event_time_join"><a class="anchor" href="#_event_time_join"></a>Event Time Join</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>这是我们看到的第一个有状态流的示例. 尽管状态是透明处理的, 但是Flink必须跟踪每个不同 key 的最大持续时间.
-每当状态涉及到您的应用程序时, 您都应该考虑状态可能会变大. 只要 Key 空间是无界的, 那么 Flink 将需要的状态量也是那么多.
-在使用流时, 通常考虑在有限窗口而不是整个流上进行聚合来思考.</p>
+<p>处理 Time Join 易于实现，并且可以以最小的延迟生成，但不适用于某些应用程序。 如果您需要可重现的确定性结果，则应使用交易时可知的最新客户信息来进行扩展。</p>
+</div>
+<div class="paragraph">
+<p>以下是进行活动时间加入所涉及的内容：</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>将每个交易以键控状态存储，直到当前水印达到交易的时间戳为止。</p>
+</li>
+<li>
+<p>存储所有可能相关的客户记录（而不是像处理时加入那样仅存储最新记录）。</p>
+</li>
+<li>
+<p>在适当的时候，将适当版本的客户信息加入每个交易中。</p>
+</li>
+<li>
+<p>最终清除不再需要的客户数据。</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>您将在 <code>EventTimeJoinExercise</code> 类中找到这种连接的有效实现。</p>
+</div>
+<div class="sect2">
+<h3 id="_测验"><a class="anchor" href="#_测验"></a>测验</h3>
+<div class="paragraph">
+<p>您可以在以下位置找到此实现的测试</p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/ververica/flink-training-exercises/blob/master/src/test/java/com/ververica/flinktraining/exercises/datastream_java/process/EventTimeJoinTest.java" target="_blank" rel="noopener">com.ververica.flinktraining.exercises.datastream_java.process.EventTimeJoinTest</a></p>
+</div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_reduce_和其他聚合器"><a class="anchor" href="#_reduce_和其他聚合器"></a>reduce() 和其他聚合器</h2>
+<h2 id="_练习_2"><a class="anchor" href="#_练习_2"></a>练习</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>上面使用的 <code>maxBy()</code> 只是Flink的 <code>KeyedStream</code> 上可用的许多聚合函数的一个示例. 还有一个更通用的 <code>reduce()</code> 函数, 可用于实现自己的自定义聚合.</p>
-</div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_进一步阅读"><a class="anchor" href="#_进一步阅读"></a>进一步阅读</h2>
-<div class="sectionbody">
-<div class="paragraph">
-<p><a href="https://ci.apache.org/projects/flink/flink-docs-release-1.10/zh/dev/stream/operators/#datastream-transformations" target="_blank" rel="noopener">DataStream Transformations</a> (Apache Flink Documentation)</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>扩展此实现以处理后期交易。 这将要求对过期的客户记录不那么积极。</p>
+</li>
+<li>
+<p>实现一个低延迟变体，该变体立即与可用的客户数据（如果有的话）结合在一起，然后在客户更新到达时发出更新的结果。</p>
+</li>
+<li>
+<p>额外的：扩展测试以涵盖此新功能。</p>
+</li>
+</ol>
 </div>
 </div>
 </div>

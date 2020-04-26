@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Keyed 流 :: The Cuddly Computing Machine</title>
-    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/flink/training/lab1/keyed-streams.html">
+    <title>规则引擎 :: The Cuddly Computing Machine</title>
+    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/flink/training/extra-labs/taxiQuery.html">
     <meta name="generator" content="Antora 2.0.0">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-86782445-1"></script>
@@ -77,23 +77,23 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="rideCleansing.html">Lab 1 - 过滤流</a>
+    <a class="nav-link" href="../lab1/rideCleansing.html">Lab 1 - 过滤流</a>
   </li>
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">数据转换</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="stateless.html">无状态转换</a>
-  </li>
-  <li class="nav-item is-current-page" data-depth="4">
-    <a class="nav-link" href="keyed-streams.html">Keyed 流</a>
+    <a class="nav-link" href="../lab1/stateless.html">无状态转换</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="stateful.html">有状态的转换</a>
+    <a class="nav-link" href="../lab1/keyed-streams.html">Keyed 流</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="connected-streams.html">连接流</a>
+    <a class="nav-link" href="../lab1/stateful.html">有状态的转换</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../lab1/connected-streams.html">连接流</a>
   </li>
 </ul>
   </li>
@@ -168,25 +168,25 @@
     <span class="nav-text">其他练习</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../extra-labs/longRides.html">长途警报</a>
+    <a class="nav-link" href="longRides.html">长途警报</a>
   </li>
   <li class="nav-item" data-depth="4">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">广播状态</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../extra-labs/nearestTaxi.html">寻找最近的出租车</a>
+    <a class="nav-link" href="nearestTaxi.html">寻找最近的出租车</a>
   </li>
   <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../extra-labs/ongoingRides.html">报告正在进行的出租车</a>
+    <a class="nav-link" href="ongoingRides.html">报告正在进行的出租车</a>
   </li>
-  <li class="nav-item" data-depth="5">
-    <a class="nav-link" href="../extra-labs/taxiQuery.html">规则引擎</a>
+  <li class="nav-item is-current-page" data-depth="5">
+    <a class="nav-link" href="taxiQuery.html">规则引擎</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../extra-labs/eventTimeJoin.html">丰富的 Joins</a>
+    <a class="nav-link" href="eventTimeJoin.html">丰富的 Joins</a>
   </li>
 </ul>
   </li>
@@ -434,143 +434,169 @@
     <li><a href="../../../index.html">Cuddly Blog</a></li>
     <li>Flink</li>
     <li><a href="../index.html">Flink Training Home</a></li>
-    <li>数据转换</li>
-    <li><a href="keyed-streams.html">Keyed 流</a></li>
+    <li>其他练习</li>
+    <li>广播状态</li>
+    <li><a href="taxiQuery.html">规则引擎</a></li>
   </ul>
 </nav>
 </div>
 <article class="doc">
-<h1 class="page">Keyed 流</h1>
-<div class="sect1">
-<h2 id="_keyby"><a class="anchor" href="#_keyby"></a>keyBy()</h2>
+<h1 class="page">规则引擎</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>能够围绕流的属性之一对流进行分区通常非常有用, 以便将具有该属性的相同值的所有事件组合在一起.
-例如, 假设我们想找到从每个网格单元中运行时间最长的出租车.
-如果我们考虑的是SQL查询, 则意味着要使用 <code>startCell</code> 进行某种 <code>GROUP BY</code> , 而在Flink中, 这需要使用 <code>keyBy(KeySelector)</code> 完成</p>
+<p>如果尚未这样做，则需要首先 <a href="../labs/devEnvSetup.html" class="page">设置Flink开发环境</a> 。 有关这些练习的总体介绍，请参见 <a href="../labs/howto-exercises.html" class="page">如何进行练习</a>。</p>
+</div>
+<div class="paragraph">
+<p>通过本练习，您将使用 <code>KeyedBroadcastProcessFunction</code> 连接两个流：</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>一系列的 <code>TaxiRide</code> 事件，以及</p>
+</li>
+<li>
+<p>您可以在其中输入查询/规则的查询流。</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>TaxiRides 的流由 taxiId 设置关键字，对于每个出租车，最新的乘坐事件将保留在关键字状态。 这意味着对于每辆出租车，我们都有其当前状况的记录：要么是在某个旅程的中间某个地方开始某个时间和地点，要么我们最后听说的是一场旅程结束了。</p>
+</div>
+<div class="paragraph">
+<p>这些查询是Java表达式，在求值时会产生一个布尔值。 这些查询表达式的作用域和当前 <code>watermark</code> 在范围内。 每当新的查询表达式到达时，都会针对所有已存储（键控）出租车对它进行评估，并且每当查询表达式对于某个出租车评估为True时，该 <code>KeyedBroadcastProcessFunction</code> 都会发出该 <code>KeyedBroadcastProcessFunction</code> 。 同样，随着新的乘坐事件到达它们的流，它们也会由查询表达式评估，并在表达式返回True时发出。</p>
+</div>
+<div class="paragraph">
+<p>查询示例：</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">rides
-  .flatMap(new NYCEnrichment())
-  .keyBy("startCell")</code></pre>
+<pre>true
+
+false
+
+ride.isStart &amp;&amp; (watermark - ride.getEventTime()) &gt; 100 * 60000
+
+!ride.isStart &amp;&amp; ride.getEuclideanDistance(-74, 41) &lt; 10.0</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>每个keyBy都会进行 shuffle 操作, 从而对流进行重新分区. 通常代价非常高, 因为它涉及网络通信以及序列化和反序列化.</p>
-</div>
-<div class="imageblock text-center">
-<div class="content">
-<img src="../../_images/training/keyBy.png" alt="keyBy">
-</div>
+<p>说明：上面的第三个查询与在100多分钟前开始的正在进行的出租车匹配，而最后一个查询与在指定位置10公里之内结束的出租车匹配。 如果您只是想看看事情基本正常，那么“ true”和“ false”是方便的查询。</p>
 </div>
 <div class="paragraph">
-<p>在上面的示例中, key 已由字段名称 "startCell" 指定.  这种类型的键选择具有一个缺点, 即编译器无法推断用于 key 的字段的类型, 因此Flink会将键值作为元组传递, 这可能很尴尬.  通常最好使用类型正确的KeySelector, eg:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">rides
-  .flatMap(new NYCEnrichment())
-  .keyBy(
-    new KeySelector&lt;EnrichedRide, int&gt;() {
-      @Override
-      public int getKey(EnrichedRide ride) throws Exception {
-        return ride.startCell;
-      }
-    })</code></pre>
-</div>
+<p>为简单起见，该实现一次只能有一个查询–一个新查询将替换之前的查询。</p>
 </div>
 <div class="paragraph">
-<p>用lambda可以更简洁地表达:</p>
+<p>我们提供的 <code>TaxiQueryExercise</code> 类创建两个流，并使用 <a href="https://janino-compiler.github.io/janino/" target="_blank" rel="noopener">Janino</a> 编译Java表达式。 剩下要做的是完成 <code>processBroadcastElement</code> 的 <code>processElement</code> 和 <code>processBroadcastElement</code> 方法的 <code>KeyedBroadcastProcessFunction</code> 。</p>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">rides
-  .flatMap(new NYCEnrichment())
-  .keyBy(ride -&gt; ride.startCell)</code></pre>
-</div>
+<div class="paragraph">
+<p>另外，由于查询可以引用 <code>KeyedBroadcastProcessFunction</code> 的当前水印，因此您需要注意这将起作用。 有关更多信息，请参见下面的实施提示。</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_keyed_流上的聚合"><a class="anchor" href="#_keyed_流上的聚合"></a>Keyed 流上的聚合</h2>
+<h2 id="_入门"><a class="anchor" href="#_入门"></a>入门</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>此代码段创建一个新的元组流, 其中包含每个骑乘结束事件的 <code>startCell</code> 和持续时间（以分钟为单位）:</p>
+<p>在MacOS和Linux上，您可以通过以下方式启动广播查询流</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">DataStream&lt;Tuple2&lt;Integer, Minutes&gt;&gt; minutesByStartCell = enrichedNYCRides
-  .flatMap(new FlatMapFunction&lt;EnrichedRide, Tuple2&lt;Integer, Minutes&gt;&gt;() {
-    @Override
-    public void flatMap(EnrichedRide ride,
-              Collector&lt;Tuple2&lt;Integer, Minutes&gt;&gt; out) throws Exception {
-      if (!ride.isStart) {
-        Interval rideInterval = new Interval(ride.startTime, ride.endTime);
-        Minutes duration = rideInterval.toDuration().toStandardMinutes();
-        out.collect(new Tuple2&lt;&gt;(ride.startCell, duration));
-      }
-    }
-  });</code></pre>
+<pre>nc -lk 9999</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>现在, 我们可以生成一个流, 其中仅包含每个 <code>startCell</code> 迄今为止最长的ride.  可以使用多种方式表示要用作关键字的字段.
-前面我们看到了一个 <code>EnrichedRide</code> POJO的示例, 在其中我们通过使用其名称指定了要使用的字段. 在这个例子下, 我们将使用Tuple2对象, 并在元组中提供从0开始的索引.</p>
+<p>在Windows上，您可以从https://nmap.org/ncat/安装ncat，然后使用</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">minutesByStartCell
-  .keyBy(0) // startCell
-  .maxBy(1) // duration
-  .print();</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>在输出流中, 每次持续时间达到新的最大值时, 我们都会看到每个键的记录. 比如 50797,8M:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-text hljs" data-lang="text">...
-4&gt; (64549,5M)
-4&gt; (46298,18M)
-1&gt; (51549,14M)
-1&gt; (53043,13M)
-1&gt; (56031,22M)
-1&gt; (50797,6M)
-...
-1&gt; (50797,8M)
-...
-1&gt; (50797,11M)
-...
-1&gt; (50797,12M)</code></pre>
+<pre>ncat -lk 9999</pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_隐含状态"><a class="anchor" href="#_隐含状态"></a>(隐含)状态</h2>
+<h2 id="_测验"><a class="anchor" href="#_测验"></a>测验</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>这是我们看到的第一个有状态流的示例. 尽管状态是透明处理的, 但是Flink必须跟踪每个不同 key 的最大持续时间.
-每当状态涉及到您的应用程序时, 您都应该考虑状态可能会变大. 只要 Key 空间是无界的, 那么 Flink 将需要的状态量也是那么多.
-在使用流时, 通常考虑在有限窗口而不是整个流上进行聚合来思考.</p>
+<p><a href="https://github.com/ververica/flink-training-exercises/blob/master/src/test/java/com/ververica/flinktraining/exercises/datastream_java/broadcast/TaxiQueryTest.java" target="_blank" rel="noopener">com.ververica.flinktraining.exercises.datastream_java.broadcast.TaxiQueryTest</a></p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_reduce_和其他聚合器"><a class="anchor" href="#_reduce_和其他聚合器"></a>reduce() 和其他聚合器</h2>
+<h2 id="_练习课"><a class="anchor" href="#_练习课"></a>练习课</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>上面使用的 <code>maxBy()</code> 只是Flink的 <code>KeyedStream</code> 上可用的许多聚合函数的一个示例. 还有一个更通用的 <code>reduce()</code> 函数, 可用于实现自己的自定义聚合.</p>
+<p>Java： <a href="https://github.com/ververica/flink-training-exercises/blob/master/src/main/java/com/ververica/flinktraining/exercises/datastream_java/broadcast/TaxiQueryExercise.java" target="_blank" rel="noopener">com.ververica.flinktraining.exercises.datastream_java.broadcast.TaxiQueryExercise</a></p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_进一步阅读"><a class="anchor" href="#_进一步阅读"></a>进一步阅读</h2>
+<h2 id="_实施提示"><a class="anchor" href="#_实施提示"></a>实施提示</h2>
+<div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>水印问题</p>
+</div>
+<div class="paragraph">
+<p>一旦两个流连接在一起，KeyedBroadcastProcessFunction运算符的水印将是两个连接流中最小的水印。 我们的查询流在Long.MIN_VALUE处具有默认的水印，除非我们对此进行处理，否则它将阻止KeyedBroadcastProcessFunction的事件时间时钟。</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>水印解决方案</p>
+</div>
+<div class="paragraph">
+<p>将 AssignerWithPeriodicWatermarks 附加到始终返回 Watermark.MAX_WATERMARK 作为当前水印的查询流就足够了。</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_文献资料"><a class="anchor" href="#_文献资料"></a>文献资料</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://ci.apache.org/projects/flink/flink-docs-stable/dev/stream/state/broadcast_state.html" target="_blank" rel="noopener">Broadcast State</a></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_参考解决方案"><a class="anchor" href="#_参考解决方案"></a>参考解决方案</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p><a href="https://ci.apache.org/projects/flink/flink-docs-release-1.10/zh/dev/stream/operators/#datastream-transformations" target="_blank" rel="noopener">DataStream Transformations</a> (Apache Flink Documentation)</p>
+<p>参考解决方案可从GitHub获得：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Java：</p>
+<div class="paragraph">
+<p><a href="https://github.com/ververica/flink-training-exercises/blob/master/src/main/java/com/ververica/flinktraining/solutions/datastream_java/broadcast/TaxiQuerySolution.java" target="_blank" rel="noopener">TaxiQuerySolution.java</a></p>
+</div>
+</li>
+</ul>
 </div>
 </div>
 </div>

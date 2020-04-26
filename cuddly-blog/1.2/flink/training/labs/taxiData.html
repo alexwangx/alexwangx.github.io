@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Keyed 流 :: The Cuddly Computing Machine</title>
-    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/flink/training/lab1/keyed-streams.html">
+    <title>使用出租车数据流 :: The Cuddly Computing Machine</title>
+    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/flink/training/labs/taxiData.html">
     <meta name="generator" content="Antora 2.0.0">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-86782445-1"></script>
@@ -66,34 +66,34 @@
     <span class="nav-text">环境配置</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../labs/devEnvSetup.html">设置您的开发环境</a>
+    <a class="nav-link" href="devEnvSetup.html">设置您的开发环境</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="4">
+    <a class="nav-link" href="taxiData.html">使用出租车数据流</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../labs/taxiData.html">使用出租车数据流</a>
-  </li>
-  <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="../labs/howto-exercises.html">如何做实验室</a>
+    <a class="nav-link" href="howto-exercises.html">如何做实验室</a>
   </li>
 </ul>
   </li>
   <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="rideCleansing.html">Lab 1 - 过滤流</a>
+    <a class="nav-link" href="../lab1/rideCleansing.html">Lab 1 - 过滤流</a>
   </li>
   <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">数据转换</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="stateless.html">无状态转换</a>
-  </li>
-  <li class="nav-item is-current-page" data-depth="4">
-    <a class="nav-link" href="keyed-streams.html">Keyed 流</a>
+    <a class="nav-link" href="../lab1/stateless.html">无状态转换</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="stateful.html">有状态的转换</a>
+    <a class="nav-link" href="../lab1/keyed-streams.html">Keyed 流</a>
   </li>
   <li class="nav-item" data-depth="4">
-    <a class="nav-link" href="connected-streams.html">连接流</a>
+    <a class="nav-link" href="../lab1/stateful.html">有状态的转换</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../lab1/connected-streams.html">连接流</a>
   </li>
 </ul>
   </li>
@@ -434,143 +434,183 @@
     <li><a href="../../../index.html">Cuddly Blog</a></li>
     <li>Flink</li>
     <li><a href="../index.html">Flink Training Home</a></li>
-    <li>数据转换</li>
-    <li><a href="keyed-streams.html">Keyed 流</a></li>
+    <li>环境配置</li>
+    <li><a href="taxiData.html">使用出租车数据流</a></li>
   </ul>
 </nav>
 </div>
 <article class="doc">
-<h1 class="page">Keyed 流</h1>
-<div class="sect1">
-<h2 id="_keyby"><a class="anchor" href="#_keyby"></a>keyBy()</h2>
+<h1 class="page">使用出租车数据流</h1>
+<div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>能够围绕流的属性之一对流进行分区通常非常有用, 以便将具有该属性的相同值的所有事件组合在一起.
-例如, 假设我们想找到从每个网格单元中运行时间最长的出租车.
-如果我们考虑的是SQL查询, 则意味着要使用 <code>startCell</code> 进行某种 <code>GROUP BY</code> , 而在Flink中, 这需要使用 <code>keyBy(KeySelector)</code> 完成</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">rides
-  .flatMap(new NYCEnrichment())
-  .keyBy("startCell")</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>每个keyBy都会进行 shuffle 操作, 从而对流进行重新分区. 通常代价非常高, 因为它涉及网络通信以及序列化和反序列化.</p>
-</div>
-<div class="imageblock text-center">
-<div class="content">
-<img src="../../_images/training/keyBy.png" alt="keyBy">
-</div>
-</div>
-<div class="paragraph">
-<p>在上面的示例中, key 已由字段名称 "startCell" 指定.  这种类型的键选择具有一个缺点, 即编译器无法推断用于 key 的字段的类型, 因此Flink会将键值作为元组传递, 这可能很尴尬.  通常最好使用类型正确的KeySelector, eg:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">rides
-  .flatMap(new NYCEnrichment())
-  .keyBy(
-    new KeySelector&lt;EnrichedRide, int&gt;() {
-      @Override
-      public int getKey(EnrichedRide ride) throws Exception {
-        return ride.startCell;
-      }
-    })</code></pre>
-</div>
-</div>
-<div class="paragraph">
-<p>用lambda可以更简洁地表达:</p>
-</div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">rides
-  .flatMap(new NYCEnrichment())
-  .keyBy(ride -&gt; ride.startCell)</code></pre>
-</div>
+<p><a href="http://www.nyc.gov/html/tlc/html/home/home.shtml" target="_blank" rel="noopener">New York City Taxi &amp; Limousine Commission</a> 提供了2009年至2015年纽约市出租车乘车的 <a href="https://uofi.app.box.com/NYCtaxidata" target="_blank" rel="noopener">公共数据集</a>. 我们使用此数据的修改后的子集生成有关出租车乘车事件的流.</p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_keyed_流上的聚合"><a class="anchor" href="#_keyed_流上的聚合"></a>Keyed 流上的聚合</h2>
+<h2 id="_1_下载出租车数据文件"><a class="anchor" href="#_1_下载出租车数据文件"></a>1. 下载出租车数据文件</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>此代码段创建一个新的元组流, 其中包含每个骑乘结束事件的 <code>startCell</code> 和持续时间（以分钟为单位）:</p>
+<p>您可以通过运行以下命令来下载出租车数据文件</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">DataStream&lt;Tuple2&lt;Integer, Minutes&gt;&gt; minutesByStartCell = enrichedNYCRides
-  .flatMap(new FlatMapFunction&lt;EnrichedRide, Tuple2&lt;Integer, Minutes&gt;&gt;() {
-    @Override
-    public void flatMap(EnrichedRide ride,
-              Collector&lt;Tuple2&lt;Integer, Minutes&gt;&gt; out) throws Exception {
-      if (!ride.isStart) {
-        Interval rideInterval = new Interval(ride.startTime, ride.endTime);
-        Minutes duration = rideInterval.toDuration().toStandardMinutes();
-        out.collect(new Tuple2&lt;&gt;(ride.startCell, duration));
-      }
-    }
-  });</code></pre>
+<pre>wget http://training.ververica.com/trainingData/nycTaxiRides.gz
+wget http://training.ververica.com/trainingData/nycTaxiFares.gz</pre>
 </div>
 </div>
 <div class="paragraph">
-<p>现在, 我们可以生成一个流, 其中仅包含每个 <code>startCell</code> 迄今为止最长的ride.  可以使用多种方式表示要用作关键字的字段.
-前面我们看到了一个 <code>EnrichedRide</code> POJO的示例, 在其中我们通过使用其名称指定了要使用的字段. 在这个例子下, 我们将使用Tuple2对象, 并在元组中提供从0开始的索引.</p>
+<p>使用 wget 或其他方法来获取这些文件并不重要, 但是无论如何, 只要获取数据, <code>都不要解压缩或重命名.gz文件</code> .</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_2_乘坐出租车事件的模式"><a class="anchor" href="#_2_乘坐出租车事件的模式"></a>2. 乘坐出租车事件的模式</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>我们的出租车数据集包含有关纽约市各个出租车行程的信息. 每次乘坐都由两个事件表示: 旅途开始和旅途结束事件. 每个事件包含11个字段</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">minutesByStartCell
-  .keyBy(0) // startCell
-  .maxBy(1) // duration
-  .print();</code></pre>
+<pre>rideId         : Long      // a unique id for each ride
+taxiId         : Long      // a unique id for each taxi
+driverId       : Long      // a unique id for each driver
+isStart        : Boolean   // TRUE for ride start events, FALSE for ride end events
+startTime      : DateTime  // the start time of a ride
+endTime        : DateTime  // the end time of a ride,
+                           //   "1970-01-01 00:00:00" for start events
+startLon       : Float     // the longitude of the ride start location
+startLat       : Float     // the latitude of the ride start location
+endLon         : Float     // the longitude of the ride end location
+endLat         : Float     // the latitude of the ride end location
+passengerCnt   : Short     // number of passengers on the ride</pre>
 </div>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+注意: 数据集包含坐标信息无效或缺失的记录（经度和纬度为0.0）.
+</td>
+</tr>
+</table>
 </div>
 <div class="paragraph">
-<p>在输出流中, 每次持续时间达到新的最大值时, 我们都会看到每个键的记录. 比如 50797,8M:</p>
+<p>还有一个包含出租车费用数据的相关数据集, 这些字段包括:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-text hljs" data-lang="text">...
-4&gt; (64549,5M)
-4&gt; (46298,18M)
-1&gt; (51549,14M)
-1&gt; (53043,13M)
-1&gt; (56031,22M)
-1&gt; (50797,6M)
-...
-1&gt; (50797,8M)
-...
-1&gt; (50797,11M)
-...
-1&gt; (50797,12M)</code></pre>
+<pre>rideId         : Long      // a unique id for each ride
+taxiId         : Long      // a unique id for each taxi
+driverId       : Long      // a unique id for each driver
+startTime      : DateTime  // the start time of a ride
+paymentType    : String    // CSH or CRD
+tip            : Float     // tip for this ride
+tolls          : Float     // tolls for this ride
+totalFare      : Float     // total fare collected</pre>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_隐含状态"><a class="anchor" href="#_隐含状态"></a>(隐含)状态</h2>
+<h2 id="_3_在flink程序中生成出租车行驶数据流"><a class="anchor" href="#_3_在flink程序中生成出租车行驶数据流"></a>3.在Flink程序中生成出租车行驶数据流</h2>
 <div class="sectionbody">
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+注意: 这些练习已经提供了使用这些出租车数据流的代码.
+</td>
+</tr>
+</table>
+</div>
 <div class="paragraph">
-<p>这是我们看到的第一个有状态流的示例. 尽管状态是透明处理的, 但是Flink必须跟踪每个不同 key 的最大持续时间.
-每当状态涉及到您的应用程序时, 您都应该考虑状态可能会变大. 只要 Key 空间是无界的, 那么 Flink 将需要的状态量也是那么多.
-在使用流时, 通常考虑在有限窗口而不是整个流上进行聚合来思考.</p>
+<p>我们提供了Flink源函数 (<code>TaxiRideSource</code>) , 该函数读取带有出租车行驶记录的 <code>.gz</code> 文件并发出 <code>TaxiRide</code> 事件流. 源包含了 <a href="https://ci.apache.org/projects/flink/flink-docs-stable/dev/event_time.html" target="_blank" rel="noopener">event-time</a>.  <code>TaxiFare</code> 事件有一个类似的源函数 (<code>TaxiFareSource</code>).</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_reduce_和其他聚合器"><a class="anchor" href="#_reduce_和其他聚合器"></a>reduce() 和其他聚合器</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p>上面使用的 <code>maxBy()</code> 只是Flink的 <code>KeyedStream</code> 上可用的许多聚合函数的一个示例. 还有一个更通用的 <code>reduce()</code> 函数, 可用于实现自己的自定义聚合.</p>
+<p>为了尽可能实际地生成这些流, 事件的发射与其时间戳成比例. 实际上彼此相隔十分钟的两个事件也彼此相隔十分钟.  可以指定加速因子以“快进”流, 即, 给定加速因子为60, 在一分钟内发生的事件将在一秒钟内得到处理. 此外, 可以指定一个最大服务延迟, 该延迟会导致每个事件在指定范围内随机延迟. 这会产生乱序流, 这在许多实际应用中很常见.</p>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="_进一步阅读"><a class="anchor" href="#_进一步阅读"></a>进一步阅读</h2>
-<div class="sectionbody">
 <div class="paragraph">
-<p><a href="https://ci.apache.org/projects/flink/flink-docs-release-1.10/zh/dev/stream/operators/#datastream-transformations" target="_blank" rel="noopener">DataStream Transformations</a> (Apache Flink Documentation)</p>
+<p>对于这些练习, 加速因子为600或更高（即, 每秒钟处理需要10分钟的事件时间）, 最大延迟为60（秒）会很好.</p>
+</div>
+<div class="paragraph">
+<p>所有练习都应使用事件时间特征来实施. 事件时间使程序语义与服务速度脱钩, 即使在历史数据或乱序交付的数据的情况下, 也可以确保一致的结果.</p>
+</div>
+<div class="sect2">
+<h3 id="_checkpointing"><a class="anchor" href="#_checkpointing"></a>Checkpointing</h3>
+<div class="paragraph">
+<p>一些练习将改用 <code>CheckpointedTaxiRideSource</code> 和/或 <code>CheckpointedTaxiFareSource</code> . 与 <code>TaxiRideSource</code>  和 <code>TaxiFareSource</code> 不同, 这些不同的版本能够 checkpoint 状态.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_table_sources"><a class="anchor" href="#_table_sources"></a>Table Sources</h3>
+<div class="paragraph">
+<p>还要注意, 存在可与Table和SQL API一起使用的 <code>TaxiRideTableSource</code> 和 <code>TaxiFareTableSource</code> 表源.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_如何使用这些资源"><a class="anchor" href="#_如何使用这些资源"></a>如何使用这些资源</h3>
+<div class="paragraph">
+<p>Java</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// get an ExecutionEnvironment
+StreamExecutionEnvironment env =
+  StreamExecutionEnvironment.getExecutionEnvironment();
+// configure event-time processing
+env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);
+
+// get the taxi ride data stream
+DataStream&lt;TaxiRide&gt; rides = env.addSource(
+  new TaxiRideSource("/path/to/nycTaxiRides.gz", maxDelay, servingSpeed));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Scala</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-scala hljs" data-lang="scala">// get an ExecutionEnvironment
+val env = StreamExecutionEnvironment.getExecutionEnvironment
+// configure event-time processing
+env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime)
+
+// get the taxi ride data stream
+val rides = env.addSource(
+  new TaxiRideSource("/path/to/nycTaxiRides.gz", maxDelay, servingSpeed))</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>还有一个 <code>TaxiFareSource</code> 使用nycTaxiFares.gz文件以类似的方式工作. 该源创建了 <code>TaxiFare</code> 事件流.</p>
+</div>
+<div class="paragraph">
+<p>Java</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-java hljs" data-lang="java">// get the taxi fare data stream
+DataStream&lt;TaxiFare&gt; fares = env.addSource(
+new TaxiFareSource("/path/to/nycTaxiFares.gz", maxDelay, servingSpeed));</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Scala</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-scala hljs" data-lang="scala">// get the taxi fare data stream
+val fares = env.addSource(
+new TaxiFareSource("/path/to/nycTaxiFares.gz", maxDelay, servingSpeed))</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>

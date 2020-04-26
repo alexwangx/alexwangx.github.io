@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Segments :: The Cuddly Computing Machine</title>
+    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/druid/druid-internals/segment.html">
+    <meta name="generator" content="Antora 2.0.0">
+    <link rel="stylesheet" href="../../../../_/css/site.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-86782445-1"></script>
+    <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-86782445-1')</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="http://alexwangx.github.io">The Cuddly Computing Machine</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/alexwangx">GitHub</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="cuddly-blog" data-version="1.2">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../index.html">Cuddly Blog</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Flink</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../flink/training/index.html">Flink Training Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Streaming 介绍</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/intro/intro-1.html">使用Apache Flink 进行流处理</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/intro/intro-2.html">流可以传输什么?</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/intro/intro-3.html">一个完整的例子</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">环境配置</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/labs/devEnvSetup.html">设置您的开发环境</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/labs/taxiData.html">使用出租车数据流</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/labs/howto-exercises.html">如何做实验室</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/training/lab1/rideCleansing.html">Lab 1 - 过滤流</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">数据转换</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab1/stateless.html">无状态转换</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab1/keyed-streams.html">Keyed 流</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab1/stateful.html">有状态的转换</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab1/connected-streams.html">连接流</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/training/lab2/rideEnrichment-flatmap.html">Lab 2 - Stateful Enrichment</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">时间和分析</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab3/event-time-watermarks.html">Event Time and Watermarks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab3/windows.html">Windows</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Lab 3 - Windowing</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab3/hourlyTips.html">Lab 3 - 窗口化分析</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab3/hourlyTips-discussion.html">Lab 3 - 讨论</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">事件驱动的应用</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab4/processfunction.html">ProcessFunction</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab4/side-outputs.html">Side Outputs</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Lab 4 - 到期状态</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab4/rideEnrichment-processfunction.html">Lab 4 - 练习</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab4/expiring-state-discussion.html">Lab 4 - 讨论</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">容错能力</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/fault/state-backends.html">状态后端</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/fault/snapshots.html">检查点和保存点</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/training/app-dev.html">应用开发</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">其他练习</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/extra-labs/longRides.html">长途警报</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">广播状态</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../flink/training/extra-labs/nearestTaxi.html">寻找最近的出租车</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../flink/training/extra-labs/ongoingRides.html">报告正在进行的出租车</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../flink/training/extra-labs/taxiQuery.html">规则引擎</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/extra-labs/eventTimeJoin.html">丰富的 Joins</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/training/resources.html">资源链接</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../flink/introduction/index.html">Flink 简介</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/introduction/architecture.html">Flink 架构介绍</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/introduction/failover.html">Flink 容错机制</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/introduction/scheduling.html">Flink 调度机制</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/introduction/statemachine.html">Flink 状态机</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/introduction/memorymanager.html">Flink 内存管理</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/introduction/dataflow.html">Flink Dataflow</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/introduction/batchdata.html">Flink 批处理</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/introduction/streamdata.html">Flink 流处理</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../flink/internals/index.html">Flink 学习笔记</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spark</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spark ops</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../spark/ops/spark-exitcode.html">Spark 任务退出码</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../spark/ops/spark-issues.html">Spark 常见错误</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../spark/spark-internals/index.html">Spark 2.4.4 架构原理</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../spark/spark-internals/root/spark-overview.html">Overview</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hadoop</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../hadoop/hadoop_krb_install.html">Hadoop 配置 Kerberos</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hadoop ops</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hadoop/hdp-ops/hadoop_commands.html">Hadoop Commands</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hadoop/hdp-ops/hadoop_practices.html">Hadoop Practices</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hadoop/hdp-ops/hadoop_jmx.html">Hadoop JMX</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hadoop/hdp-ops/hadoop_delroot.html">Hadoop 意外删除挽救</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hbase</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hbase ops</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hbase/hbase-ops/hbase_notes.html">Hbase 基本命令</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hbase/hbase-ops/hbase_issues.html">Hbase Issues</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Druid</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../druid-install.html">Druid 安装</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Druid 架构</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="tutorial-load-data.html">Druid 导入数据</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="druid-internals.html">Druid 0.1.5 架构</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="broker.html">Druid Broker</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="coordinator.html">Druid Coordinator</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="historical.html">Druid Historical</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="middleManager.html">Druid MiddleManager</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="overlord.html">Druid Overlord</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="router.html">Druid Router</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="segment.html">Druid Segments</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Kafka</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../kafka/kafka_practices.html">Kafka Practices</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../kafka/kafka_issues.html">Kafka Issues</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Other</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../mac.html">Mac OS</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../linux.html">Linux</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../mysql_install.html">Mysql 安装</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../readlist.html">北京中小学孩子读书清单</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../demo/demo.html">Adoc Demo</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Cuddly Blog</span>
+    <span class="version">1.2</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">Cuddly Blog</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../index.html">1.2</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main>
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../index.html">Cuddly Blog</a></li>
+    <li>Druid</li>
+    <li>Druid 架构</li>
+    <li><a href="segment.html">Druid Segments</a></li>
+  </ul>
+</nav>
+</div>
+<article class="doc">
+<h1 class="page">Segments</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>转载: 请附上原文出处链接.</p>
+</li>
+<li>
+<p><a href="https://github.com/alexwangx/alexwangx.github.io/issues" target="_blank" rel="noopener">点击留言</a></p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Apache Druid 将其索引存储在Segment文件中,Segment文件按时间进行分区. 在基本设置中, 会按照每个时间间隔创建一个 Segment 文件.时间间隔在 <code>segmentGranularity</code> 参数配置, <a href="https://druid.apache.org/docs/latest/ingestion/index.html#granularityspec">参考配置规则granularitySpec</a> . 对于 Segment 的大小, 建议300mb-700mb范围内,避免Query 负载过高. 如果 Segment 超过该范围,可以考虑缩小时间间隔或者通过 <a href="https://druid.apache.org/docs/latest/ingestion/hadoop.html#partitionsspec"><code>partitionsSpec</code></a> 中的 <code>targetPartitionSize</code> 参数对数据分区大小进行调整.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_segment_文件内部结构"><a class="anchor" href="#_segment_文件内部结构"></a>Segment 文件内部结构</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Segment 结构可以分为三种基本列类型: 时间戳列, 维度列, 指标列. 每列的数据都设置在单独的数据结构中. 通过分别存储每个列, Druid可以通过仅扫描查询实际需要的那些列来减少查询延迟.</p>
+</div>
+<div class="imageblock text-center">
+<div class="content">
+<img src="../_images/druid-internals/druid-column-types.png" alt="druid column types">
+</div>
+<div class="title">Figure 1. Druid Colum Types</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>timestamp和metric列:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>在Segment 里每个都是由LZ4压缩的整数或浮点值的数组.</p>
+</li>
+<li>
+<p>一旦查询确定需要的一行数据时, 它就简单地解压缩这些行, 取出这一行数据然后聚合.</p>
+</li>
+<li>
+<p>如果查询不需要某列, 则该列的数据将被跳过.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>维度列有所不同, 因为它们支持过滤和分组操作, 因此每个维度都需要以下三个数据结构.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>维度值(始终被视为字符串)映射成整数 ID 的字典.</p>
+</li>
+<li>
+<p>所有列值的列表根据字典编码.</p>
+</li>
+<li>
+<p>对于列里面的不同值, 通过 bitmap 指出哪些行包含该值.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>维度值被映射成整数字典后, 所有列值的列表以及使用 bitmap 结构时更节省内存, 紧凑. 通过 bitmap(反向索引) 可以实现快速过滤操作(位图便于快速应用AND和OR运算符).  最后, <code>group by</code> 和 <code>TopN</code> 查询需要所有列的值列表.</p>
+</div>
+<div class="paragraph">
+<p>举个栗子: 请考虑上面示例数据中的 <code>page</code> 列. 下图说明了表示该维度的三个数据结构:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">1: 维度值字典
+  {
+    "Justin Bieber": 0,
+    "Ke$ha":         1
+  }
+
+2: 维度值列表(列数据)
+  [0,
+   0,
+   1,
+   1]
+
+3: Bitmaps - 对应列的每个唯一值
+  value="Justin Bieber": [1,1,0,0]
+  value="Ke$ha":         [0,0,1,1]</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>请注意, bitmap与前两个数据结构不同: 在最坏的情况下前两个在数据大小成线性增长(基数大,无重复值等), 位图部分的大小是数据大小*列基数. Druid 使用 <code>Roaring / Concise bitmap</code> 压缩算法来进行数据压缩(默认是Concise算法).</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_多值列"><a class="anchor" href="#_多值列"></a>多值列</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>如果数据源使用多值列(multi-value columns), 则Segment文件中的数据结构会有变化. 假设在上面的示例中, 第二行同时标记了 <code>Ke$ha</code> 和 <code>Justin Bieber</code> 主题.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">1: 维度值字典
+  {
+    "Justin Bieber": 0,
+    "Ke$ha":         1
+  }
+
+2: 维度值列表(列数据)
+  [0,
+   [0,1],  &lt;--Row value of multi-value column can have array of values
+   1,
+   1]
+
+3: Bitmaps - one for each unique value
+  value="Justin Bieber": [1,1,0,0]
+  value="Ke$ha":         [0,1,1,1]
+                            ^
+                            |
+                            |
+    Multi-value column has multiple non-zero entries</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>注意列数据和 <code>Ke$ha</code> 位图中第二行的更改. 如果一行的一个列有多个值, 则其在 <code>列数据</code> 中的输入是一组值. 此外，在 <code>列数据</code> 中具有n个值的行在位图中将具有n个非零值元素.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_命名规范"><a class="anchor" href="#_命名规范"></a>命名规范</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>datasource_intervalStart_intervalEnd_version_partitionNum
+数据源名称_开始时间_结束时间_版本号_分区</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+分片号是从0开始, 如果分区号为0, 则可以省略: datasource_2019-11-21T16:00:00.000Z_2019-12-21T17:00:00.000Z_2019-11-21T16:00:00.000Z
+还需要注意如果一个时间间隔segment由多个分片组成, 则在查询该segment的时候, 需要等到所有分片都被加载完成后, 才能够查询(除非使用线性分片规范(linear shard spec), 允许在未加载完成时查询).
+</td>
+</tr>
+</table>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">字段</th>
+<th class="tableblock halign-left valign-top">是否必须</th>
+<th class="tableblock halign-left valign-top">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">datasource</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">是</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">segment所在的Datasource</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">开始时间</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">是</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">该Segment所存储最早的数据, 时间格式是 <code>ISO 8601</code> 开始时间和结束时间是通过segmentGranularity设置的时间间隔</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">结束时间</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">是</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">该segment所存储最晚的数据, 时间格式是 <code>ISO 8601</code></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">版本号</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">是</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">因为Druid支持批量覆盖操作, 当批量摄入与之前相同数据源, 相同时间间隔数据时, 数据就会被覆盖, 这时候版本号就会被更新. Druid系统的其它部分感知到这个信号后, 就会把就旧数据删除, 使用新版本的数据(这个切换很快). 版本号也是是用的 <code>ISO 8601</code> 时间戳, 但是这个时间戳代表首次启动的时间.</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">分区号</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">否</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">segment如果采用分区, 才会有该标识</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_segment_组成"><a class="anchor" href="#_segment_组成"></a>Segment 组成</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>一个 Segment 由一下几个文件组成:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>version.bin</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>4个字节, 以整数表示当前 segment 的版本. E.g. 对于 segments 版本是 v9 的, 版本号为: 0x0, 0x0, 0x0, 0x9</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>meta.smoosh</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>所有smoosh 文件(xxxxx.smoosh) 的元数据( 文件名和偏移量), 里面记录了每一列对应文件和在文件的偏移量. 除了列信息外, smoosh文件还包含了 <code>index.drd</code> 和 <code>metadata.drd</code> , 这部分是关于Segment的一些额外元数据信息.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><code>XXXXX.smoosh</code></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Druid为了减少打开数据文件描述符的数量(文件句柄数), smoosh 文件会为数据中的每个列存储成单独的一个文件, 以及一个带有有关该 Segment 的额外元数据的 index.drd 文件. smoosh 文件最大为
+2GB(Java中的 <a href="https://docs.oracle.com/javase/8/docs/api/java/nio/MappedByteBuffer.html">MapByteBuffer</a> 限制), 当超过 2GB 时 Druid 会将数据写入到下一个 smoosh 文件中.</p>
+</li>
+<li>
+<p>还有一个特殊列 <code>__time</code> 它是 segment 里面的时间列.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="title">XXXXX.smoosh</div>
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-smoosh hljs" data-lang="smoosh">#版本号,该文件所能存储的最大值(2G),smooth文件数
+v1,2147483647,1
+# 列名,文件名,起始偏移量,结束偏移量
+__time,0,0,163214
+column1,0,122836965,141628682
+column2,0,117288530,118294341
+column3,0,118893462,121704611
+column4,0,147364494,152208057
+column5,0,141628682,145940454
+column6,0,118294341,118893462
+column7,0,163214,6985720</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_列格式"><a class="anchor" href="#_列格式"></a>列格式</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>每个列为两个部分存储:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Jackson序列化的ColumnDescriptor</p>
+</li>
+<li>
+<p>该列的其余的二进制文件.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>ColumnDescriptor 是一个使用Jackson序列化的对象. 它包含了该列的一些元数据信息(比如数据类型，是否是多值等等), 然后是可以反序列化其余二进制数的序列化/反序列化逻辑列表.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_分片数据"><a class="anchor" href="#_分片数据"></a>分片数据</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_sharding"><a class="anchor" href="#_sharding"></a>Sharding</h3>
+<div class="paragraph">
+<p>对于同一数据源, 在相同的时间间隔内可能存在多个段. 这段时间间隔内的 Segments 都来自一个 <code>block</code> . <code>shardSpec</code> 用于数据分片, Query 要依赖 <code>block</code> 完成才能够可用. 也就是说, 如果一个块由3个Segment组成, 例如:</p>
+</div>
+<div class="paragraph">
+<p><code>sampleData_2011-01-01T02:00:00:00Z_2011-01-01T03:00:00:00Z_v1_0</code></p>
+</div>
+<div class="paragraph">
+<p><code>sampleData_2011-01-01T02:00:00:00Z_2011-01-01T03:00:00:00Z_v1_1</code></p>
+</div>
+<div class="paragraph">
+<p><code>sampleData_2011-01-01T02:00:00:00Z_2011-01-01T03:00:00:00Z_v1_2</code></p>
+</div>
+<div class="paragraph">
+<p>在 Query 时间间隔 <code>2011-01-01T02:00:00:00Z_2011-01-01T03:00:00:00Z</code> 上, 必须要求三个 Segment 都要加载才能查询.</p>
+</div>
+<div class="paragraph">
+<p>该规则的例外是使用线性分片. 线性分片不会强制`完整性`, 即使分片未加载到系统中, 查询也可以完成. 例如, 如果你实时摄取数据并创建了3个使用线性分片规范进行分片的Segment, 并且系统中仅加载了两个Segment, 则查询将仅返回这2个Segment的结果.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_replacing_segments"><a class="anchor" href="#_replacing_segments"></a>Replacing segments</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Druid 使用datasource, interval, version, partition number 标识Segment.  如果一段时间内的数据量比较大, 会生成多个 Segment. 这些 Segment将共享相同的数据源,时间间隔和版本,但分区号线性增加.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>foo_2015-01-01/2015-01-02_v1_0
+foo_2015-01-01/2015-01-02_v1_1
+foo_2015-01-01/2015-01-02_v1_2</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>如果后面重新构建索引, 创建的新的 Segment 会具有更高的版本号.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>foo_2015-01-01/2015-01-02_v2_0
+foo_2015-01-01/2015-01-02_v2_1
+foo_2015-01-01/2015-01-02_v2_2</pre>
+</div>
+</div>
+</div>
+</div>
+</article>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../../_/js/site.js"></script>
+<script async src="../../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

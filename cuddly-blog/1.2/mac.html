@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Untitled :: The Cuddly Computing Machine</title>
-    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/index.html">
+    <title>Mac os :: The Cuddly Computing Machine</title>
+    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/mac.html">
     <meta name="generator" content="Antora 2.0.0">
     <link rel="stylesheet" href="../../_/css/site.css">
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-86782445-1"></script>
@@ -384,7 +384,7 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Other</span>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="2">
+  <li class="nav-item is-current-page" data-depth="2">
     <a class="nav-link" href="mac.html">Mac OS</a>
   </li>
   <li class="nav-item" data-depth="2">
@@ -428,16 +428,189 @@
 <main>
 <div class="toolbar" role="navigation">
 <button class="nav-toggle"></button>
-  <a href="index.html" class="home-link is-current"></a>
+  <a href="index.html" class="home-link"></a>
 <nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Cuddly Blog</a></li>
+    <li>Other</li>
+    <li><a href="mac.html">Mac OS</a></li>
+  </ul>
 </nav>
 </div>
 <article class="doc">
-<div class="imageblock text-right">
-<div class="content">
-<img src="_images/BSD.png" alt="BSD">
+<h1 class="page">Mac os</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>Mac 基本设置记录.</p>
 </div>
-<div class="title">Figure 1. Done is better than perfect !</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_mac"><a class="anchor" href="#_mac"></a>Mac</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre># Trash replace rm with mv, use trm to run true rm
+alias trm='/bin/rm'
+trash(){
+  mv $@ /Users/alex/.Trash
+}
+alias rm='trash'
+
+# 修改终端显示方式(centos)
+export PS1="[\u@\h \W]\$"
+
+# 设置JAVA_HOME
+JAVA_HOME=$(/usr/libexec/java_home -v 1.7)
+
+# 禁止生成"._"文件 http://www.eifr.com/article.php?id=1643&amp;act=print
+vi .bashrc
+# disable special creation/extraction of ._* files by tar, etc. on Mac OS X
+COPYFILE_DISABLE=1;
+export COPYFILE_DISABLE
+
+
+# brew 装机软件
+proxychains-ng	wget    python		tmux    jq  unrar
+
+# 清理微信空间
+\rm -rf ~/Library/Containers/com.tencent.xinWeChat/Data/Library/Application\ Support/com.tencent.xinWeChat/*
+
+
+
+# 关闭摄像头
+sudo chmod a-r /System/Library/Frameworks/CoreMediaIO.framework/Versions/A/Resources/VDC.plugin/Contents/MacOS/VDC
+
+#开启摄像头
+sudo chmod a+r /System/Library/Frameworks/CoreMediaIO.framework/Versions/A/Resources/VDC.plugin/Contents/MacOS/VDC
+
+# 获取 DNS
+networksetup -getdnsservers Wi-Fi
+
+#清理 DNS 缓存
+sudo discoveryutil mdnsflushcache
+
+# 设置 DNS
+networksetup -setdnsservers Wi-Fi 8.8.8.8 8.8.4.4</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_jupyter"><a class="anchor" href="#_jupyter"></a>Jupyter</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="https://mp.weixin.qq.com/s?__biz=MzA3MzI4MjgzMw==&amp;mid=2650754166&amp;idx=4&amp;sn=0bcbacd8639c62c3b52e3f6c0b4063b8&amp;chksm=871a8808b06d011e4039034767eecc77ae0545faa478935d09db2addf0aa3a4bbdc435af5169&amp;scene=21#wechat_redirect">插件安装</a></p>
+</li>
+</ol>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>pip install jupyter_contrib_nbextensions &amp;&amp; jupyter contrib nbextension install</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_asciidoc"><a class="anchor" href="#_asciidoc"></a>AsciiDoc</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre>brew install asciidoctor
+brew install pandoc
+
+# 转 html
+asciidoctor --backend html5 -a data-uri my_input_file.adoc
+
+# 转 doc
+INPUT_ADOC=my_input_file.adoc
+asciidoctor --backend docbook --out-file - $INPUT_ADOC|pandoc --from docbook --to docx --output $INPUT_ADOC.docx</pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_maven_随记"><a class="anchor" href="#_maven_随记"></a>Maven 随记</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>安装jar包到本地仓库</p>
+<div class="listingblock">
+<div class="content">
+<pre> mvn install:install-file -Dfile=./lib/jackson-all-1.7.6.jar -DgroupId=org.codehaus.jackson -DartifactId=jackson-all -Dversion=1.7.6 -Dpackaging=jar</pre>
+</div>
+</div>
+</li>
+<li>
+<p>提取maven仓库中的jar包</p>
+<div class="ulist">
+<ul>
+<li>
+<p>mvn dependency:copy-dependencies -DoutputDirectory=lib   -DincludeScope=compile</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Maven常用命令</p>
+<div class="ulist">
+<ul>
+<li>
+<p>mvn archetype:create # 创建 Maven 项目</p>
+</li>
+<li>
+<p>mvn compile # 编译源代码</p>
+</li>
+<li>
+<p>mvn test-compile # 编译测试代码</p>
+</li>
+<li>
+<p>mvn test #  运行应用程序中的单元测试</p>
+</li>
+<li>
+<p>mvn site #  生成项目相关信息的网站</p>
+</li>
+<li>
+<p>mvn clean # 清除目标目录中的生成结果</p>
+</li>
+<li>
+<p>mvn package #  依据项目生成 jar 文件</p>
+</li>
+<li>
+<p>mvn install # 在本地 Repository 中安装 jar</p>
+</li>
+<li>
+<p>mvn eclipse:eclipse # 生成 Eclipse 项目文件</p>
+</li>
+<li>
+<p>mvn eclipse:eclipse –Dwtpversion=1.0 # 生成Eclipse WTP 项目</p>
+</li>
+<li>
+<p>mvn package -DskipTests   # mvn编译跳过单元测试</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Maven内置变量说明:</p>
+<div class="listingblock">
+<div class="content">
+<pre>${basedir} 项目根目录
+${project.build.directory} 构建目录，缺省为target
+${project.build.outputDirectory} 构建过程输出目录，缺省为target/classes
+${project.build.finalName} 产出物名称，缺省为${project.artifactId}-${project.version}
+${project.packaging} 打包类型，缺省为jar
+${project.xxx} 当前pom文件的任意节点的内容</pre>
+</div>
+</div>
+</li>
+</ol>
+</div>
+</div>
 </div>
 </article>
 </main>

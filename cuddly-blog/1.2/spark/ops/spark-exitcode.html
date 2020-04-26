@@ -1,0 +1,1197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>概述 :: The Cuddly Computing Machine</title>
+    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/spark/ops/spark-exitcode.html">
+    <meta name="generator" content="Antora 2.0.0">
+    <link rel="stylesheet" href="../../../../_/css/site.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-86782445-1"></script>
+    <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-86782445-1')</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="http://alexwangx.github.io">The Cuddly Computing Machine</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/alexwangx">GitHub</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="cuddly-blog" data-version="1.2">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../index.html">Cuddly Blog</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Flink</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../flink/training/index.html">Flink Training Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Streaming 介绍</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/intro/intro-1.html">使用Apache Flink 进行流处理</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/intro/intro-2.html">流可以传输什么?</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/intro/intro-3.html">一个完整的例子</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">环境配置</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/labs/devEnvSetup.html">设置您的开发环境</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/labs/taxiData.html">使用出租车数据流</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/labs/howto-exercises.html">如何做实验室</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/training/lab1/rideCleansing.html">Lab 1 - 过滤流</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">数据转换</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab1/stateless.html">无状态转换</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab1/keyed-streams.html">Keyed 流</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab1/stateful.html">有状态的转换</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab1/connected-streams.html">连接流</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/training/lab2/rideEnrichment-flatmap.html">Lab 2 - Stateful Enrichment</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">时间和分析</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab3/event-time-watermarks.html">Event Time and Watermarks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab3/windows.html">Windows</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Lab 3 - Windowing</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab3/hourlyTips.html">Lab 3 - 窗口化分析</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab3/hourlyTips-discussion.html">Lab 3 - 讨论</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">事件驱动的应用</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab4/processfunction.html">ProcessFunction</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab4/side-outputs.html">Side Outputs</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Lab 4 - 到期状态</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab4/rideEnrichment-processfunction.html">Lab 4 - 练习</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab4/expiring-state-discussion.html">Lab 4 - 讨论</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">容错能力</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/fault/state-backends.html">状态后端</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/fault/snapshots.html">检查点和保存点</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/training/app-dev.html">应用开发</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">其他练习</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/extra-labs/longRides.html">长途警报</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">广播状态</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../flink/training/extra-labs/nearestTaxi.html">寻找最近的出租车</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../flink/training/extra-labs/ongoingRides.html">报告正在进行的出租车</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../flink/training/extra-labs/taxiQuery.html">规则引擎</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/extra-labs/eventTimeJoin.html">丰富的 Joins</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/training/resources.html">资源链接</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../flink/introduction/index.html">Flink 简介</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/introduction/architecture.html">Flink 架构介绍</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/introduction/failover.html">Flink 容错机制</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/introduction/scheduling.html">Flink 调度机制</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/introduction/statemachine.html">Flink 状态机</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/introduction/memorymanager.html">Flink 内存管理</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/introduction/dataflow.html">Flink Dataflow</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/introduction/batchdata.html">Flink 批处理</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/introduction/streamdata.html">Flink 流处理</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../flink/internals/index.html">Flink 学习笔记</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spark</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spark ops</span>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="spark-exitcode.html">Spark 任务退出码</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="spark-issues.html">Spark 常见错误</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../spark-internals/index.html">Spark 2.4.4 架构原理</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../spark-internals/root/spark-overview.html">Overview</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hadoop</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../hadoop/hadoop_krb_install.html">Hadoop 配置 Kerberos</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hadoop ops</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hadoop/hdp-ops/hadoop_commands.html">Hadoop Commands</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hadoop/hdp-ops/hadoop_practices.html">Hadoop Practices</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hadoop/hdp-ops/hadoop_jmx.html">Hadoop JMX</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hadoop/hdp-ops/hadoop_delroot.html">Hadoop 意外删除挽救</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hbase</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hbase ops</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hbase/hbase-ops/hbase_notes.html">Hbase 基本命令</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hbase/hbase-ops/hbase_issues.html">Hbase Issues</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Druid</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../druid/druid-install.html">Druid 安装</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Druid 架构</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/tutorial-load-data.html">Druid 导入数据</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/druid-internals.html">Druid 0.1.5 架构</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/broker.html">Druid Broker</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/coordinator.html">Druid Coordinator</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/historical.html">Druid Historical</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/middleManager.html">Druid MiddleManager</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/overlord.html">Druid Overlord</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/router.html">Druid Router</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/segment.html">Druid Segments</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Kafka</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../kafka/kafka_practices.html">Kafka Practices</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../kafka/kafka_issues.html">Kafka Issues</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Other</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../mac.html">Mac OS</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../linux.html">Linux</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../mysql_install.html">Mysql 安装</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../readlist.html">北京中小学孩子读书清单</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../demo/demo.html">Adoc Demo</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Cuddly Blog</span>
+    <span class="version">1.2</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">Cuddly Blog</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../index.html">1.2</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main>
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../index.html">Cuddly Blog</a></li>
+    <li>Spark</li>
+    <li>Spark ops</li>
+    <li><a href="spark-exitcode.html">Spark 任务退出码</a></li>
+  </ul>
+</nav>
+</div>
+<article class="doc">
+<h1 class="page">概述</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>转载: 请附上原文出处链接.</p>
+</li>
+<li>
+<p><a href="https://github.com/alexwangx/alexwangx.github.io/issues" target="_blank" rel="noopener">点击留言</a></p>
+</li>
+</ul>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>SparkOnYarn 程序的退出码种类比较繁多逻辑杂乱, 主要包括：</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Yarn 退出码</p>
+</li>
+<li>
+<p>Spark 退出码</p>
+</li>
+<li>
+<p>JVM 退出码</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>其中一些退出码可能是多个环节共同作用最终展现到日志上, EG: SparkOnYarn 程序封装 driver/executor 的 ContainerLauchContext 时启动命令时加入 <code>-XX:OnOutOfMemoryError=kill %p</code> , 所以当程序 OOM 使用默认 signal(15) 终止 Container 脚本启动的 JVM, 上报到 SparkOnYarn 日志的退出码是 143(128+15).</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+以下均基于 Hadoop2.7.3, Spark 2.3, jdk1.8
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_yarn_退出码"><a class="anchor" href="#_yarn_退出码"></a>Yarn 退出码</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Yarn container 的退出码分为两类: container-executor 和 container</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>container 是 Yarn 资源调度的基础, 也是资源隔离的基础, 在同一台服务器上运行的多个container 之间内存, CPU和权限等方面不应该相互影响(实际上内存和 CPU 没有做到绝对的资源隔离,仅仅监控内存/不管 CPU,在此不细说).</p>
+</li>
+<li>
+<p>container-executor 负责使用 Yarn 参考 ContainerLaunchContext 上下文环境组装的脚本 初始化, 启动和终止 Container, 因此其错误码体系更像是操作系统的进程退出码.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>container-executor 共分两类:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>通用的 DefaultContainerExecutor, 所有的 Container 的用户均为启动 NodeManager 的用户.</p>
+</li>
+<li>
+<p>LinuxContainerExecutor, 每个 Container 进程可以由不同用户启动, 并支持 CGROUP 和 ACL.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>container 错误码体系适用于所有容器, 是 Yarn 框架的一部分, 应用程序错误码体系的补充. 即 container-executor 错误码体系更靠近操作系统, container 错误码体系更靠近应用程序.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="sect2">
+<h3 id="_container_executor"><a class="anchor" href="#_container_executor"></a>container-executor</h3>
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+仅列出 LinuxContainerExecutor 错误码体系. Hadoop 源码: container-executor.h
+</td>
+</tr>
+</table>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. container-executor 错误码</caption>
+<colgroup>
+<col style="width: 9.0909%;">
+<col style="width: 45.4545%;">
+<col style="width: 45.4546%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">错误码</th>
+<th class="tableblock halign-left valign-top">错误信息</th>
+<th class="tableblock halign-left valign-top">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">1</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INVALID_ARGUMENT_NUMBER</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>启动脚本给定输入参数数量不符</p>
+</li>
+<li>
+<p>未能成功初始化</p>
+</li>
+</ol>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INVALID_USER_NAME</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>启动脚本所属用户不存在</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INVALID_COMMAND_PROVIDED</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>无法识别被提供的启动命令</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SUPER_USER_NOT_ALLOWED_TO_RUN_TASKS</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>未启用</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INVALID_NM_ROOT_DIRS</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>启动脚本参数定义的 NM root 目录不存在</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SETUID_OPER_FAILED</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>无法设置 UID 或 GID</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UNABLE_TO_EXECUTE_CONTAINER_SCRIPT</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>无法运行启动脚本</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UNABLE_TO_SIGNAL_CONTAINER</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>无法向指定容器发送信号</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">9</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INVALID_CONTAINER_PID</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>设置的启动命令 PID 不大于 0或不合法</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ERROR_RESOLVING_FILE_PATH</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>未启用</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">RELATIVE_PATH_COMPONENTS_IN_FILE_PATH</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>未启用</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">12</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UNABLE_TO_STAT_FILE</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>未启用</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">13</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FILE_NOT_OWNED_BY_ROOT</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>未启用</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">14</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PREPARE_CONTAINER_DIRECTORIES_FAILED</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>未启用</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">15</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INITIALIZE_CONTAINER_FAILED</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>未启用</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">16</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PREPARE_CONTAINER_LOGS_FAILED</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>未启用</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">17</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INVALID_LOG_DIR</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>未启用</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">18</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OUT_OF_MEMORY</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>启动命令未能获得足够的内存</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">19</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INITIALIZE_DISTCACHEFILE_FAILED</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>未启用</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">20</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INITIALIZE_USER_FAILED</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>无法获取用户的 NM 目录</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">21</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UNABLE_TO_BUILD_PATH</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>启动脚本创建路径失败</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">22</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INVALID_CONTAINER_EXEC_PERMISSIONS</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>启动脚本没有设置正确的执行权限</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">23</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PREPARE_JOB_LOGS_FAILED</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>未启用</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">24</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INVALID_CONFIG_FILE</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>container-executor.cfg文件不存在或者权限不正确</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">25</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SETSID_OPER_FAILED</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>设置容器的 SID(sessionId?)失败</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">26</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WRITE_PIDFILE_FAILED</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>无法将 PID 写入 PID 文件</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">27</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">WRITE_CGROUP_FAILED</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>无法写入CGROUP 信息(/sys/fs/cgroup ?)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">其他</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UNKNOWN_ERROR</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>需要依据错误信息具体分析</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_container"><a class="anchor" href="#_container"></a>container</h2>
+<div class="sectionbody">
+<div class="admonitionblock important">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-important" title="Important"></i>
+</td>
+<td class="content">
+LinuxContainerExecutor 和 DefaultContainerExecutor 通用的错误码体系, Yarn 框架的一部分, 可作为应用程序错误码的补充.  Hadoop 源码: ContainerExitStatus.java
+</td>
+</tr>
+</table>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 2. container 错误码</caption>
+<colgroup>
+<col style="width: 9.0909%;">
+<col style="width: 45.4545%;">
+<col style="width: 45.4546%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">错误码</th>
+<th class="tableblock halign-left valign-top">错误信息</th>
+<th class="tableblock halign-left valign-top">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SUCCESS</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>容器成功退出</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-1000</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">INVALID</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>容器退出码的初始值</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-100</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ABORTED</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>容器被框架杀死,可能是 app 释放容器或 nm 失败丢失容器导致</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-101</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DISKS_FAILED</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>NM 本地目录数量超过阈值</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-102</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">PREEMPTED</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>容器被抢占</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-103</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">KILLED_EXCEEDED_VMEM</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>虚拟内存超限被杀</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-104</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">KILLED_EXCEEDED_PMEM</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>物理内存超限被杀</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-105</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">KILLED_BY_APPMASTER</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>被 am 请求终止</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-106</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">KILLED_BY_RESOURCEMANAGER</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>被 rm 请求终止</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-107</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">KILLED_AFTER_APP_COMPLETION</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>app 完成后被杀死</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_application"><a class="anchor" href="#_application"></a>Application</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>通用的 Yarn Application 状态码定义, Hadoop 源码: FinalApplicationStatus.java &amp;&amp; ExitCode.java</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 9.0909%;">
+<col style="width: 45.4545%;">
+<col style="width: 45.4546%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">错误码</th>
+<th class="tableblock halign-left valign-top">错误信息</th>
+<th class="tableblock halign-left valign-top">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UNDEFINED</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>APP 未完成时的状态码(初始值)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">SUCCEEDED</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>APP 成功完成</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FAILED</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>APP 失败</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">-</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">KILLED</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>APP 被提交用户或者管理员用户终止</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_spark_退出码"><a class="anchor" href="#_spark_退出码"></a>Spark 退出码</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_executor_退出码"><a class="anchor" href="#_executor_退出码"></a>Executor 退出码</h3>
+<div class="paragraph">
+<p>参考 org.apache.spark.executor.ExecutorExitCode.scala</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 9.0909%;">
+<col style="width: 45.4545%;">
+<col style="width: 45.4546%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">错误码</th>
+<th class="tableblock halign-left valign-top">错误信息</th>
+<th class="tableblock halign-left valign-top">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">50</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UNCAUGHT_EXCEPTION</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>触发了默认的异常处理器(?)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">51</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">UNCAUGHT_EXCEPTION_TWICE</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>触发了默认的异常处理器,并在记录异常时触发了新的异常(?)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">52</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">OOM</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>触发了默认的异常处理器,且异常是 OutOfMemoryError</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">53</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">DISK_STORE_FAILED_TO_CREATE_DIR</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>DiskStore 未能创建本地临时目录</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">54</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EXTERNAL_BLOCK_STORE_FAILED_TO_INITIALIZE</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>ExternalBlockStore 未能初始化</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">55</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EXTERNAL_BLOCK_STORE_FAILED_TO_CREATE_DIR</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>ExternalBlockStore 未能创建本地临时目录</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">56</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HEARTBEAT_FAILURE</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>executor 向 driver 发送心跳信号失败次数超过了 spark.executor.heartbeat.maxFailures</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_applicationmaster_退出码"><a class="anchor" href="#_applicationmaster_退出码"></a>ApplicationMaster 退出码</h3>
+<div class="paragraph">
+<p>参考 org.apache.spark.deploy.yarn.ApplicationMaster.scala</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 9.0909%;">
+<col style="width: 45.4545%;">
+<col style="width: 45.4546%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">错误码</th>
+<th class="tableblock halign-left valign-top">错误信息</th>
+<th class="tableblock halign-left valign-top">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">0</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EXIT_SUCCESS</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EXIT_UNCAUGHT_EXCEPTION</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>未捕获的异常(此列表之外的异常)退出</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EXIT_MAX_EXECUTOR_FAILURES</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>失败的 executor 数量超过目标值的 2 倍, 其他情况则取 <code>spark.executor.instances</code> 的 2 倍</p>
+<div class="ulist">
+<ul>
+<li>
+<p>目标值优先取 <code>spark.yarn.max.executor.failures</code> (默认无)</p>
+</li>
+<li>
+<p>未配置且开启动态资源管理时取 <code>spark.dynamicAllocation.maxExecutors</code></p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">12</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EXIT_REPORTER_FAILURE</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>应用进度汇报线程(progress reporter)的失败次数超过 <code>spark.yarn.scheduler.reporterThread.maxFailures</code> (默认 5)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">13</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EXIT_SC_NOT_INITED</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>SparkContext 初始化时间超过 <code>spark.yarn.am.waitTime</code> (默认 100s)</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">14</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EXIT_SECURITY</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>未启用</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">15</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EXIT_EXCEPTION_USER_CLASS</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>用户MainClass 抛出异常</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">16</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">EXIT_EARLY</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>在 APP 结束前调用了 ShutdownHook</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_jvm_退出码"><a class="anchor" href="#_jvm_退出码"></a>JVM 退出码</h3>
+<div class="paragraph">
+<p>数值上超过 128 的退出码很有可能是由 Unix Signal 触发的程序关闭导致的, 可以通过用退出码减去 128来计算 Unix Signal. 例如最常见的 137 退出码是由 kill -9 强制杀死抛出的, 143 退出码一般是由 kill 或 kill -15 杀死抛出的.</p>
+</div>
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 9.0909%;">
+<col style="width: 45.4545%;">
+<col style="width: 45.4546%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">错误码</th>
+<th class="tableblock halign-left valign-top">错误信息</th>
+<th class="tableblock halign-left valign-top">描述</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">137</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">FORCE_KILLED</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>128+9, 即是由 kill -9 命令强制终止, 一般是虚拟或物理内存超限导致</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">143</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">TERMINATED</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>128+15, 即是由 kill 命令终止的, 一般是 OOM/FGC 导致</p>
+</div></div></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">154</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">LOST</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>128+27, 虚拟计时器过期(?)</p>
+</div></div></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p><a href="http://journal.thobe.org/2013/02/jvms-and-kill-signals.html">参考</a></p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>Then I ran the program in one terminal window (java Death; echo $?) while iterating through all kill signals (0-31) in another:
+kill -$SIGNAL $(jps | grep Death | cut -d\ -f1)
+
+signal shutdown runs hook exit code comment
+default (15) yes yes 143 SIGTERM is the default unix kill signal
+0 no - -
+1 (SIGHUP) yes yes 129
+2 (SIGINT) yes yes 130 SIGINT is the signal sent on ^C
+3 (SIGQUIT) no - - Makes the JVM dump threads / stack-traces
+4 (SIGILL) yes no 134 Makes the JVM write a core dump and abort on trap 6
+5 yes no 133 Makes the JVM exit with "Trace/BPT trap: 5"
+6 (SIGABRT) yes no 134 Makes the JVM exit with "Abort trap: 6"
+7 yes no 135 Makes the JVM exit with "EMT trap: 7"
+8 (SIGFPE) yes no 134 Makes the JVM write a core dump and abort on trap 6
+9 (SIGKILL) yes no 137 The JVM is forcibly killed (exits with "Killed: 9")
+10 (SIGBUS) yes no 134 Emulates a "Bus Error"
+11 (SIGSEGV) yes no 134 Emulates a "Segmentation fault"
+12 yes no 140 Makes the JVM exit with "Bad system call: 12"
+13 no - -
+14 yes no 142 Makes the JVM exit with "Alarm clock: 14"
+15 (SIGTERM) yes yes 143 This is the default unix kill signal
+16 no - -
+17 no - 145 Stops the application (sends it to the background), same as ^Z
+18 no - 146 Stops the application (sends it to the background), same as ^Z
+19 no - -
+20 no - -
+21 no - 149 Stops the application (sends it to the background), same as ^Z
+22 no - 150 Stops the application (sends it to the background), same as ^Z
+23 no - -
+24 yes no 152 Makes the JVM exit with "Cputime limit exceeded: 24"
+25 no - -
+26 yes no 154 Makes the JVM exit with "Virtual timer expired: 26"
+27 yes no 155 Makes the JVM exit with "Profiling timer expired: 27"
+28 no - -
+29 no - -
+30 yes no 158 Makes the JVM exit with "User defined signal 1: 30"
+31 yes no 134 Makes the JVM exit on Segmentation fault
+
+
+This list was compiled using (a quite old) Oracle Hotspot Java 8 EA on Mac OS X:
+java version "1.8.0-ea"
+Java(TM) SE Runtime Environment (build 1.8.0-ea-b65)
+Java HotSpot(TM) 64-Bit Server VM (build 25.0-b09, mixed mode)</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</article>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../../_/js/site.js"></script>
+<script async src="../../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
