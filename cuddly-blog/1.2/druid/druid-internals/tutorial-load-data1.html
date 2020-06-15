@@ -3,8 +3,8 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Druid 教程-加载数据 :: The Cuddly Computing Machine</title>
-    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/druid/druid-internals/tutorial-load-data.html">
+    <title>Druid Json 配置介绍 :: The Cuddly Computing Machine</title>
+    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/druid/druid-internals/tutorial-load-data1.html">
     <meta name="generator" content="Antora 2.3.1">
     <link rel="stylesheet" href="../../../../_/css/site.css">
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-86782445-1"></script>
@@ -329,11 +329,11 @@
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Druid 架构</span>
 <ul class="nav-list">
-  <li class="nav-item is-current-page" data-depth="3">
+  <li class="nav-item" data-depth="3">
     <button class="nav-item-toggle"></button>
     <a class="nav-link" href="tutorial-load-data.html">Druid 导入数据</a>
 <ul class="nav-list">
-  <li class="nav-item" data-depth="4">
+  <li class="nav-item is-current-page" data-depth="4">
     <a class="nav-link" href="tutorial-load-data1.html">Druid Json 配置介绍</a>
   </li>
 </ul>
@@ -441,140 +441,125 @@
     <li>Druid</li>
     <li>Druid 架构</li>
     <li><a href="tutorial-load-data.html">Druid 导入数据</a></li>
+    <li><a href="tutorial-load-data1.html">Druid Json 配置介绍</a></li>
   </ul>
 </nav>
 </div>
 <article class="doc">
-<h1 class="page">Druid 教程-加载数据</h1>
+<h1 class="page">Druid Json 配置介绍</h1>
 <div id="preamble">
 <div class="sectionbody">
-<div class="admonitionblock important">
-<table>
-<tr>
-<td class="icon">
-<i class="fa icon-important" title="Important"></i>
-</td>
-<td class="content">
-<div class="ulist">
-<ul>
-<li>
-<p>转载: 请附上原文出处链接.</p>
-</li>
-<li>
-<p><a href="https://github.com/alexwangx/alexwangx.github.io/issues" target="_blank" rel="noopener">点击留言</a></p>
-</li>
-</ul>
-</div>
-</td>
-</tr>
-</table>
-</div>
 <div class="paragraph">
 <p><a href="https://druid.apache.org/docs/latest/tutorials/tutorial-batch.html" target="_blank" rel="noopener">官方手册</a></p>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_从本地文件加载数据"><a class="anchor" href="#_从本地文件加载数据"></a>从本地文件加载数据</h2>
+<h2 id="_json_配置介绍"><a class="anchor" href="#_json_配置介绍"></a>Json 配置介绍</h2>
 <div class="sectionbody">
 <div class="listingblock">
-<div class="title">quickstart/tutorial/wikipedia-index.json</div>
 <div class="content">
 <pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
-  "type" : "index",
-  "spec" : {
-    "dataSchema" : {
-      "dataSource" : "wikipedia",
-      "parser" : {
-        "type" : "string",
-        "parseSpec" : {
-          "format" : "json",
-          "dimensionsSpec" : {
-            "dimensions" : [
-              "channel",
-              "cityName",
-              "comment",
-              "countryIsoCode",
-              "countryName",
-              "isAnonymous",
-              "isMinor",
-              "isNew",
-              "isRobot",
-              "isUnpatrolled",
-              "metroCode",
-              "namespace",
-              "page",
-              "regionIsoCode",
-              "regionName",
-              "user",
-              { "name": "added", "type": "long" },
-              { "name": "deleted", "type": "long" },
-              { "name": "delta", "type": "long" }
-            ]
-          },
-          "timestampSpec": {
-            "column": "time",
-            "format": "iso"
-          }
-        }
-      },
-      "metricsSpec" : [],
-      "granularitySpec" : {
-        "type" : "uniform",
-        "segmentGranularity" : "day",
-        "queryGranularity" : "none",
-        "intervals" : ["2015-09-12/2015-09-13"],
-        "rollup" : false
-      }
+  "type" : "index_hadoop",  <i class="conum" data-value="1"></i><b>(1)</b>
+  "spec" : {  <i class="conum" data-value="2"></i><b>(2)</b>
+    "dataSchema" : { <i class="conum" data-value="3"></i><b>(3)</b>
     },
-    "ioConfig" : {
-      "type" : "index",
-      "firehose" : {
-        "type" : "local",
-        "baseDir" : "quickstart/tutorial/",
-        "filter" : "wikiticker-2015-09-12-sampled.json.gz"
-      },
-      "appendToExisting" : false
+    "ioConfig" : { <i class="conum" data-value="4"></i><b>(4)</b>
     },
-    "tuningConfig" : {
-      "type" : "index",
-      "maxRowsPerSegment" : 5000000,
-      "maxRowsInMemory" : 25000
+    "tuningConfig" : { <i class="conum" data-value="5"></i><b>(5)</b>
     }
   }
 }</code></pre>
 </div>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell"># Loading data with a spec (via command line)
-
-bin/post-index-task --file quickstart/tutorial/wikipedia-index.json --coordinator-url http://hadoop8:8081 --url http://hadoop8:8081
-
-# Loading data without the script
-
-curl -X 'POST' -H 'Content-Type:application/json' -d @quickstart/tutorial/wikipedia-index.json http://hadoop8:8081/druid/indexer/v1/task</code></pre>
-</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>type: 表示上传的方式, 本地文件上传使用 index, hdfs文件上传使用index_hadoop.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>spec: 用于设置数据的具体配置以及转换方式</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>dataSchema: 用于指定上传数据的格式.</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>ioConfig: 用于指定数据的来源以及存储位置</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>tuningConfig(可选): 用于指定如何协调各种不同的参数</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_从kafka加载数据"><a class="anchor" href="#_从kafka加载数据"></a>从Kafka加载数据</h2>
+<h2 id="_dataschema"><a class="anchor" href="#_dataschema"></a>dataSchema</h2>
 <div class="sectionbody">
 <div class="listingblock">
-<div class="title">quickstart/tutorial/wikipedia-kafka-supervisor.json</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
-  "type": "kafka",
-  "spec" : {
-    "dataSchema": {
-      "dataSource": "wikipedia",
-      "timestampSpec": {
-        "column": "time",
-        "format": "auto"
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"dataSchema" : {
+  "dataSource" : "wikipedia_hdp", <i class="conum" data-value="1"></i><b>(1)</b>
+  "parser" : { <i class="conum" data-value="2"></i><b>(2)</b>
+    "type" : "hadoopyString",
+    "parseSpec" : {
+      "format" : "json",
+      "dimensionsSpec" : {
+        "dimensions" : [
+        ]
       },
-      "dimensionsSpec": {
-        "dimensions": [
+      "timestampSpec" : {
+        "format" : "auto",
+        "column" : "time"
+      }
+    }
+  },
+  "metricsSpec" : [], <i class="conum" data-value="3"></i><b>(3)</b>
+  "granularitySpec" : { <i class="conum" data-value="4"></i><b>(4)</b>
+    "type" : "uniform",
+    "segmentGranularity" : "day",
+    "queryGranularity" : "none",
+    "intervals" : ["2015-09-12/2015-09-13"],
+    "rollup" : false
+  }
+},</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>dataSource： 数据源名称，用于设置上传数据之后的表名称。</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>parser：用于指定数据怎么被转化，转化为什么格式</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>metricsSpec：包含了一系列的aggregators转换</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>granularitySpec：指定如何划分segment以及数据的时间范围</td>
+</tr>
+</table>
+</div>
+<div class="sect2">
+<h3 id="_parser"><a class="anchor" href="#_parser"></a>parser</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"parser" : {
+    "type" : "hadoopyString", <i class="conum" data-value="1"></i><b>(1)</b>
+    "parseSpec" : { <i class="conum" data-value="2"></i><b>(2)</b>
+      "format" : "json", <i class="conum" data-value="3"></i><b>(3)</b>
+      "dimensionsSpec" : { <i class="conum" data-value="4"></i><b>(4)</b>
+        "dimensions" : [
           "channel",
           "cityName",
           "comment",
@@ -596,120 +581,179 @@ curl -X 'POST' -H 'Content-Type:application/json' -d @quickstart/tutorial/wikipe
           { "name": "delta", "type": "long" }
         ]
       },
-      "metricsSpec" : [],
-      "granularitySpec": {
-        "type": "uniform",
-        "segmentGranularity": "DAY",
-        "queryGranularity": "NONE",
-        "rollup": false
-      }
-    },
-    "tuningConfig": {
-      "type": "kafka",
-      "reportParseExceptions": false
-    },
-    "ioConfig": {
-      "topic": "wikipedia",
-      "useEarliestOffset": true,
-      "resetOffsetAutomatically": true,
-      "inputFormat": {
-        "type": "json"
+      "timestampSpec" : { <i class="conum" data-value="5"></i><b>(5)</b>
+        "format" : "auto",
+        "column" : "time"
       },
-      "replicas": 2,
-      "taskDuration": "PT10M",
-      "completionTimeout": "PT20M",
-      "consumerProperties": {
-        "bootstrap.servers": "localhost:9092",
-        "auto.offset.reset": "earliest",
-        "group.id": "t0_druid_group_test",
-        "enable.auto.commit": "true"
-      }
+      "columns" : { <i class="conum" data-value="6"></i><b>(6)</b>
+      },
     }
-  }
-}</code></pre>
+  }</code></pre>
 </div>
 </div>
-<div class="paragraph">
-<p><a href="https://druid.apache.org/docs/latest/tutorials/tutorial-kafka.html#load-data-into-kafka" target="_blank" rel="noopener">kafka 数据准备</a></p>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>type:指定常规数据的格式，默认为string，如果保存hdfs上那么指定为hadoopyString，注意hadoop后边有个y；</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>parseSpec：用于指定数据转换格式</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="3"></i><b>3</b></td>
+<td>format：指定上传文件格式,可以为csv，json，tsv，javascript、timeAndDims等</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="4"></i><b>4</b></td>
+<td>dimensionsSpec：配置维度数据，也就是将要在druid数据表中展现的列,dimensions用于指定所有的列；dimensionExclusion可选，用于指定不需要的数据，默认为空；spatialDimensions可选，用于指定列的空间限制，默认为空。</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="5"></i><b>5</b></td>
+<td>timestampSpec：指定时间戳序列,包含column以及format两个参数，column必选，用于指定时间戳对应的列。format用于指定时间格式，可以使用iso、millis、posix、zuto，默认为auto。</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="6"></i><b>6</b></td>
+<td>columns（可选）：csv格式特有，用于配置源文件中应该包含的所有列的列名</td>
+</tr>
+</table>
 </div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+dimensionsSpec: 如果字段为String，那么直接列出，如果为其他类型如long/double等，需要使用{"type":"long","name":"字段名称" }单独列出，注意：配置时间戳的列不需要在dimensions中列出。
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_metricsspec"><a class="anchor" href="#_metricsspec"></a>metricsSpec</h3>
 <div class="listingblock">
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell"># Submit a supervisor directly
-
-curl -XPOST -H'Content-Type: application/json' -d @quickstart/tutorial/wikipedia-kafka-supervisor.json http://hadoop8:8081/druid/indexer/v1/supervisor</code></pre>
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">"metricsSpec":[ <i class="conum" data-value="1"></i><b>(1)</b>
+    {"type":"count","name":"count"},
+    {"type":"doubleSum","name":"added","fieldName":"added"},
+    {"type":"doubleSum","name":"deleted","fieldName":"deleted"},
+    {"type":"doubleSum","name":"delta","fieldName":"delta"}
+]</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>metricsSpec：包含了一系列的aggregators转换,type可以为：count、longSum、doubleSum、doubleMin/doubleMax、longMin/longMax、doubleFirst/doubleLast、longFirst/longLast</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+除count外其他都需要指定name和fieldName两个参数，name表示最后输出的，也就是在表中体现的名称，而fieldName则代表源数据中的列名。
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_granularityspec"><a class="anchor" href="#_granularityspec"></a>granularitySpec</h3>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">  "granularitySpec" : { <i class="conum" data-value="1"></i><b>(1)</b>
+    "type" : "uniform",
+    "segmentGranularity" : "day",
+    "queryGranularity" : "none",
+    "intervals" : ["2015-09-12/2015-09-13"],
+    "rollup" : false
+  }</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>granularitySpec包含如下五个维度：
+<div class="ulist">
+<ul>
+<li>
+<p>type：用来指定粒度类型的使用，默认为type=uniform，建议设置为uniform或arbitrary（尝试创建大小相等的字段）</p>
+</li>
+<li>
+<p>segmentGranularity（可选）：指定每个segment包含的时间戳的范围,默认为day，用来确定每个segment包含的时间戳的范围，可以为 "SECOND", "MINUTE", "HOUR", "DAY", "DOW", "DOY", "WEEK", "MONTH", "QUARTER", "YEAR", "EPOCH", "DECADE", "CENTURY", "MILLENNIUM"等。</p>
+</li>
+<li>
+<p>queryGranularity（可选）：默认为None，允许查询的时间粒度，单位与segmentGranularity相同，如果为None那么允许以任意时间粒度进行查询。</p>
+</li>
+<li>
+<p>rollup（可选）：是否使用预计算算法，默认为true，推荐true，比较快。</p>
+</li>
+<li>
+<p>intervals：使用时间段来将数据源进行限制。只有时间段内的数据可以上传。</p>
+</li>
+</ul>
+</div></td>
+</tr>
+</table>
 </div>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="_从hadoop加载数据"><a class="anchor" href="#_从hadoop加载数据"></a>从Hadoop加载数据</h2>
+<h2 id="_ioconfig"><a class="anchor" href="#_ioconfig"></a>ioConfig</h2>
 <div class="sectionbody">
 <div class="listingblock">
-<div class="title">quickstart/tutorial/wikipedia-index-hadoop.json</div>
 <div class="content">
-<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{
-  "type" : "index_hadoop",  <i class="conum" data-value="1"></i><b>(1)</b>
-  "spec" : {  <i class="conum" data-value="2"></i><b>(2)</b>
-    "dataSchema" : { <i class="conum" data-value="3"></i><b>(3)</b>
-      "dataSource" : "wikipedia_hdp", <i class="conum" data-value="4"></i><b>(4)</b>
-      "parser" : {
-        "type" : "hadoopyString",
-        "parseSpec" : {
-          "format" : "json",
-          "dimensionsSpec" : {
-            "dimensions" : [
-              "channel",
-              "cityName",
-              "comment",
-              "countryIsoCode",
-              "countryName",
-              "isAnonymous",
-              "isMinor",
-              "isNew",
-              "isRobot",
-              "isUnpatrolled",
-              "metroCode",
-              "namespace",
-              "page",
-              "regionIsoCode",
-              "regionName",
-              "user",
-              { "name": "added", "type": "long" },
-              { "name": "deleted", "type": "long" },
-              { "name": "delta", "type": "long" }
-            ]
-          },
-          "timestampSpec" : {
-            "format" : "auto",
-            "column" : "time"
-          }
-        }
-      },
-      "metricsSpec" : [],
-      "granularitySpec" : {
-        "type" : "uniform",
-        "segmentGranularity" : "day",
-        "queryGranularity" : "none",
-        "intervals" : ["2015-09-12/2015-09-13"],
-        "rollup" : false
-      }
-    },
-    "ioConfig" : { <i class="conum" data-value="5"></i><b>(5)</b>
-      "type" : "hadoop",
-      "inputSpec" : {
-        "type" : "static",
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">    "ioConfig" : {
+      "type" : "hadoop", <i class="conum" data-value="1"></i><b>(1)</b>
+      "inputSpec" : { <i class="conum" data-value="2"></i><b>(2)</b>
+        "type" : "static",// "type" : "granularity"
         "paths" : "hdfs://clusterId/tmp/wikiticker-2015-09-12-sampled.json.gz"
       }
-    },
-    "tuningConfig" : { <i class="conum" data-value="6"></i><b>(6)</b>
-      "type" : "hadoop",
-      "partitionsSpec" : {
+    },</code></pre>
+</div>
+</div>
+<div class="colist arabic">
+<table>
+<tr>
+<td><i class="conum" data-value="1"></i><b>1</b></td>
+<td>type: 用于指定源数据获取方式, 保存为本地使用 "local"，保存为hdfs使用"hadoop"</td>
+</tr>
+<tr>
+<td><i class="conum" data-value="2"></i><b>2</b></td>
+<td>inputSpec: 指定源数据路径, 包含type，以及paths路径, 当设置type为 "granularity" 时候，则需要根据时间戳使用路径格式将数据导入目录中。</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_tuningconfig"><a class="anchor" href="#_tuningconfig"></a>tuningConfig</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">    "tuningConfig" : {
+      "type" : "hadoop", <i class="conum" data-value="1"></i><b>(1)</b>
+      "partitionsSpec" : { <i class="conum" data-value="2"></i><b>(2)</b>
         "type" : "hashed",
-        "targetPartitionSize" : 5000000
+        "targetPartitionSize" : 5000000,
+        "maxPartitionSize":7500000,
+        "assumeGrouped":false,
+        "numShards": -1,
+        "partitionDimensions": [ ]
       },
       "ignoreInvalidRows": true,
       "forceExtendableShardSpecs" : true,
-      "jobProperties" : {
+      "jobProperties" : { <i class="conum" data-value="3"></i><b>(3)</b>
         "fs.default.name" : "hdfs://clusterId",
         "fs.defaultFS" : "hdfs://clusterId",
         "dfs.datanode.address" : "0.0.0.0:50010",
@@ -724,49 +768,72 @@ curl -XPOST -H'Content-Type: application/json' -d @quickstart/tutorial/wikipedia
         "mapreduce.map.memory.mb" : 2048,
         "mapreduce.reduce.memory.mb" : 3072,
         "mapreduce.job.queuename":"default"
-      }
+      },
+      "workingPath" : "/tmp/druid-indexing", <i class="conum" data-value="4"></i><b>(4)</b>
     }
-  },
-  "hadoopDependencyCoordinates": ["org.apache.hadoop:hadoop-client:2.7.3", "com.hadoop.gplcompression:hadoop-lzo:0.4.20"]
-}</code></pre>
+  },</code></pre>
 </div>
 </div>
 <div class="colist arabic">
 <table>
 <tr>
 <td><i class="conum" data-value="1"></i><b>1</b></td>
-<td>type: 表示上传的方式, 本地文件上传使用 index, hdfs文件上传使用index_hadoop.</td>
+<td>type：指定数据存放方式.</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="2"></i><b>2</b></td>
-<td>spec: 用于设置数据的具体配置以及转换方式</td>
+<td>partitionsSpec：用于指定数据的segment的分区方式以及大小,默认为hashed. Segment会给予时间戳进行分区，并根据其他类型进一步分区，druid支持hashed（基于每行所有维度的哈希值）和dimension（基于单个维度的范围）来进行分区。为了让druid在重查询负载下运行良好，对于段文件大小的推荐在300Mb到700mb之间，可以使用partitionsSpec来调整大小。
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>hashed分区首先会选择多个Segment，然后根据每行数据所有列的哈希值对这些Segment进行分区，Segment的数量是输入数据集的基数以及目标分区大小自动确定的。</p>
+<div class="ulist">
+<ul>
+<li>
+<p>type:要分区的类型，hashed</p>
+</li>
+<li>
+<p>targetPartitionSize：包含在分区中的目标行数，应该在500M-1G</p>
+</li>
+<li>
+<p>maxPartitionSize：分区中包括的最大行数，默认为比targetPartitionSize大50%。</p>
+</li>
+<li>
+<p>numShards：直接指定分区的数量而不是分区的大小，可以跳过自动选择多个分区的必要步骤，录入数据将会更快。此项与targetPartitionSize只需要填入一项即可。</p>
+</li>
+<li>
+<p>partitionDemensions（可选），只能配合numShards一起使用，指定需要分区的维度，为空则选择所有维度列，当targetPartitionSize设置时候将自动忽略。</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div></td>
 </tr>
 <tr>
 <td><i class="conum" data-value="3"></i><b>3</b></td>
-<td>dataSchema: 用于指定上传数据的格式.</td>
+<td>jobProperties:在添加mapreduce作业时候的一些配置，key:value表示</td>
 </tr>
 <tr>
 <td><i class="conum" data-value="4"></i><b>4</b></td>
-<td>dataSource: 数据源名称, 用于设置上传数据之后的表名称.</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="5"></i><b>5</b></td>
-<td>ioConfig: 用于指定数据的来源以及存储位置</td>
-</tr>
-<tr>
-<td><i class="conum" data-value="6"></i><b>6</b></td>
-<td>tuningConfig(可选): 用于指定如何协调各种不同的参数</td>
+<td>workingPath：用于指示数据中间落地的路径（mapreduce中间结果），默认为'/tmp/druid-indexing'</td>
 </tr>
 </table>
 </div>
-<div class="listingblock">
-<div class="content">
-<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell"># Load batch data
-
-curl -X 'POST' -H 'Content-Type:application/json' -d @quickstart/tutorial/wikipedia-index-hadoop.json http://hadoop8:8081/druid/indexer/v1/task
-
-bin/post-index-task --file quickstart/tutorial/wikipedia-index-hadoop.json  --coordinator-url http://hadoop8:8081 --url http://hadoop8:8081</code></pre>
 </div>
+</div>
+<div class="sect1">
+<h2 id="_参考"><a class="anchor" href="#_参考"></a>参考</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://www.jianshu.com/p/35561ece0fdb" target="_blank" rel="noopener">druid上传数据index文件配置</a></p>
+</li>
+<li>
+<p><a href="https://druid.apache.org/docs/latest/ingestion/hadoop.html#tuningconfig" target="_blank" rel="noopener">其他参数参考</a></p>
+</li>
+</ul>
 </div>
 </div>
 </div>

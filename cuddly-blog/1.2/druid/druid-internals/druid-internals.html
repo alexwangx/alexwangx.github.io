@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Druid 0.1.5 架构 :: The Cuddly Computing Machine</title>
     <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/druid/druid-internals/druid-internals.html">
-    <meta name="generator" content="Antora 2.0.0">
+    <meta name="generator" content="Antora 2.3.1">
     <link rel="stylesheet" href="../../../../_/css/site.css">
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-86782445-1"></script>
     <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-86782445-1')</script>
@@ -251,13 +251,7 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../spark/spark-internals/index.html">Spark 2.4.4 架构原理</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../spark/spark-internals/root/spark-overview.html">Overview</a>
-  </li>
-</ul>
+    <a class="nav-link" href="https://alexwangx.github.io/apache-spark-internals/2.4.5/">Spark 2.4.4 架构原理</a>
   </li>
 </ul>
   </li>
@@ -287,6 +281,9 @@
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../../hadoop/hdp-ops/hadoop_delroot.html">Hadoop 意外删除挽救</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hadoop/hdp-ops/delrmstore_onzk.html">删除ZK上的rmstore目录</a>
   </li>
 </ul>
   </li>
@@ -326,11 +323,20 @@
     <a class="nav-link" href="../druid-install.html">Druid 安装</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../ops/druid-restApi.html">Druid RestApi</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Druid 架构</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="tutorial-load-data.html">Druid 导入数据</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="tutorial-load-data1.html">Druid Json 配置介绍</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item is-current-page" data-depth="3">
     <a class="nav-link" href="druid-internals.html">Druid 0.1.5 架构</a>
@@ -967,7 +973,7 @@ Bar : [0,1,1,0,1,0]</pre>
 <h2 id="_存储设计"><a class="anchor" href="#_存储设计"></a>存储设计</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_datasources_and_druidsegment_adoc"><a class="anchor" href="#_datasources_and_druidsegment_adoc"></a>Datasources and <a href="#">druid/segment.adoc</a></h3>
+<h3 id="_datasources_and_segment"><a class="anchor" href="#_datasources_and_segment"></a>Datasources and <a href="segment.html" class="page">Segment</a></h3>
 <div class="paragraph">
 <p>Druid 里面的数据存储在"Datasources"里面, 每个 DataSource 都会按时间进行分区, 可以选择按其他列进一步分区. 每个时间范围的数据统称为一个"chunk"(eg: 数据源按天划分, 则一天的数据成为一个 chunk). 在一个 chunk 内, 数据又会被划分为一个或多个 "segments". 每个 segment 是一个包含几百万行的数据的单独文件, 由于 segment 在时间轴上面的 chunk 上划分, 这样设计在时间轴上考虑这些 segment 的存活非常有用.</p>
 </div>

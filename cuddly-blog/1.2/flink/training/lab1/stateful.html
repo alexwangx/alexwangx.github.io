@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>有状态转换 :: The Cuddly Computing Machine</title>
     <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/flink/training/lab1/stateful.html">
-    <meta name="generator" content="Antora 2.0.0">
+    <meta name="generator" content="Antora 2.3.1">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-86782445-1"></script>
     <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-86782445-1')</script>
@@ -251,13 +251,7 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../spark/spark-internals/index.html">Spark 2.4.4 架构原理</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../../spark/spark-internals/root/spark-overview.html">Overview</a>
-  </li>
-</ul>
+    <a class="nav-link" href="https://alexwangx.github.io/apache-spark-internals/2.4.5/">Spark 2.4.4 架构原理</a>
   </li>
 </ul>
   </li>
@@ -287,6 +281,9 @@
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../../../hadoop/hdp-ops/hadoop_delroot.html">Hadoop 意外删除挽救</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../hadoop/hdp-ops/delrmstore_onzk.html">删除ZK上的rmstore目录</a>
   </li>
 </ul>
   </li>
@@ -326,11 +323,20 @@
     <a class="nav-link" href="../../../druid/druid-install.html">Druid 安装</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../druid/ops/druid-restApi.html">Druid RestApi</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Druid 架构</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="../../../druid/druid-internals/tutorial-load-data.html">Druid 导入数据</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../../druid/druid-internals/tutorial-load-data1.html">Druid Json 配置介绍</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../../../druid/druid-internals/druid-internals.html">Druid 0.1.5 架构</a>
@@ -514,7 +520,7 @@ DataStream&lt;Tuple2&lt;String, Double&gt;&gt; smoothed = input.keyBy(0).map(new
 </div>
 </div>
 <div class="paragraph">
-<p>为此, 我们的 <code>Smoother</code> 将需要以某种方式记录每个传感器的最新数据, 这将使用 <code>Flink</code> 的 `keyed state ` 接口来完成.</p>
+<p>为此, 我们的 <code>Smoother</code> 将需要以某种方式记录每个传感器的最新数据, 这将使用 <code>Flink</code> 的 <code>keyed state</code> 接口来完成.</p>
 </div>
 <div class="paragraph">
 <p>当您使用像这样的 <code>keyed</code> 流时, Flink 将为所管理的每个状态项维护一个 <code>key/value</code> 存储.</p>
@@ -572,7 +578,7 @@ DataStream&lt;Tuple2&lt;String, Double&gt;&gt; smoothed = input.keyBy(0).map(new
 </div>
 </div>
 <div class="paragraph">
-<p>例如, 您可能要在指定的 key 不活动一段时间之后执行此操作. 再我们学习关于 <code>ProcessFunction ` 的课程时 <a href="../lab4/processfunction.html" class="page">event-driven applications</a>, 将会看到如何使用 `Timers</code> 去实现.</p>
+<p>例如, 您可能要在指定的 key 不活动一段时间之后执行此操作. 再我们学习关于 <code>ProcessFunction</code> 的课程时 <a href="../lab4/processfunction.html" class="page">event-driven applications</a>, 将会看到如何使用 <code>Timers</code> 去实现.</p>
 </div>
 <div class="paragraph">
 <p>1.6版中的 Flink 还添加了 “状态生存时间”（TTL）特性. 您可以使用它来指定何时希望自动清除陈旧 key 的状态.</p>

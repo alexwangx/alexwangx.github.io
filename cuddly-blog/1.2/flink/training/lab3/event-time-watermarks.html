@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>Event Time and Watermarks :: The Cuddly Computing Machine</title>
     <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/flink/training/lab3/event-time-watermarks.html">
-    <meta name="generator" content="Antora 2.0.0">
+    <meta name="generator" content="Antora 2.3.1">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-86782445-1"></script>
     <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-86782445-1')</script>
@@ -251,13 +251,7 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../spark/spark-internals/index.html">Spark 2.4.4 架构原理</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../../spark/spark-internals/root/spark-overview.html">Overview</a>
-  </li>
-</ul>
+    <a class="nav-link" href="https://alexwangx.github.io/apache-spark-internals/2.4.5/">Spark 2.4.4 架构原理</a>
   </li>
 </ul>
   </li>
@@ -287,6 +281,9 @@
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../../../hadoop/hdp-ops/hadoop_delroot.html">Hadoop 意外删除挽救</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../hadoop/hdp-ops/delrmstore_onzk.html">删除ZK上的rmstore目录</a>
   </li>
 </ul>
   </li>
@@ -326,11 +323,20 @@
     <a class="nav-link" href="../../../druid/druid-install.html">Druid 安装</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../druid/ops/druid-restApi.html">Druid RestApi</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Druid 架构</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="../../../druid/druid-internals/tutorial-load-data.html">Druid 导入数据</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../../druid/druid-internals/tutorial-load-data1.html">Druid Json 配置介绍</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../../../druid/druid-internals/druid-internals.html">Druid 0.1.5 架构</a>
@@ -511,25 +517,28 @@ env.setStreamTimeCharacteristic(TimeCharacteristic.EventTime);</code></pre>
 <p>现在想象一下我们正在尝试创建一个流分类器。这意味着该应用程序将在流到达时处理每个事件，并发出包含相同事件但按其时间戳排序的新流。</p>
 </div>
 <div class="paragraph">
-<p>一些观察：
-. 我们的流分类器看到的第一个元素是4，但我们不能立即将其作为已分类流的第一个元素发布。 它可能已到达混乱状态，并且较早的事件可能尚未到达。实际上，我们受益于对该流的未来的一些类似的预测，并且我们可以看到我们的流分类器应该至少等到两个流分类器到达之后才能产生任何结果。 需要一些缓冲和一些延迟。
-. 如果我们做错了，我们可能会永远等待。首先，我们的应用程序从时间4开始看到一个事件，然后从时间2开始看到一个事件。时间戳小于2的事件会到达吗？ 也许。 也许不。 我们可以永远等待，永远不会看到1。最终，我们必须有勇气，将2发出作为已排序流的开始。
-. 然后，我们需要某种策略，该策略定义对于任何给定时间戳的事件何时停止等待较早事件的到来。</p>
-</div>
-<div class="paragraph">
-<p>+
-这正是水印的作用-它们定义何时停止等待早期事件。</p>
-</div>
-<div class="paragraph">
-<p>+
-Flink中的事件时间处理取决于水印生成器，该生成器将带有特殊时间戳的元素插入流中，称为水印。</p>
-</div>
-<div class="paragraph">
-<p>+
-我们的流分类器什么时候应该停止等待，并推出2以开始分类的流？当水印以2或更大的时间戳到达时。</p>
+<p>一些观察：</p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
+<li>
+<p>我们的流分类器看到的第一个元素是4，但我们不能立即将其作为已分类流的第一个元素发布。 它可能已到达混乱状态，并且较早的事件可能尚未到达。实际上，我们受益于对该流的未来的一些类似的预测，并且我们可以看到我们的流分类器应该至少等到两个流分类器到达之后才能产生任何结果。 需要一些缓冲和一些延迟。</p>
+</li>
+<li>
+<p>如果我们做错了，我们可能会永远等待。首先，我们的应用程序从时间4开始看到一个事件，然后从时间2开始看到一个事件。时间戳小于2的事件会到达吗？ 也许。 也许不。 我们可以永远等待，永远不会看到1。最终，我们必须有勇气，将2发出作为已排序流的开始。</p>
+</li>
+<li>
+<p>然后，我们需要某种策略，该策略定义对于任何给定时间戳的事件何时停止等待较早事件的到来。</p>
+<div class="paragraph">
+<p>这正是水印的作用-它们定义何时停止等待早期事件。</p>
+</div>
+<div class="paragraph">
+<p>Flink中的事件时间处理取决于水印生成器，该生成器将带有特殊时间戳的元素插入流中，称为水印。</p>
+</div>
+<div class="paragraph">
+<p>我们的流分类器什么时候应该停止等待，并推出2以开始分类的流？当水印以2或更大的时间戳到达时。</p>
+</div>
+</li>
 <li>
 <p>我们可以想象一下用于决定如何生成水印的不同策略。</p>
 <div class="paragraph">

@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Druid Rest Api 汇总 :: The Cuddly Computing Machine</title>
+    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/druid/ops/druid-restApi.html">
+    <meta name="generator" content="Antora 2.3.1">
+    <link rel="stylesheet" href="../../../../_/css/site.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-86782445-1"></script>
+    <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-86782445-1')</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="http://alexwangx.github.io">The Cuddly Computing Machine</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/alexwangx">GitHub</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="cuddly-blog" data-version="1.2">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../index.html">Cuddly Blog</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Flink</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../flink/training/index.html">Flink Training Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Streaming 介绍</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/intro/intro-1.html">使用Apache Flink 进行流处理</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/intro/intro-2.html">流可以传输什么?</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/intro/intro-3.html">一个完整的例子</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">环境配置</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/labs/devEnvSetup.html">设置您的开发环境</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/labs/taxiData.html">使用出租车数据流</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/labs/howto-exercises.html">如何做实验室</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/training/lab1/rideCleansing.html">Lab 1 - 过滤流</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">数据转换</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab1/stateless.html">无状态转换</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab1/keyed-streams.html">Keyed 流</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab1/stateful.html">有状态的转换</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab1/connected-streams.html">连接流</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/training/lab2/rideEnrichment-flatmap.html">Lab 2 - Stateful Enrichment</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">时间和分析</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab3/event-time-watermarks.html">Event Time and Watermarks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab3/windows.html">Windows</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Lab 3 - Windowing</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab3/hourlyTips.html">Lab 3 - 窗口化分析</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab3/hourlyTips-discussion.html">Lab 3 - 讨论</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">事件驱动的应用</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab4/processfunction.html">ProcessFunction</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab4/side-outputs.html">Side Outputs</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Lab 4 - 到期状态</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab4/rideEnrichment-processfunction.html">Lab 4 - 练习</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/lab4/expiring-state-discussion.html">Lab 4 - 讨论</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">容错能力</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/fault/state-backends.html">状态后端</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/fault/snapshots.html">检查点和保存点</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/training/app-dev.html">应用开发</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">其他练习</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/extra-labs/longRides.html">长途警报</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">广播状态</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../flink/training/extra-labs/nearestTaxi.html">寻找最近的出租车</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../flink/training/extra-labs/ongoingRides.html">报告正在进行的出租车</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../../flink/training/extra-labs/taxiQuery.html">规则引擎</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../flink/training/extra-labs/eventTimeJoin.html">丰富的 Joins</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/training/resources.html">资源链接</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../flink/introduction/index.html">Flink 简介</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/introduction/architecture.html">Flink 架构介绍</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/introduction/failover.html">Flink 容错机制</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/introduction/scheduling.html">Flink 调度机制</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/introduction/statemachine.html">Flink 状态机</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/introduction/memorymanager.html">Flink 内存管理</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/introduction/dataflow.html">Flink Dataflow</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/introduction/batchdata.html">Flink 批处理</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../flink/introduction/streamdata.html">Flink 流处理</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../flink/internals/index.html">Flink 学习笔记</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spark</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spark ops</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../spark/ops/spark-exitcode.html">Spark 任务退出码</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../spark/ops/spark-issues.html">Spark 常见错误</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="https://alexwangx.github.io/apache-spark-internals/2.4.5/">Spark 2.4.4 架构原理</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hadoop</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../hadoop/hadoop_krb_install.html">Hadoop 配置 Kerberos</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hadoop ops</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hadoop/hdp-ops/hadoop_commands.html">Hadoop Commands</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hadoop/hdp-ops/hadoop_practices.html">Hadoop Practices</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hadoop/hdp-ops/hadoop_jmx.html">Hadoop JMX</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hadoop/hdp-ops/hadoop_delroot.html">Hadoop 意外删除挽救</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hadoop/hdp-ops/delrmstore_onzk.html">删除ZK上的rmstore目录</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hbase</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hbase ops</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hbase/hbase-ops/hbase_notes.html">Hbase 基本命令</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hbase/hbase-ops/hbase_issues.html">Hbase Issues</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Druid</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../druid-install.html">Druid 安装</a>
+  </li>
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="druid-restApi.html">Druid RestApi</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Druid 架构</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../druid-internals/tutorial-load-data.html">Druid 导入数据</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../druid-internals/tutorial-load-data1.html">Druid Json 配置介绍</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../druid-internals/druid-internals.html">Druid 0.1.5 架构</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../druid-internals/broker.html">Druid Broker</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../druid-internals/coordinator.html">Druid Coordinator</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../druid-internals/historical.html">Druid Historical</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../druid-internals/middleManager.html">Druid MiddleManager</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../druid-internals/overlord.html">Druid Overlord</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../druid-internals/router.html">Druid Router</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../druid-internals/segment.html">Druid Segments</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Kafka</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../kafka/kafka_practices.html">Kafka Practices</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../kafka/kafka_issues.html">Kafka Issues</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Other</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../mac.html">Mac OS</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../linux.html">Linux</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../mysql_install.html">Mysql 安装</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../readlist.html">北京中小学孩子读书清单</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../demo/demo.html">Adoc Demo</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Cuddly Blog</span>
+    <span class="version">1.2</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">Cuddly Blog</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../index.html">1.2</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main>
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../index.html">Cuddly Blog</a></li>
+    <li>Druid</li>
+    <li><a href="druid-restApi.html">Druid RestApi</a></li>
+  </ul>
+</nav>
+</div>
+<article class="doc">
+<h1 class="page">Druid Rest Api 汇总</h1>
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p>集群所有的数据、任务管理和数据查询都是以RestAPI的方式进行, <a href="https://druid.apache.org/docs/latest/operations/api-reference.html" target="_blank" rel="noopener">官方文档</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_common"><a class="anchor" href="#_common"></a>Common</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>curl <a href="http://hadoop5:8081/status" class="bare">http://hadoop5:8081/status</a></p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_master_server"><a class="anchor" href="#_master_server"></a>Master Server</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_coordinator"><a class="anchor" href="#_coordinator"></a>Coordinator</h3>
+<div class="sect3">
+<h4 id="_leadership"><a class="anchor" href="#_leadership"></a>Leadership</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>查看Coordinator的leader</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl <a href="http://hadoop5:8081/druid/coordinator/v1/leader" class="bare">http://hadoop5:8081/druid/coordinator/v1/leader</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>查看Coordinator 是否是 leader</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl <a href="http://hadoop5:8081/druid/coordinator/v1/isLeader" class="bare">http://hadoop5:8081/druid/coordinator/v1/isLeader</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_segment_loading"><a class="anchor" href="#_segment_loading"></a>Segment Loading</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>查看数据加载情况</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl <a href="http://hadoop5:8081/druid/coordinator/v1/loadstatus" class="bare">http://hadoop5:8081/druid/coordinator/v1/loadstatus</a></p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>注意 可以通过参数full查看各个数据源replicas的情况</p>
+<div class="ulist">
+<ul>
+<li>
+<p>例如：curl <a href="http://hadoop5:8081/druid/coordinator/v1/loadstatus?full=true" class="bare">http://hadoop5:8081/druid/coordinator/v1/loadstatus?full=true</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>查看正在加载或者删除的数据段</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl <a href="http://hadoop5:8081/druid/coordinator/v1/loadqueue" class="bare">http://hadoop5:8081/druid/coordinator/v1/loadqueue</a></p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>注意 可以通过参数full查看所有的明细, 例如：可以通过参数full查看各个数据源replicas的情况</p>
+<div class="ulist">
+<ul>
+<li>
+<p>例如：curl <a href="http://hadoop5:8081/druid/coordinator/v1/loadqueue?full=true" class="bare">http://hadoop5:8081/druid/coordinator/v1/loadqueue?full=true</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>查看Coordinator动态配置的参数</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl <a href="http://hadoop5:8081/druid/coordinator/v1/config" class="bare">http://hadoop5:8081/druid/coordinator/v1/config</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>设置Coordinator动态配置的参数</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl -X POST -H 'Content-Type: application/json' -d @config.json <a href="http://hadoop5:8081/druid/coordinator/v1/config" class="bare">http://hadoop5:8081/druid/coordinator/v1/config</a></p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>config.json可以配置为:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-json hljs" data-lang="json">{"millisToWaitBeforeDeleting":900000,"mergeBytesLimit":524288000,"mergeSegmentsLimit":100,"maxSegmentsToMove":5,"replicantLifetime":15,"replicationThrottleLimit":10,"balancerComputeThreads":1,"emitBalancingStats":false,"killDataSourceWhitelist":null}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>每个参数的解释:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>millisToWaitBeforeDeleting</p>
+<div class="ulist">
+<ul>
+<li>
+<p>删除数据段等待的时长，目的是为了待数据段稳定后删除，避免在balance的过程中存在删除恢复的情况</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>mergeBytesLimit</p>
+<div class="ulist">
+<ul>
+<li>
+<p>自动合并数据段时，只合并小于此值的段，忽略，默认即可</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>mergeSegmentsLimit</p>
+<div class="ulist">
+<ul>
+<li>
+<p>每个task合并最多的段，忽略，默认即可</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>maxSegmentsToMove</p>
+<div class="ulist">
+<ul>
+<li>
+<p>每次balance的时候最多允许移动的数据段数</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>replicantLifetime</p>
+<div class="ulist">
+<ul>
+<li>
+<p>数据段replicas的时候，超过这个时间范围还没有replicat完成，会出现没有replicas的警告</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>replicationThrottleLimit</p>
+<div class="ulist">
+<ul>
+<li>
+<p>每次允许最多replicat多少个数据段</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>balancerComputeThreads</p>
+<div class="ulist">
+<ul>
+<li>
+<p>做balance的线程数，如果不想做balance可以设置为0，可以结合replicas为1的时候使用，避免数据balance的时候查询不准确</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>emitBalancingStats</p>
+<div class="ulist">
+<ul>
+<li>
+<p>是否统计balance的情况，一般建议关闭</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>killDataSourceWhitelist</p>
+<div class="ulist">
+<ul>
+<li>
+<p>不需要的datasource白名单，但task需要落地白名单中的datasource时，如果 <code>druid.coordinator.kill.on</code> 为true，则会停止这些task.</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_datasources_数据管理"><a class="anchor" href="#_datasources_数据管理"></a>Datasources 数据管理</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>查看所有的数据源</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl <a href="http://hadoop5:8081/druid/coordinator/v1/datasources" class="bare">http://hadoop5:8081/druid/coordinator/v1/datasources</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>查看指定数据源信息</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl <a href="http://hadoop5:8081/druid/coordinator/v1/datasources/{dataSourceName}" class="bare">http://hadoop5:8081/druid/coordinator/v1/datasources/{dataSourceName}</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>屏蔽数据源</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl -X DELETE -H 'Content-Type: application/json' <a href="http://hadoop5:8081/druid/coordinator/v1/datasources/{dataSourceName}" class="bare">http://hadoop5:8081/druid/coordinator/v1/datasources/{dataSourceName}</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>恢复数据源</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl -X POST -H 'Content-Type: application/json' <a href="http://hadoop5:8081/druid/coordinator/v1/datasources/{dataSourceName}" class="bare">http://hadoop5:8081/druid/coordinator/v1/datasources/{dataSourceName}</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>查看数据源所有时间段</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl <a href="http://hadoop5:8081/druid/coordinator/v1/datasources/{dataSourceName}/intervals" class="bare">http://hadoop5:8081/druid/coordinator/v1/datasources/{dataSourceName}/intervals</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>查看指定时间段的数据段(interval的格式：2017-03-24T01:00:00.000Z_2017-03-24T02:00:00.000Z)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl <a href="http://hadoop5:8081/druid/coordinator/v1/datasources/{dataSourceName}/intervals/{interval}" class="bare">http://hadoop5:8081/druid/coordinator/v1/datasources/{dataSourceName}/intervals/{interval}</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>查看指定时间段的数据段的服务视图(interval的格式：2017-03-24T01:00:00.000Z_2017-03-24T02:00:00.000Z)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl <a href="http://hadoop5:8081/druid/coordinator/v1/datasources/{dataSourceName}/intervals/{interval}/serverview" class="bare">http://hadoop5:8081/druid/coordinator/v1/datasources/{dataSourceName}/intervals/{interval}/serverview</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>清理指定时间段的数据段(interval的格式：2017-03-24T01:00:00.000Z_2017-03-24T02:00:00.000Z)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl -X DELETE -H 'Content-Type: application/json' <a href="http://hadoop5:8081/druid/coordinator/v1/datasources/{dataSourceName}/intervals/{interval}" class="bare">http://hadoop5:8081/druid/coordinator/v1/datasources/{dataSourceName}/intervals/{interval}</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>查看数据源所有的数据段</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl <a href="http://hadoop5:8081/druid/coordinator/v1/datasources/{dataSourceName}/segments" class="bare">http://hadoop5:8081/druid/coordinator/v1/datasources/{dataSourceName}/segments</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>查看数据源指定数据段信息</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl <a href="http://hadoop5:8081/druid/coordinator/v1/datasources/{dataSourceName}/segments/{segmentid}" class="bare">http://hadoop5:8081/druid/coordinator/v1/datasources/{dataSourceName}/segments/{segmentid}</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>删除数据源指定数据段</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl -X DELETE -H 'Content-Type: application/json' <a href="http://hadoop5:8081/druid/coordinator/v1/datasources/{dataSourceName}/segments/{segmentid}" class="bare">http://hadoop5:8081/druid/coordinator/v1/datasources/{dataSourceName}/segments/{segmentid}</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>恢复数据源指定数据段</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl -X POST -H 'Content-Type: application/json' <a href="http://hadoop5:8081/druid/coordinator/v1/datasources/{dataSourceName}/segments/{segmentid}" class="bare">http://hadoop5:8081/druid/coordinator/v1/datasources/{dataSourceName}/segments/{segmentid}</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_metadata_store_information_元数据管理"><a class="anchor" href="#_metadata_store_information_元数据管理"></a>Metadata store information 元数据管理</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>查看所有的数据源</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl <a href="http://hadoop5:8081/druid/coordinator/v1/metadata/datasources" class="bare">http://hadoop5:8081/druid/coordinator/v1/metadata/datasources</a></p>
+</li>
+<li>
+<p>注意 可以通过参数full查看所有数据源的明细，通过参数includeDisabled指定是否查看的数据源包括已经屏蔽的数据源，例如：curl <a href="http://hadoop5:8081/druid/coordinator/v1/metadata/datasources?full=true&amp;includeDisabled=false" class="bare">http://hadoop5:8081/druid/coordinator/v1/metadata/datasources?full=true&amp;includeDisabled=false</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>查看指定数据源的元数据信息，包括数据段信息</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl <a href="http://hadoop5:8081/druid/coordinator/v1/metadata/datasources/{dataSourceName}" class="bare">http://hadoop5:8081/druid/coordinator/v1/metadata/datasources/{dataSourceName}</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>查看指定数据源的数据段信息</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl <a href="http://hadoop5:8081/druid/coordinator/v1/metadata/datasources/{dataSourceName}/segments" class="bare">http://hadoop5:8081/druid/coordinator/v1/metadata/datasources/{dataSourceName}/segments</a></p>
+</li>
+<li>
+<p>注意 可以通过参数full查看所有数据源的明细, 例如：curl <a href="http://hadoop5:8081/druid/coordinator/v1/metadata/datasources/{dataSourceName}/segments?full=true" class="bare">http://hadoop5:8081/druid/coordinator/v1/metadata/datasources/{dataSourceName}/segments?full=true</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>查看指定数据源可供查询的数据段</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl -X POST -H 'Content-Type: application/json' <a href="http://hadoop5:8081/druid/coordinator/v1/metadata/datasources/{dataSourceName}/segments" class="bare">http://hadoop5:8081/druid/coordinator/v1/metadata/datasources/{dataSourceName}/segments</a></p>
+</li>
+<li>
+<p>注意 可以通过参数full查看所有的明细, 例如：curl -X POST -H 'Content-Type: application/json' <a href="http://hadoop5:8081/druid/coordinator/v1/metadata/datasources/{dataSourceName}/segments?full=true" class="bare">http://hadoop5:8081/druid/coordinator/v1/metadata/datasources/{dataSourceName}/segments?full=true</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_retention_rules_规则管理"><a class="anchor" href="#_retention_rules_规则管理"></a>Retention Rules 规则管理</h4>
+<div class="paragraph">
+<p>集群数据的加载、删除都可以制定相应的Rule。类似于最近一个月数据加载到hot节点，只保留最近半年的数据，都可以通过定义Rule来实现。</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>查看所有的Rule</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl <a href="http://hadoop5:8081/druid/coordinator/v1/rules" class="bare">http://hadoop5:8081/druid/coordinator/v1/rules</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>查看指定数据源的Rule</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl <a href="http://hadoop5:8081/druid/coordinator/v1/rules/{dataSourceName}" class="bare">http://hadoop5:8081/druid/coordinator/v1/rules/{dataSourceName}</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>设置数据源的Rule</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl -X POST -H 'Content-Type: application/json' -d @rule.json <a href="http://hadoop5:8081/druid/coordinator/v1/rules/{dataSourceName}" class="bare">http://hadoop5:8081/druid/coordinator/v1/rules/{dataSourceName}</a>
+rule.json可以定义json，具体的规则的格式可参考druid社区Rule</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>查看数据源Rule的修改历史记录</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl <a href="http://hadoop5:8081/druid/coordinator/v1/rules/{dataSourceName}/history" class="bare">http://hadoop5:8081/druid/coordinator/v1/rules/{dataSourceName}/history</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_overlord"><a class="anchor" href="#_overlord"></a>Overlord</h3>
+<div class="sect3">
+<h4 id="_leadership_2"><a class="anchor" href="#_leadership_2"></a>Leadership</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>查看Overlord的leader
+curl <a href="http://overlordIP:8090/druid/indexer/v1/leader" class="bare">http://overlordIP:8090/druid/indexer/v1/leader</a></p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_task_任务管理"><a class="anchor" href="#_task_任务管理"></a>Task 任务管理</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>获取处于waiting状态的task信息</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl <a href="http://hadoop5:8081/druid/indexer/v1/waitingTasks" class="bare">http://hadoop5:8081/druid/indexer/v1/waitingTasks</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>获取处于pending状态的task信息</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl <a href="http://hadoop5:8081/druid/indexer/v1/pendingTasks" class="bare">http://hadoop5:8081/druid/indexer/v1/pendingTasks</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>获取处于running状态的task信息</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl <a href="http://hadoop5:8081/druid/indexer/v1/runningTasks" class="bare">http://hadoop5:8081/druid/indexer/v1/runningTasks</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>获取已完成任务的task信息</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl <a href="http://hadoop5:8081/druid/indexer/v1/completeTasks" class="bare">http://hadoop5:8081/druid/indexer/v1/completeTasks</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>关闭task Id指定的task</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl -X 'POST' -H 'Content-Type: application/json' <a href="http://hadoop5:8081/druid/indexer/v1/task/{taskid}/shutdown" class="bare">http://hadoop5:8081/druid/indexer/v1/task/{taskid}/shutdown</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>获取指定task(task Id)运行日志信息
+curl <a href="http://hadoop5:8081/druid/indexer/v1//task/{taskid}/log" class="bare">http://hadoop5:8081/druid/indexer/v1//task/{taskid}/log</a></p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_worker相关的管理"><a class="anchor" href="#_worker相关的管理"></a>Worker相关的管理</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>获取worker行为信息</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl <a href="http://hadoop5:8081/druid/indexer/v1/worker" class="bare">http://hadoop5:8081/druid/indexer/v1/worker</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>设置worker授权信息</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl -X curl -H 'Content-Type: application/json' -d @workerBehaviorConfig.json -d "X-Druid-Author={配置信息}&amp;X-Druid-Comment={配置信息}" <a href="http://hadoop5:8081/druid/indexer/v1/worker" class="bare">http://hadoop5:8081/druid/indexer/v1/worker</a></p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>公平调用Middlemanager资源的workerBehaviorConfig.json格式为：
+{
+	"selectStrategy": {
+	   "type":"equalDistribution"
+	 }
+}</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>获取worker历史信息</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl <a href="http://hadoop5:8081/druid/indexer/v1/worker/history" class="bare">http://hadoop5:8081/druid/indexer/v1/worker/history</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>获取worker运行信息</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl <a href="http://hadoop5:8081/druid/indexer/v1/workers" class="bare">http://hadoop5:8081/druid/indexer/v1/workers</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_supervisor相关的管理"><a class="anchor" href="#_supervisor相关的管理"></a>supervisor相关的管理</h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>根据supervisorSpec.json配置信息创建supervisor服务</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl -X curl -H 'Content-Type: application/json' -d @supervisorSpec.json <a href="http://hadoop5:8081/druid/indexer/v1/supervisor" class="bare">http://hadoop5:8081/druid/indexer/v1/supervisor</a></p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+<div class="paragraph">
+<p>说明:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>如果相同数据源的supervisor已经存在，则会导致正在运行的supervisor会通知其管理的所有任务终止读取并执行segment发布。</p>
+</li>
+<li>
+<p>推出正在执行的supervisor。</p>
+</li>
+<li>
+<p>使用Request请求体内的规范创建一个新的supervisor，它会接管处于发布状态的任务，已经创建新的任务从处于发布状态的任务的介绍offset处开始读取数据。</p>
+</li>
+</ol>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>获取当前活跃的supervisor列表</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl <a href="http://hadoop5:8081/druid/indexer/v1/supervisor" class="bare">http://hadoop5:8081/druid/indexer/v1/supervisor</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>获取当前活跃的supervisor列表</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl <a href="http://hadoop5:8081/druid/indexer/v1/supervisor/{supervisorid}" class="bare">http://hadoop5:8081/druid/indexer/v1/supervisor/{supervisorid}</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>重置消费位置</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl -X 'POST' <a href="http://hadoop5:8081/druid/indexer/v1/supervisor/{supervisorid}/reset" class="bare">http://hadoop5:8081/druid/indexer/v1/supervisor/{supervisorid}/reset</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>获取指定supervisorId的状态</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl <a href="http://hadoop5:8081/druid/indexer/v1/supervisor/{supervisorid}/status" class="bare">http://hadoop5:8081/druid/indexer/v1/supervisor/{supervisorid}/status</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>关闭supervisorId指定的supervisor，同时使其管理的所有任务终止读取，进入segment发布状态</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl <a href="http://hadoop5:8081/druid/indexer/v1/supervisor/{supervisorid}/shutdown" class="bare">http://hadoop5:8081/druid/indexer/v1/supervisor/{supervisorid}/shutdown</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>查看所有supervisor的历史</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl <a href="http://hadoop5:8081/druid/indexer/v1/supervisor/history" class="bare">http://hadoop5:8081/druid/indexer/v1/supervisor/history</a></p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>获取指定supervisor(supervisorId)的历史</p>
+<div class="ulist">
+<ul>
+<li>
+<p>curl <a href="http://hadoop5:8081/druid/indexer/v1/supervisor/{supervisorid}/history" class="bare">http://hadoop5:8081/druid/indexer/v1/supervisor/{supervisorid}/history</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</article>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../../_/js/site.js"></script>
+<script async src="../../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

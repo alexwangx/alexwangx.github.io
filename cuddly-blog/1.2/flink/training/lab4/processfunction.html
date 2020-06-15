@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>ProcessFunction :: The Cuddly Computing Machine</title>
     <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/flink/training/lab4/processfunction.html">
-    <meta name="generator" content="Antora 2.0.0">
+    <meta name="generator" content="Antora 2.3.1">
     <link rel="stylesheet" href="../../../../../_/css/site.css">
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-86782445-1"></script>
     <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-86782445-1')</script>
@@ -251,13 +251,7 @@
 </ul>
   </li>
   <li class="nav-item" data-depth="2">
-    <button class="nav-item-toggle"></button>
-    <a class="nav-link" href="../../../spark/spark-internals/index.html">Spark 2.4.4 架构原理</a>
-<ul class="nav-list">
-  <li class="nav-item" data-depth="3">
-    <a class="nav-link" href="../../../spark/spark-internals/root/spark-overview.html">Overview</a>
-  </li>
-</ul>
+    <a class="nav-link" href="https://alexwangx.github.io/apache-spark-internals/2.4.5/">Spark 2.4.4 架构原理</a>
   </li>
 </ul>
   </li>
@@ -287,6 +281,9 @@
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../../../hadoop/hdp-ops/hadoop_delroot.html">Hadoop 意外删除挽救</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../../hadoop/hdp-ops/delrmstore_onzk.html">删除ZK上的rmstore目录</a>
   </li>
 </ul>
   </li>
@@ -326,11 +323,20 @@
     <a class="nav-link" href="../../../druid/druid-install.html">Druid 安装</a>
   </li>
   <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../../druid/ops/druid-restApi.html">Druid RestApi</a>
+  </li>
+  <li class="nav-item" data-depth="2">
     <button class="nav-item-toggle"></button>
     <span class="nav-text">Druid 架构</span>
 <ul class="nav-list">
   <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
     <a class="nav-link" href="../../../druid/druid-internals/tutorial-load-data.html">Druid 导入数据</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../../druid/druid-internals/tutorial-load-data1.html">Druid Json 配置介绍</a>
+  </li>
+</ul>
   </li>
   <li class="nav-item" data-depth="3">
     <a class="nav-link" href="../../../druid/druid-internals/druid-internals.html">Druid 0.1.5 架构</a>
@@ -447,7 +453,7 @@
 <p>ProcessFunction 将事件处理与计时器和状态相结合，使其成为流处理应用程序的强大构建块。 这是使用Flink创建事件驱动的应用程序的基础。 它与 RichFlatMap 非常相似，但是增加了计时器。</p>
 </div>
 <div class="paragraph">
-<p>在GitHub的https://github.com/ververica/flink-training-exercises/blob/master/src/main/java/com/ververica/flinktraining/examples/datastream_java/process/CarEventSort.java[CarEventSort^]中，有一个使用 ProcessFunction 对来自联网汽车的事件流进行排序的完整示例，这是您可能已经克隆的训练练习库的一部分。 让我们详细研究一下该应用程序的工作方式。</p>
+<p>在GitHub的 <a href="https://github.com/ververica/flink-training-exercises/blob/master/src/main/java/com/ververica/flinktraining/examples/datastream_java/process/CarEventSort.java" target="_blank" rel="noopener">CarEventSort</a>中，有一个使用 ProcessFunction 对来自联网汽车的事件流进行排序的完整示例，这是您可能已经克隆的训练练习库的一部分。 让我们详细研究一下该应用程序的工作方式。</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -491,10 +497,20 @@
 </div>
 </div>
 <div class="paragraph">
-<p>注意事项：
-* 有几种类型的ProcessFunctions –这是一个KeyedProcessFunction，但也有CoProcessFunctions，BroadcastProcessFunctions等。
-* KeyedProcessFunction是RichFunction的一种。作为RichFunction，它可以访问使用托管键控状态所需的open和getRuntimeContext方法。
-* 有两个回调要实现：processElement和onTimer。 每个传入事件都会调用processElement； 计时器触发时调用onTimer。 这些可以是事件时间或处理时间计时器。 这两个回调都提供了一个上下文对象，该对象可用于与TimerService交互（以及其他功能）。 两个回调也都传递了一个收集器，该收集器可用于发出结果。</p>
+<p>注意事项:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>有几种类型的ProcessFunctions –这是一个KeyedProcessFunction，但也有CoProcessFunctions，BroadcastProcessFunctions等。</p>
+</li>
+<li>
+<p>KeyedProcessFunction是RichFunction的一种。作为RichFunction，它可以访问使用托管键控状态所需的open和getRuntimeContext方法。</p>
+</li>
+<li>
+<p>有两个回调要实现：processElement和onTimer。 每个传入事件都会调用processElement； 计时器触发时调用onTimer。 这些可以是事件时间或处理时间计时器。 这两个回调都提供了一个上下文对象，该对象可用于与TimerService交互（以及其他功能）。 两个回调也都传递了一个收集器，该收集器可用于发出结果。</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -539,9 +555,17 @@ public void processElement(ConnectedCarEvent event, Context context, Collector&l
 </div>
 </div>
 <div class="paragraph">
-<p>注意事项：
-* 迟到的事件会怎样？水印后面（即较晚）的事件将被丢弃。如果您想做得更好，请考虑使用侧面输出，<a href="side-outputs.html" class="page">下一节</a> 将对此进行说明。
-* 我们正在为 <code>event.timestamp</code> 设置一个事件时间计时器。这实际上是一种非常常见的模式。您可以这样想：“请解决所有早于此事件的无序影响事件时，请叫醒我。”</p>
+<p>注意事项：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>延迟的事件会怎样？水印后面（即较晚）的事件将被丢弃。如果您想做得更好，请考虑使用侧面输出，<a href="side-outputs.html" class="page">下一节</a> 将对此进行说明。</p>
+</li>
+<li>
+<p>我们正在为 <code>event.timestamp</code> 设置一个事件时间计时器。这实际上是一种非常常见的模式。您可以这样想：“请解决所有早于此事件的无序影响事件时，请叫醒我。”</p>
+</li>
+</ul>
 </div>
 </div>
 </div>
@@ -581,7 +605,7 @@ public void onTimer(long timestamp, OnTimerContext context, Collector&lt;Connect
 <p>Flink提供针对RocksDB优化的 <code>MapState</code> 和 <code>ListState</code> 类型。 在可能的情况下，应使用这些值代替持有某种集合的 <code>ValueState</code> 对象。 RocksDB状态后端可以不通过 ser/de 附加到 <code>ListState</code> ，对于 <code>MapState</code> ，每个 key/value 对都是一个单独的RocksDB对象，因此可以高效地访问和更新 <code>MapState</code> 。</p>
 </div>
 <div class="paragraph">
-<p>因此，对流进行排序的更好方法是将乱序流缓存在 <code>MapState&lt;Long,List &lt;Event &gt;&gt;</code> 中，其中 key 是时间戳，而值是均具有相同时间戳的流元素的列表。 这差不多是Flink的SQL和CEP库在需要排序时在内部完成的。</p>
+<p>因此，对流进行排序的更好方法是将乱序流缓存在 <code>MapState&lt;Long,List &lt;Event&gt;&gt;</code> 中，其中 key 是时间戳，而值是均具有相同时间戳的流元素的列表。 这差不多是Flink的SQL和CEP库在需要排序时在内部完成的。</p>
 </div>
 </div>
 </div>
