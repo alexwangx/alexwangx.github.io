@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>The Internals Of Apache Spark 2.4.5 :: The Internals Of Apache Spark</title>
+    <title>Apache Spark 2.4.5 架构原理 :: The Internals Of Apache Spark</title>
     <link rel="canonical" href="http://alexwangx.github.io/apache-spark-internals/2.4.5/apache-spark-internals/latest/index.html">
     <meta name="generator" content="Antora 2.3.1">
     <link rel="stylesheet" href="../../_/css/site.css">
@@ -1921,22 +1921,16 @@
 <nav class="breadcrumbs" aria-label="breadcrumbs">
   <ul>
     <li><a href="index.html">Apache Spark</a></li>
-    <li><a href="index.html">The Internals Of Apache Spark 2.4.5</a></li>
+    <li><a href="index.html">Apache Spark 2.4.5 架构原理</a></li>
   </ul>
 </nav>
   <div class="edit-this-page"><a href="file:///Users/alex/Alex/_Code/GitBook/mastering-apache-spark-book-cn/modules/ROOT/pages/index.adoc">Edit this Page</a></div>
 </div>
   <div class="content">
 <article class="doc">
-<h1 class="page">The Internals Of Apache Spark 2.4.5</h1>
+<h1 class="page">Apache Spark 2.4.5 架构原理</h1>
 <div class="paragraph">
-<p>Welcome to <strong>The Internals Of Apache Spark</strong> online book!</p>
-</div>
-<div class="paragraph">
-<p>I&#8217;m <a href="https://pl.linkedin.com/in/jaceklaskowski">Jacek Laskowski</a>, a freelance IT consultant specializing in <a href="https://spark.apache.org/">Apache Spark</a>, <a href="https://kafka.apache.org/">Apache Kafka</a>, <a href="https://delta.io/">Delta Lake</a> and <a href="https://kafka.apache.org/documentation/streams/">Kafka Streams</a>.</p>
-</div>
-<div class="paragraph">
-<p>I&#8217;m very excited to have you here and hope you will enjoy exploring the internals of Apache Spark (Core) as much as I have.</p>
+<p>欢迎阅读 <strong>Spark 架构原理</strong> 一书! 我很高兴您能来这里, 希望您能像我一样乐于探索Apache Spark 架构原理.</p>
 </div>
 <div class="quoteblock">
 <blockquote>
@@ -1946,14 +1940,29 @@ I write to discover what I know.
 &#8212; Flannery O'Connor
 </div>
 </div>
-<div class="admonitionblock note">
+<div class="paragraph">
+<p>本书的作者是 <a href="https://pl.linkedin.com/in/jaceklaskowski">Jacek Laskowski</a>,
+自由 IT 顾问, 软件工程师和专业技术讲师. 技术领域包括 <strong>Apache Spark</strong> , Apache Kafka 和 Kafka Streams</p>
+</div>
+<div class="paragraph">
+<p>作者提供软件开发和咨询服务, 并提供深入的研讨会和指导. 请通过 <a href="mailto:jacek@japila.pl">jacek@japila.pl</a>
+或 <a href="https://twitter.com/jaceklaskowski">@jaceklaskowski</a>与作者联系讨论.</p>
+</div>
+<div class="paragraph">
+<p>考虑加入作者在波兰华沙的 <a href="http://www.meetup.com/WarsawScala/">Warsaw Scala Enthusiasts</a>
+和 <a href="http://www.meetup.com/Warsaw-Spark">WarsawSpark</a> 聚会。</p>
+</div>
+<div class="admonitionblock tip">
 <table>
 <tr>
 <td class="icon">
-<i class="fa icon-note" title="Note"></i>
+<i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-I&#8217;m also writing other online books in the "The Internals Of" series about <a href="https://bit.ly/spark-sql-internals">Spark SQL</a>, <a href="https://bit.ly/spark-structured-streaming">Spark Structured Streaming</a>, <a href="https://books.japila.pl/delta-lake-internals">Delta Lake</a>, <a href="https://bit.ly/apache-kafka-internals">Apache Kafka</a> and <a href="https://bit.ly/kafka-streams-internals">Kafka Streams</a>.
+作者还写了其他 "架构原理" 系列的书  <a href="https://bit.ly/spark-sql-internals">Spark SQL</a>,
+<a href="https://bit.ly/spark-structured-streaming">Spark Structured Streaming</a>,
+<a href="https://bit.ly/apache-kafka-internals">Apache Kafka</a>
+和 <a href="https://bit.ly/kafka-streams-internals">Kafka Streams</a>.
 </td>
 </tr>
 </table>

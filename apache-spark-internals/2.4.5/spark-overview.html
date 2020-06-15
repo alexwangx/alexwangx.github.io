@@ -1932,7 +1932,9 @@
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p><a href="http://spark.apache.org/">Apache Spark</a> is an <strong>open-source distributed general-purpose cluster computing framework</strong> with (mostly) <strong>in-memory data processing engine</strong> that can do ETL, analytics, machine learning and graph processing on large volumes of data at rest (batch processing) or in motion (streaming processing) with <a href="#unified-api">rich concise high-level APIs</a> for the programming languages: Scala, Python, Java, R, and SQL.</p>
+<p><a href="http://spark.apache.org/">Apache Spark</a> 是一个 <strong>开源分布式通用集群计算框架</strong> 主要是 <strong>基于内存的数据处理引擎</strong>
+应用到大规模数据处理场景: 如 ETL, 数据分析,机器学习和图像处理等.
+在批处理及流处理方面为下列程序语言: Scala, Python, Java, R, 和 SQL, 提供了<a href="#unified-api">丰富, 简洁的高级API</a></p>
 </div>
 <div class="imageblock text-center">
 <div class="content">
@@ -1941,25 +1943,30 @@
 <div class="title">Figure 1. The Spark Platform</div>
 </div>
 <div class="paragraph">
-<p>You could also describe Spark as a distributed, data processing engine for <strong>batch and streaming modes</strong> featuring SQL queries, graph processing, and machine learning.</p>
+<p>您也可以将 Spark 用于 <strong>批处理和流处理模式</strong> 的分布式数据处理引擎, 具有SQL查询, 图处理和机器学习功能.</p>
 </div>
 <div class="paragraph">
-<p>In contrast to Hadoop’s two-stage disk-based MapReduce computation engine, Spark&#8217;s multi-stage (mostly) in-memory computing engine allows for running most computations in memory, and hence most of the time provides better performance for certain applications, e.g. iterative algorithms or interactive data mining (read <a href="https://databricks.com/blog/2014/11/05/spark-officially-sets-a-new-record-in-large-scale-sorting.html">Spark officially sets a new record in large-scale sorting</a>).</p>
+<p>与Hadoop的基于磁盘的两阶段MapReduce计算引擎相比, Spark的多阶段 (主要是) 内存计算引擎可让您在内存中运行更多的计算.
+因此, 大多数时候可以为某些应用提供更好的性能, 例如: 迭代算法或交互式数据挖掘
+(<a href="https://databricks.com/blog/2014/11/05/spark-officially-sets-a-new-record-in-large-scale-sorting.html">Spark
+officially sets a new record in large-scale sorting</a>).</p>
 </div>
 <div class="paragraph">
-<p>Spark aims at speed, ease of use, extensibility and interactive analytics.</p>
+<p>Spark的目标是速度, 易用性, 可扩展性和交互式分析.</p>
 </div>
 <div class="paragraph">
-<p>Spark is often called <strong>cluster computing engine</strong> or simply <strong>execution engine</strong>.</p>
+<p>Spark通常被称为 <strong>计算引擎</strong> 或简称为 <strong>执行引擎</strong>.</p>
 </div>
 <div class="paragraph">
-<p>Spark is a <strong>distributed platform for executing complex multi-stage applications</strong>, like <strong>machine learning algorithms</strong>, and <strong>interactive ad hoc queries</strong>. Spark provides an efficient abstraction for in-memory cluster computing called <a href="rdd/index.html" class="page">Resilient Distributed Dataset</a>.</p>
+<p>Spark 是一个 <strong>用于执行复杂的多阶段应用程序的分布式平台</strong> , 例如 <strong>机器学习算法</strong> 和 <strong>交互式查询</strong> .
+Spark 为内存集群计算提供了一种有效的抽象,
+称为 <a href="rdd/index.html" class="page">Resilient Distributed Dataset</a>.</p>
 </div>
 <div class="paragraph">
-<p>Using Spark Application Frameworks, Spark simplifies access to machine learning and predictive analytics at scale.</p>
+<p>使用Spark应用程序框架, Spark 简化了大规模机器学习和预测分析的使用.</p>
 </div>
 <div class="paragraph">
-<p>Spark is mainly written in <a href="http://scala-lang.org/">Scala</a>, but provides developer API for languages like Java, Python, and R.</p>
+<p>Spark 主要用 <a href="http://scala-lang.org/">Scala</a> 编写, 提供了 Java, Python 和 R语言的开发API.</p>
 </div>
 <div class="admonitionblock note">
 <table>
@@ -1968,21 +1975,22 @@
 <i class="fa icon-note" title="Note"></i>
 </td>
 <td class="content">
-Microsoft&#8217;s <a href="https://github.com/Microsoft/Mobius">Mobius project</a> provides C# API for Spark <em>"enabling the implementation of Spark driver program and data processing operations in the languages supported in the .NET framework like C# or F#."</em>
+微软的 <a href="https://github.com/Microsoft/Mobius">Mobius项目</a> 为Spark提供了 C＃ API
+<em>"以 .NET 框架支持的语言 (如C＃ 或 F＃) 启用 Spark 驱动程序和数据处理操作的实现. "</em>
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p>If you have large amounts of data that requires low latency processing that a typical MapReduce program cannot provide, Spark is a viable alternative.</p>
+<p>如果有大量数据需要处理, 并且 MapReduce 程序无法提供低延迟处理, 那么Spark是一个可行的选择.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Access any data type across any data source.</p>
+<p>支持多数据源, 多数据类型.</p>
 </li>
 <li>
-<p>Huge demand for storage and data processing.</p>
+<p>满足大量数据处理等需求.</p>
 </li>
 </ul>
 </div>
