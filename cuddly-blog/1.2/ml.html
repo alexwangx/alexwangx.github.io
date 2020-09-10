@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>机器学习 &amp; 深度学习 :: The Cuddly Computing Machine</title>
+    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/ml.html">
+    <meta name="generator" content="Antora 2.3.3">
+    <link rel="stylesheet" href="../../_/css/site.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-86782445-1"></script>
+    <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-86782445-1')</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="http://alexwangx.github.io">The Cuddly Computing Machine</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/alexwangx">GitHub</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="cuddly-blog" data-version="1.2">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="index.html">Cuddly Blog</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Flink</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="flink/training/index.html">Flink Training Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Streaming 介绍</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="flink/training/intro/intro-1.html">使用Apache Flink 进行流处理</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="flink/training/intro/intro-2.html">流可以传输什么?</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="flink/training/intro/intro-3.html">一个完整的例子</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">环境配置</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="flink/training/labs/devEnvSetup.html">设置您的开发环境</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="flink/training/labs/taxiData.html">使用出租车数据流</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="flink/training/labs/howto-exercises.html">如何做实验室</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="flink/training/lab1/rideCleansing.html">Lab 1 - 过滤流</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">数据转换</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="flink/training/lab1/stateless.html">无状态转换</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="flink/training/lab1/keyed-streams.html">Keyed 流</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="flink/training/lab1/stateful.html">有状态的转换</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="flink/training/lab1/connected-streams.html">连接流</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="flink/training/lab2/rideEnrichment-flatmap.html">Lab 2 - Stateful Enrichment</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">时间和分析</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="flink/training/lab3/event-time-watermarks.html">Event Time and Watermarks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="flink/training/lab3/windows.html">Windows</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Lab 3 - Windowing</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="flink/training/lab3/hourlyTips.html">Lab 3 - 窗口化分析</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="flink/training/lab3/hourlyTips-discussion.html">Lab 3 - 讨论</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">事件驱动的应用</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="flink/training/lab4/processfunction.html">ProcessFunction</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="flink/training/lab4/side-outputs.html">Side Outputs</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Lab 4 - 到期状态</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="flink/training/lab4/rideEnrichment-processfunction.html">Lab 4 - 练习</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="flink/training/lab4/expiring-state-discussion.html">Lab 4 - 讨论</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">容错能力</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="flink/training/fault/state-backends.html">状态后端</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="flink/training/fault/snapshots.html">检查点和保存点</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="flink/training/app-dev.html">应用开发</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">其他练习</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="flink/training/extra-labs/longRides.html">长途警报</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">广播状态</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="flink/training/extra-labs/nearestTaxi.html">寻找最近的出租车</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="flink/training/extra-labs/ongoingRides.html">报告正在进行的出租车</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="flink/training/extra-labs/taxiQuery.html">规则引擎</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="flink/training/extra-labs/eventTimeJoin.html">丰富的 Joins</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="flink/training/resources.html">资源链接</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="flink/introduction/index.html">Flink 简介</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="flink/introduction/architecture.html">Flink 架构介绍</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="flink/introduction/failover.html">Flink 容错机制</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="flink/introduction/scheduling.html">Flink 调度机制</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="flink/introduction/statemachine.html">Flink 状态机</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="flink/introduction/memorymanager.html">Flink 内存管理</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="flink/introduction/dataflow.html">Flink Dataflow</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="flink/introduction/batchdata.html">Flink 批处理</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="flink/introduction/streamdata.html">Flink 流处理</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="flink/internals/index.html">Flink 学习笔记</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="flink/internals/flink_docker.html">Flink Docker安装</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spark</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spark ops</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="spark/ops/spark-exitcode.html">Spark 任务退出码</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="spark/ops/spark-issues.html">Spark 常见错误</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="spark/spark-internals/index.html">Spark 2.4.4 架构原理</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="spark/spark-internals/root/spark-overview.html">Overview</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hadoop</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="hadoop/hadoop_krb_install.html">Hadoop 配置 Kerberos</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hadoop ops</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hadoop/hdp-ops/hadoop_commands.html">Hadoop Commands</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hadoop/hdp-ops/hadoop_practices.html">Hadoop Practices</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hadoop/hdp-ops/hadoop_jmx.html">Hadoop JMX</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hadoop/hdp-ops/hadoop_delroot.html">Hadoop 意外删除挽救</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hadoop/hdp-ops/delrmstore_onzk.html">删除ZK上的rmstore目录</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hbase</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hbase ops</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hbase/hbase-ops/hbase_notes.html">Hbase 基本命令</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="hbase/hbase-ops/hbase_issues.html">Hbase Issues</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Druid</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="druid/druid-install.html">Druid 安装</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="druid/ops/druid-restApi.html">Druid RestApi</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Druid 架构</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="druid/druid-internals/tutorial-load-data.html">Druid 导入数据</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="druid/druid-internals/tutorial-load-data1.html">Druid Json 配置介绍</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="druid/druid-internals/druid-internals.html">Druid 0.1.5 架构</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="druid/druid-internals/broker.html">Druid Broker</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="druid/druid-internals/coordinator.html">Druid Coordinator</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="druid/druid-internals/historical.html">Druid Historical</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="druid/druid-internals/middleManager.html">Druid MiddleManager</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="druid/druid-internals/overlord.html">Druid Overlord</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="druid/druid-internals/router.html">Druid Router</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="druid/druid-internals/segment.html">Druid Segments</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Kafka</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="kafka/kafka_practices.html">Kafka Practices</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="kafka/kafka_issues.html">Kafka Issues</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Other</span>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="2">
+    <a class="nav-link" href="ml.html">机器学习&amp;深度学习资料</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="mac.html">Mac OS</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="linux.html">Linux</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="mysql_install.html">Mysql 安装</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="readlist.html">北京中小学孩子读书清单</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="demo/demo.html">Adoc Demo</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Cuddly Blog</span>
+    <span class="version">1.2</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">Cuddly Blog</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="index.html">1.2</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main>
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="index.html">Cuddly Blog</a></li>
+    <li>Other</li>
+    <li><a href="ml.html">机器学习&amp;深度学习资料</a></li>
+  </ul>
+</nav>
+</div>
+<article class="doc">
+<h1 class="page">机器学习 &amp; 深度学习</h1>
+<div class="sect1">
+<h2 id="_书籍推荐"><a class="anchor" href="#_书籍推荐"></a>书籍推荐</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_机器学习与深度学习"><a class="anchor" href="#_机器学习与深度学习"></a>机器学习与深度学习</h3>
+<div class="sect3">
+<h4 id="_机器学习"><a class="anchor" href="#_机器学习"></a>机器学习</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="https://book.douban.com/subject/33437381/" target="_blank" rel="noopener">《统计机器学习》作者：李航</a></p>
+</li>
+<li>
+<p><a href="https://book.douban.com/subject/24703171/" target="_blank" rel="noopener">《机器学习实战》</a></p>
+</li>
+<li>
+<p><a href="https://book.douban.com/subject/2061116/" target="_blank" rel="noopener">《模式识别与机器学习》（PRML）作者：Christopher Bishop</a></p>
+</li>
+<li>
+<p><a href="https://github.com/josephmisiti/awesome-machine-learning/blob/master/books.md" target="_blank" rel="noopener">国外书单</a></p>
+</li>
+<li>
+<p><a href="https://github.com/ujjwalkarn/Machine-Learning-Tutorials" target="_blank" rel="noopener">机器&amp;深度学习讲解</a></p>
+</li>
+<li>
+<p>视频资料：</p>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://www.bilibili.com/video/av50747658/" target="_blank" rel="noopener">吴恩达 :机器学习教学视频，Coursera</a></p>
+</li>
+<li>
+<p><a href="https://www.bilibili.com/video/av36760800/" target="_blank" rel="noopener">林轩田：机器学习基石、机器学习技法</a> . <a href="https://github.com/RedstoneWill/HsuanTienLin_MachineLearning" target="_blank" rel="noopener">学习笔记</a></p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="_深度学习"><a class="anchor" href="#_深度学习"></a>深度学习</h4>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="https://github.com/exacity/deeplearningbook-chinese" target="_blank" rel="noopener">Yoshua Bengio深度学习书稿中文版</a></p>
+</li>
+<li>
+<p><a href="http://yerevann.com/a-guide-to-deep-learning/" target="_blank" rel="noopener">深度学习指南</a></p>
+</li>
+<li>
+<p>《深度学习》作者：Ian Goodfellow / Yoshua Bengio / Aaron Courville</p>
+</li>
+<li>
+<p>《Keras深度学习实战》作者：[意大利]安东尼奥·古利 等著</p>
+</li>
+<li>
+<p>《TensorFlow技术解析与实战》作者： 李嘉璇 著</p>
+</li>
+<li>
+<p>《Python 深度学习》作者：[英] 尼格尔·刘易斯（N.D.Lewis） 著</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_学习资料"><a class="anchor" href="#_学习资料"></a>学习资料</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="https://easyai.tech/ai-definition-category/algorithm/" target="_blank" rel="noopener">AI 算法</a></p>
+</li>
+<li>
+<p><a href="https://easyai.tech/ai-definition/linear-regression/" target="_blank" rel="noopener">一文看懂线性回归</a></p>
+</li>
+<li>
+<p><a href="https://easyai.tech/ai-definition-category/popular-science/" target="_blank" rel="noopener">基础科普</a></p>
+</li>
+<li>
+<p><a href="https://easyai.tech/ai-definition-category/mathematical-foundation/" target="_blank" rel="noopener">数学基础</a></p>
+</li>
+<li>
+<p><a href="https://easyai.tech/ai-definition-category/machine-learning/" target="_blank" rel="noopener">机器学习</a></p>
+</li>
+<li>
+<p><a href="https://easyai.tech/ai-definition-category/deep-learning/" target="_blank" rel="noopener">深度学习</a></p>
+</li>
+<li>
+<p><a href="https://easyai.tech/ai-definition-category/nlp/" target="_blank" rel="noopener">自然语言处理</a></p>
+</li>
+<li>
+<p><a href="https://easyai.tech/ai-definition-category/computer-vision/" target="_blank" rel="noopener">计算机视觉</a></p>
+</li>
+<li>
+<p><a href="https://easyai.tech/ai-definition-category/voice-interaction/" target="_blank" rel="noopener">语音交互</a></p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_基础知识"><a class="anchor" href="#_基础知识"></a>基础知识</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<caption class="title">Table 1. 基础知识</caption>
+<colgroup>
+<col style="width: 20%;">
+<col style="width: 20%;">
+<col style="width: 40%;">
+<col style="width: 20%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">知识</th>
+<th class="tableblock halign-left valign-top">说明</th>
+<th class="tableblock halign-left valign-top">资料</th>
+<th class="tableblock halign-left valign-top">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">数学基础：线性代数、概率论、信息论</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">机器学习强依赖于线性代数以及概率论知识作为理论基础，因此必要的数学知识是需要的。国内的课本过分强调公式和性质，整体学习效果上并不好，国外这基本教材都有比较合理的切入点并且实践讲解。</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>推荐国外三本比较经典的教材，回忆一下大学的课程：</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="_attachments/线性代数及其应用_cn.pdf" target="_blank" rel="noopener">线性代数及其应用</a></p>
+</li>
+<li>
+<p><a href="_attachments/概率论基础教程.pdf" target="_blank" rel="noopener">概率论基础教程</a></p>
+</li>
+<li>
+<p><a href="_attachments/信息论基础原书第2版.pdf" target="_blank" rel="noopener">信息论基础原书第2版</a></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>MIT线性代数公开课，MIT教授水平比较高，不会直接交公式和性质，整体上课程还是比较容易学习的，有时间也推荐 <a href="https://www.bilibili.com/video/av15463995" target="_blank" rel="noopener">这个视频</a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">机器学习</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">机器学习这几年比较火热，因此各种培训视频较多，因此实际上而言，整体学习入门的难度并不高，同时工程上学习以及应用的也不是很难</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>机器学习最经典 <a href="https://www.bilibili.com/video/av50747658/" target="_blank" rel="noopener">推荐吴恩达的在线课程</a>，比较系统讲解，同时也有相关数学基础和实践方面的讲解，
+<a href="https://github.com/TheisTrue/MLofAndrew-Ng/tree/master/%E5%90%B4%E6%81%A9%E8%BE%BE%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E8%AE%B2%E4%B9%89" target="_blank" rel="noopener">PPT下载</a>.
+ 国内相关培训机构的视频，适合快速入门，属于“野路子”，但是足够用，培训机构的特点是让你可以入门，什么都能知道一点，虽然整体上不会说让你很优秀，但是足够入门，让你能用起来， <a href="https://www.bilibili.com/video/av55181893?p=1" target="_blank" rel="noopener">也值得参考</a>, <a href="https://www.bilibili.com/video/av59538266/" target="_blank" rel="noopener">一个台湾老师的公开课，讲解比较适合入门</a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">推荐系统</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">推荐系统是机器学习应用的一个重要方向，无论是电商的猜你喜欢，还是头条的Feed流，背后都离不开精准推荐</p></td>
+<td class="tableblock halign-left valign-top"><div class="content"><div class="paragraph">
+<p>推荐系统领域有一本非常经典的图书，推荐系统实践，据说当时张一鸣边看这本书边写出了头条第一版的推荐系统，后来这本书的作者也加入了头条：<a href="_attachments/推荐系统实践.pdf" target="_blank" rel="noopener">推荐系统实践</a></p>
+</div></div></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_业内实践资料"><a class="anchor" href="#_业内实践资料"></a>业内实践资料</h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all stretch">
+<colgroup>
+<col style="width: 33.3333%;">
+<col style="width: 33.3333%;">
+<col style="width: 33.3334%;">
+</colgroup>
+<thead>
+<tr>
+<th class="tableblock halign-left valign-top">资料</th>
+<th class="tableblock halign-left valign-top">链接</th>
+<th class="tableblock halign-left valign-top">备注</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">如何增加用户的参与感？交互式推荐来了！</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://developer.aliyun.com/article/714527" class="bare">https://developer.aliyun.com/article/714527</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">开源 MNN：淘宝在移动 AI 上的实践</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.infoq.cn/article/9Rl6OMAepSSjXh8*h48V" class="bare">https://www.infoq.cn/article/9Rl6OMAepSSjXh8*h48V</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2019年双十一，淘系技术的突破与创新</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://mp.weixin.qq.com/s/_8oaHCMrajhuXxHtNtF0Lg" class="bare">https://mp.weixin.qq.com/s/_8oaHCMrajhuXxHtNtF0Lg</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">做过10亿次设计的人工智能「鹿班」，原来是他负责的！</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://www.uisdc.com/responsible-for-the-design-of-luban" class="bare">https://www.uisdc.com/responsible-for-the-design-of-luban</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2020 年 7 个软件开发趋势</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://mp.weixin.qq.com/s/ZQTVv5dgRlLbVGJSJsWMTQ" class="bare">https://mp.weixin.qq.com/s/ZQTVv5dgRlLbVGJSJsWMTQ</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">HUAWEI HiAI 3.0发布，端侧AI走向分布式</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="http://www.enet.com.cn/article/2019/1119/A201911191044496.html?from=timeline&amp;isappinstalled=0" class="bare">http://www.enet.com.cn/article/2019/1119/A201911191044496.html?from=timeline&amp;isappinstalled=0</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">端智能揭秘-促使双十一GMV大幅提升，手淘用了什么秘密武器？</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><a href="https://mp.weixin.qq.com/s/zJOUpMXyzYbl0vOX5xlmlw" class="bare">https://mp.weixin.qq.com/s/zJOUpMXyzYbl0vOX5xlmlw</a></p></td>
+<td class="tableblock halign-left valign-top"></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</article>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../_/js/site.js"></script>
+<script async src="../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>

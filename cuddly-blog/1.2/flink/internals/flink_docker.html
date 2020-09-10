@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Flink Docker安装 :: The Cuddly Computing Machine</title>
+    <link rel="canonical" href="http://alexwangx.github.io/cuddly-blog/1.2/flink/internals/flink_docker.html">
+    <meta name="generator" content="Antora 2.3.3">
+    <link rel="stylesheet" href="../../../../_/css/site.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-86782445-1"></script>
+    <script>function gtag(){dataLayer.push(arguments)};window.dataLayer=window.dataLayer||[];gtag('js',new Date());gtag('config','UA-86782445-1')</script>
+  </head>
+  <body class="article">
+<header class="header">
+  <nav class="navbar">
+    <div class="navbar-brand">
+      <a class="navbar-item" href="http://alexwangx.github.io">The Cuddly Computing Machine</a>
+      <button class="navbar-burger" data-target="topbar-nav">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+    <div id="topbar-nav" class="navbar-menu">
+      <div class="navbar-end">
+        <a class="navbar-item" href="https://github.com/alexwangx">GitHub</a>
+      </div>
+    </div>
+  </nav>
+</header>
+<div class="body">
+<div class="nav-container" data-component="cuddly-blog" data-version="1.2">
+  <aside class="nav">
+    <div class="panels">
+<div class="nav-panel-menu is-active" data-panel="menu">
+  <nav class="nav-menu">
+    <h3 class="title"><a href="../../index.html">Cuddly Blog</a></h3>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Flink</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../training/index.html">Flink Training Home</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Streaming 介绍</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/intro/intro-1.html">使用Apache Flink 进行流处理</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/intro/intro-2.html">流可以传输什么?</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/intro/intro-3.html">一个完整的例子</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">环境配置</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/labs/devEnvSetup.html">设置您的开发环境</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/labs/taxiData.html">使用出租车数据流</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/labs/howto-exercises.html">如何做实验室</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../training/lab1/rideCleansing.html">Lab 1 - 过滤流</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">数据转换</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab1/stateless.html">无状态转换</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab1/keyed-streams.html">Keyed 流</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab1/stateful.html">有状态的转换</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab1/connected-streams.html">连接流</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../training/lab2/rideEnrichment-flatmap.html">Lab 2 - Stateful Enrichment</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">时间和分析</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab3/event-time-watermarks.html">Event Time and Watermarks</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab3/windows.html">Windows</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Lab 3 - Windowing</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab3/hourlyTips.html">Lab 3 - 窗口化分析</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab3/hourlyTips-discussion.html">Lab 3 - 讨论</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">事件驱动的应用</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab4/processfunction.html">ProcessFunction</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab4/side-outputs.html">Side Outputs</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Lab 4 - 到期状态</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab4/rideEnrichment-processfunction.html">Lab 4 - 练习</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/lab4/expiring-state-discussion.html">Lab 4 - 讨论</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">容错能力</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/fault/state-backends.html">状态后端</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/fault/snapshots.html">检查点和保存点</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../training/app-dev.html">应用开发</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">其他练习</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/extra-labs/longRides.html">长途警报</a>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">广播状态</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../training/extra-labs/nearestTaxi.html">寻找最近的出租车</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../training/extra-labs/ongoingRides.html">报告正在进行的出租车</a>
+  </li>
+  <li class="nav-item" data-depth="5">
+    <a class="nav-link" href="../training/extra-labs/taxiQuery.html">规则引擎</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../training/extra-labs/eventTimeJoin.html">丰富的 Joins</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../training/resources.html">资源链接</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../introduction/index.html">Flink 简介</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../introduction/architecture.html">Flink 架构介绍</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../introduction/failover.html">Flink 容错机制</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../introduction/scheduling.html">Flink 调度机制</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../introduction/statemachine.html">Flink 状态机</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../introduction/memorymanager.html">Flink 内存管理</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../introduction/dataflow.html">Flink Dataflow</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../introduction/batchdata.html">Flink 批处理</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../introduction/streamdata.html">Flink 流处理</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="index.html">Flink 学习笔记</a>
+<ul class="nav-list">
+  <li class="nav-item is-current-page" data-depth="3">
+    <a class="nav-link" href="flink_docker.html">Flink Docker安装</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spark</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Spark ops</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../spark/ops/spark-exitcode.html">Spark 任务退出码</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../spark/ops/spark-issues.html">Spark 常见错误</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../spark/spark-internals/index.html">Spark 2.4.4 架构原理</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../spark/spark-internals/root/spark-overview.html">Overview</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hadoop</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../hadoop/hadoop_krb_install.html">Hadoop 配置 Kerberos</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hadoop ops</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hadoop/hdp-ops/hadoop_commands.html">Hadoop Commands</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hadoop/hdp-ops/hadoop_practices.html">Hadoop Practices</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hadoop/hdp-ops/hadoop_jmx.html">Hadoop JMX</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hadoop/hdp-ops/hadoop_delroot.html">Hadoop 意外删除挽救</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hadoop/hdp-ops/delrmstore_onzk.html">删除ZK上的rmstore目录</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hbase</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Hbase ops</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hbase/hbase-ops/hbase_notes.html">Hbase 基本命令</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../hbase/hbase-ops/hbase_issues.html">Hbase Issues</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Druid</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../druid/druid-install.html">Druid 安装</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../druid/ops/druid-restApi.html">Druid RestApi</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Druid 架构</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="3">
+    <button class="nav-item-toggle"></button>
+    <a class="nav-link" href="../../druid/druid-internals/tutorial-load-data.html">Druid 导入数据</a>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="4">
+    <a class="nav-link" href="../../druid/druid-internals/tutorial-load-data1.html">Druid Json 配置介绍</a>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/druid-internals.html">Druid 0.1.5 架构</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/broker.html">Druid Broker</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/coordinator.html">Druid Coordinator</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/historical.html">Druid Historical</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/middleManager.html">Druid MiddleManager</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/overlord.html">Druid Overlord</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/router.html">Druid Router</a>
+  </li>
+  <li class="nav-item" data-depth="3">
+    <a class="nav-link" href="../../druid/druid-internals/segment.html">Druid Segments</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Kafka</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../kafka/kafka_practices.html">Kafka Practices</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../kafka/kafka_issues.html">Kafka Issues</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+  <li class="nav-item" data-depth="0">
+<ul class="nav-list">
+  <li class="nav-item" data-depth="1">
+    <button class="nav-item-toggle"></button>
+    <span class="nav-text">Other</span>
+<ul class="nav-list">
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../ml.html">机器学习&amp;深度学习资料</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../mac.html">Mac OS</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../linux.html">Linux</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../mysql_install.html">Mysql 安装</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../readlist.html">北京中小学孩子读书清单</a>
+  </li>
+  <li class="nav-item" data-depth="2">
+    <a class="nav-link" href="../../demo/demo.html">Adoc Demo</a>
+  </li>
+</ul>
+  </li>
+</ul>
+  </li>
+</ul>
+  </nav>
+</div>
+<div class="nav-panel-explore" data-panel="explore">
+  <div class="context">
+    <span class="title">Cuddly Blog</span>
+    <span class="version">1.2</span>
+  </div>
+  <ul class="components">
+    <li class="component is-current">
+      <span class="title">Cuddly Blog</span>
+      <ul class="versions">
+        <li class="version is-current is-latest">
+          <a href="../../index.html">1.2</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+    </div>
+  </aside>
+</div>
+<main>
+<div class="toolbar" role="navigation">
+<button class="nav-toggle"></button>
+  <a href="../../index.html" class="home-link"></a>
+<nav class="breadcrumbs" aria-label="breadcrumbs">
+  <ul>
+    <li><a href="../../index.html">Cuddly Blog</a></li>
+    <li>Flink</li>
+    <li><a href="index.html">Flink 学习笔记</a></li>
+    <li><a href="flink_docker.html">Flink Docker安装</a></li>
+  </ul>
+</nav>
+</div>
+<article class="doc">
+<h1 class="page">Flink Docker安装</h1>
+<div class="sect1">
+<h2 id="_环境准备"><a class="anchor" href="#_环境准备"></a>环境准备</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>安装 Docker</p>
+</li>
+<li>
+<p><a href="https://mirrors.tuna.tsinghua.edu.cn/apache/flink/flink-1.10.2/flink-1.10.2-bin-scala_2.11.tgz">下载 flink-1.10.2-bin-scala_2.11.tgz</a></p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_制作_docker_镜像"><a class="anchor" href="#_制作_docker_镜像"></a>制作 Docker 镜像</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">tar -zxvf flink-1.10.2-bin-scala_2.11.tgz
+vim flink-1.10.2/conf/flink-conf.yaml
+jobmanager.rpc.address: flink-jm
+taskmanager.numberOfTaskSlots: 10</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_配置dockerfile"><a class="anchor" href="#_配置dockerfile"></a>配置dockerfile</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">vim dockerfile
+
+FROM centos:centos7
+#RUN yum install java-1.8.0-openjdk -y
+ADD jdk-8u202-linux-x64.tar.gz /usr/java/jdk
+ENV JAVA_HOME /usr/java/jdk/jdk1.8.0_202
+ENV PATH ${PATH}:${JAVA_HOME}/bin
+ARG FLINK_VERSION=1.10.2
+ARG SCALA_VERSION=2.11
+ARG FLINK_TAR_NAME=flink-${FLINK_VERSION}-bin-scala_${SCALA_VERSION}.tgz
+ENV FLINK_HOME=/flink-${FLINK_VERSION}
+ADD ${FLINK_TAR_NAME} /
+#RUN mkdir /home
+COPY flink_run.sh /home
+EXPOSE 8088
+VOLUME $FLINK_HOME/conf
+RUN chmod u+x /home/flink_run.sh
+#ENTRYPOINT cd /home &amp;&amp; sh /home/flink_run.sh
+
+ENTRYPOINT ["/home/flink_run.sh"]</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_配置启动tm_jm"><a class="anchor" href="#_配置启动tm_jm"></a>配置启动tm, jm</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">vim flink_run.sh
+#!/bin/bash
+FLINK_HOME=/flink-1.10.2
+FLINK_JOB_MANAGER_SH=$FLINK_HOME/bin/jobmanager.sh
+FLINK_TASK_MANAGER_SH=$FLINK_HOME/bin/taskmanager.sh
+
+case "$1" in
+"jobmanager")
+$FLINK_JOB_MANAGER_SH start-foreground
+;;
+
+"taskmanager")
+$FLINK_TASK_MANAGER_SH start-foreground
+;;
+
+*)
+echo "COMMAND ERROR"
+;;
+esac</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_build"><a class="anchor" href="#_build"></a>build</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">docker build -f dockerfile -t flink-service:flink1.10.2 .
+
+## 创建Flink的network
+docker network create flink
+
+
+## 启动1个job manager和2个task manager
+docker run -itd  --name flink-jm  -p 8081:8081 \
+-v $FLINK_HOME/conf:/flink-1.10.2/conf \
+-v /tmp/data:/tmp/data \
+--network flink flink-service:flink1.10.2 jobmanager
+
+docker run -itd  --name flink-tm1  \
+-v $FLINK_HOME/conf:/flink-1.10.2/conf \
+-v /tmp/data:/tmp/data \
+--network flink flink-service:flink1.10.2 taskmanager
+
+docker run -itd  --name flink-tm2  \
+-v $FLINK_HOME/conf:/flink-1.10.2/conf \
+-v /tmp/data:/tmp/data \
+--network flink flink-service:flink1.10.2 taskmanager
+
+
+docker start flink-jm flink-tm1 flink-tm2
+docker stop flink-jm flink-tm1 flink-tm2
+
+docker ps|grep flink-|awk '{print $1}'|xargs docker stop
+docker ps -a |grep flink-|awk '{print $1}'|xargs docker rm</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_查看是否存在flink_jm和flink_tm容器"><a class="anchor" href="#_查看是否存在flink_jm和flink_tm容器"></a>查看是否存在flink-jm和flink-tm容器</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">docker ps
+
+外部访问:
+http://localhost:8081/#/overview</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_运行示例"><a class="anchor" href="#_运行示例"></a>运行示例</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell">echo "127.0.0.1	localhost flink-jm" &gt;&gt; /etc/hosts
+
+# 在 flink 客户端(mac 宿主机) 执行
+cd $FLINK_HOME
+./bin/flink run ./examples/batch/WordCount.jar
+
+./bin/flink run -m localhost:8081 \
+                       ./examples/batch/WordCount.jar \
+                       --input file:///tmp/data/README.txt --output file:///tmp/data/wordcount_out</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_kafka_安装"><a class="anchor" href="#_kafka_安装"></a>Kafka 安装</h2>
+<div class="sectionbody">
+<div class="listingblock">
+<div class="content">
+<pre class="highlightjs highlight"><code class="language-shell hljs" data-lang="shell"># 拉取镜像
+docker pull wurstmeister/kafka
+docker pull wurstmeister/zookeeper
+
+# 运行 zk
+docker run -d --name zookeeper -p 2181:2181 -t wurstmeister/zookeeper
+
+# 运行kafka, 172.30.165.115 为宿主机 IP
+docker run --name kafka01 \
+-p 9092:9092 \
+-e KAFKA_BROKER_ID=0 \
+-e KAFKA_ZOOKEEPER_CONNECT=172.30.165.115:2181 \
+-e KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://172.30.165.115:9092 \
+-e KAFKA_LISTENERS=PLAINTEXT://0.0.0.0:9092 \
+-d wurstmeister/kafka</code></pre>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_参考"><a class="anchor" href="#_参考"></a>参考</h2>
+<div class="sectionbody">
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><a href="https://blog.csdn.net/u014384314/article/details/104939031" target="_blank" rel="noopener">flink1.10-docker 安装</a></p>
+</li>
+<li>
+<p><a href="https://www.cnblogs.com/huangqingshi/p/12531717.html" target="_blank" rel="noopener">使用docker构建hadoop集群</a></p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</article>
+</main>
+</div>
+<footer class="footer">
+  <p>This page was built using the Antora default UI.</p>
+  <p>The source code for this UI is licensed under the terms of the MPL-2.0 license.</p>
+</footer>
+<script src="../../../../_/js/site.js"></script>
+<script async src="../../../../_/js/vendor/highlight.js"></script>
+  </body>
+</html>
